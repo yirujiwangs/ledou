@@ -1,0 +1,171 @@
+<div class=" panel-default" >
+	<div class="panel-heading title-middle" style="    height: 46px;    margin-bottom: 15px;">
+		<h3 class="panel-title ">创建运营商账号</h3>
+	</div>
+</div>
+<!--<div class='account-edit-header'><i class="glyphicon glyphicon-remove" ng-click="accountAddCtrl.close()"></i></div>-->
+<form class="form-horizontal modal-form" name="accountAddForm" novalidate>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">运营商账号:</label>
+		<div class="col-xs-5">
+			<input 
+				name="account"
+				type="text"
+				class="form-control"
+				placeholder="请输入手机号"
+				required=""
+				maxlength="11"
+				ng-model="form.account"
+				ng-pattern="/1[3|5|7|8|][0-9]{9}/"
+			>
+			<p ng-show="accountAddForm.account.$dirty  &&accountAddForm.account.$error.pattern">请输入正确的手机号</p>
+			<p ng-show="accountAddForm.account.$dirty  &&accountAddForm.account.$error.required">请输入手机号</p>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">运营商名称:</label>
+		<div class="col-xs-5">
+			<input 
+				name="accountName"
+				type="text"
+				class="form-control" 
+				placeholder="字数不超过12个"
+				required=""
+				maxlength="12" 
+				ng-model='form.accountName' 	
+			>
+		</div>
+		<p ng-show="accountAddForm.accountName.$dirty  &&accountAddForm.accountName.$error.required">请输入运营商名称</p>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">登陆密码:</label>
+		<div class="col-xs-5">
+			<input
+				name="passwd" 
+				type="password"
+				class="form-control"
+				placeholder="6~20个字母/数字/符号的组合"
+				required=""
+				minlength="6"
+				ng-model='form.password'
+			>
+			<p ng-show="accountAddForm.passwd.$dirty  &&accountAddForm.passwd.$error.required">请输入密码</p>
+			<p ng-show="accountAddForm.passwd.$dirty  &&accountAddForm.passwd.$error.minlength">密码最少为6个字母/数字/符号的组合</p>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">政策:</label>
+		<input type="radio" id="newPolicy"  name="policy" ng-model="policy"  value=2 ng-checked="true">
+		<label for="newPolicy">新政策</label>
+		<input type="radio" id="oldPolicy"  name="policy" ng-model="policy" value=1 >
+		<label for="oldPolicy">老政策</label>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">代理商类型:</label>
+		<input type="radio" id="proxyTypeP" name="proxyType" ng-model="proxyType"  value='P' ng-checked="true">
+		<label for="proxyTypeP">区县代理</label>
+		<input type="radio" id="proxyTypeM" name="proxyType" ng-model="proxyType" 	value='M' >
+		<label for="proxyTypeM">市级代理</label>
+		<input type="radio" id="proxyTypeS" name="proxyType" ng-model="proxyType" 	value='S'  ng-disabled="true">
+		<label for="proxyTypeS">省级代理</label>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">代理区域:</label>
+		<div 
+			class="col-xs-6 pull-left"
+			require="{{ require }}"
+			area-code="areaCode"
+			align="align"
+			proxy-type="proxyType"
+			city-selector>
+		</div>
+		<input 
+			name="areaCode"
+			type="hidden" 
+			ng-model="areaCode"
+			required=""
+		>
+		<p ng-show="accountAddForm.areaCode.$dirty  &&accountAddForm.areaCode.$error.required">请选择代理区域</p>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">签约方式:</label>
+		<input type="radio" id="signwayG"  name="signway" ng-model="signway"  value=1 ng-checked="true">
+		<label for="signwayG">绿豆芽公司</label>
+		<input type="radio" id="signwayC"  name="signway" ng-model="signway" 	value=2 >
+		<label for="signwayC">市级代理</label>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label" for="franchiseFee">代理商加盟费(单位元):</label>
+		<div class="col-xs-5">
+			<input name="franchiseFee" id="franchiseFee" class="form-control" type="number" min="0" ng-model="franchiseFee"  required="">
+			<p ng-show="accountAddForm.franchiseFee.$dirty  &&accountAddForm.franchiseFee.$error.required">请输入代理商加盟费</p>
+			<p ng-show="accountAddForm.franchiseFee.$dirty  &&accountAddForm.franchiseFee.$error.min">代理商加盟费不能小于0元</p>
+		</div>
+	</div>
+
+	<!--<div class="form-group">-->
+		<!--<label class="col-xs-4 control-label">分配普通商户:</label>-->
+		<!--<div class="col-xs-5">-->
+			<!--<input-->
+				<!--name="account_num" -->
+				<!--type="number" -->
+				<!--class="form-control"-->
+				<!--placeholder="请输入要分配的普通账号个数"-->
+				<!--required=""-->
+				<!--min="0"-->
+				<!--ng-model='form.account_num'-->
+			<!-->
+			<!--<p ng-show="accountAddForm.account_num.$dirty  &&accountAddForm.password.$error.required">请输入默认库存</p>-->
+			<!--<p ng-show="accountAddForm.account_num.$dirty  &&accountAddForm.account_num.$error.min">默认库存最小为0</p>-->
+		<!--</div>-->
+	<!--</div>-->
+	<!--<div class="form-group">-->
+		<!--<label class="col-xs-4 control-label">备注:</label>-->
+		<!--<div class="col-xs-5">-->
+			<!--<input-->
+				<!--name="remark" -->
+				<!--type="text"-->
+				<!--class="form-control"-->
+				<!--placeholder="请输入备注信息"  -->
+				<!--ng-model='form.remark'-->
+				<!--maxlength="15"-->
+			<!-->
+		<!--</div>-->
+	<!--</div>-->
+<!--	<div class="form-group">
+		<label class="col-xs-4 control-label">已有报备人数：</label>
+		<div class="col-xs-5">
+			3人
+
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">已有推荐人数:</label>
+		<div class="col-xs-5">
+			3人
+		</div>
+	</div>-->
+	<div class="form-group">
+		<label class="col-xs-4 control-label">(可选)推荐代理:</label>
+		<div class="col-xs-5">
+			<input
+					name="account_num"
+					type="number"
+					class="form-control"
+					placeholder="请输入手机号"
+					min="0"
+					ng-model='form.recommentPhone'
+					>
+			<p ng-show="accountAddForm.account_num.$dirty  &&accountAddForm.password.$error.required">请输入手机号</p>
+		</div>
+	</div>
+	<div class="btn-group">
+		<button 
+				class="btn-g t-btn-green"
+				ng-class="{'btn':accountAddForm.$invalid,'btn-g-green':accountAddForm.$valid}"
+				ng-click="accountAddCtrl.add()" 
+				ng-disabled="accountAddForm.$invalid"
+		>提交</button>
+		<button class="btn-g btn-g-default" ng-click="accountAddCtrl.close()">取消</button>
+	</div>
+</form>

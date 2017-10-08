@@ -1,0 +1,153 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">数据指标</h3>
+		</div>
+		<div class="panel-body">
+			<div class='panel-items col-xs-4'>
+				<p>本月/累计激活</p>
+				<p class="panel-items-num">
+					{{  allDeviceCtrl.generalNum.activeDevicesThisMonth }}/{{  allDeviceCtrl.generalNum.activeDevicesAll }}
+				</p>
+			</div>
+			<div class='panel-items col-xs-4'>
+				<p>本月/累计采购</p>
+				<p class="panel-items-num">
+					{{  allDeviceCtrl.generalNum.deviceAmountThisMonth }}/{{  allDeviceCtrl.generalNum.deviceAmountAll }}
+				</p>
+			</div>
+			<div class='panel-items col-xs-4'>
+				<p>激活码/普通设备库存</p>
+				<p class="panel-items-num">
+					{{  allDeviceCtrl.generalNum.activeDeviceLeft }}/{{  allDeviceCtrl.generalNum.normalDeviceLeft }}
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="device-main row clearfix">
+		<div class="allDevice-table">
+			<div class="allDevice-group">
+				<div class="btn-group">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						新建分组<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li class="dropdown-header"><span>请输入分组名称</span></li>
+						<li>
+							<input type="text" class="form-control" ng-model="addGroupName">
+							<button class="t-btn t-btn-green" ng-click="allDeviceCtrl.addGroup()">提交</button>
+							<button class="t-btn t-btn-default">取消</button>
+						</li>
+					</ul>
+				</div>
+				<div class="btn-group dropdown-del">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						<span class="dropdown-del-title">删除分组</span><span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu" style="height: 300px;overflow: auto; ">
+						<li
+								ng-repeat="group in allDeviceCtrl.groups"
+								ng-click="allDeviceCtrl.delGroup($index)">
+							{{ group.name }}
+						</li>
+					</ul>
+				</div>
+				<div class="allDevice-list">
+					<h4 class="bold">设备列表</h4>
+					<div class="list-group" style="height: 480px;width:200px;">
+						<div
+								class="list-group-item bold"
+								ng-class="{true :'list-group-item-clicked', false :''}[allDeviceCtrl.activeIndex=='all']"
+								ng-click="allDeviceCtrl.search('all',null)"
+								>
+							全部设备
+						</div>
+						<div
+								class="list-group-item bold"
+								ng-class="{true :'list-group-item-clicked', false :''}[allDeviceCtrl.activeIndex=='unAssign']"
+								ng-click="allDeviceCtrl.search('unAssign',null)">
+							未分组设备
+						</div>
+						<device-group-edit
+								ng-show="group.name"
+								ng-class="{true :'list-group-item-clicked', false :''}[allDeviceCtrl.activeIndex==$index]"
+								ng-click="allDeviceCtrl.search($index,null)"
+								ng-repeat="group in allDeviceCtrl.groups"
+								group-name="group.name">
+						</device-group-edit>
+					</div>
+				</div>
+			</div>
+			<table class="table table-hover table-reponsive">
+				<div class='table-func clearfix'>
+					<div class="pull-left t-btn t-btn-green m-r-md"  ng-click="allDeviceCtrl.activereturn()" style="cursor:pointer;">批量设置激活返利</div>
+					<div class="pull-right">
+						<select
+								class="pull-left m-r-xs"
+								style="height: 32px;"
+								ng-model="typeSelect"
+								ng-change="allDeviceCtrl.search(null,'select')">
+							<option value="">设备类型</option>
+							<option value="C">普通设备</option>
+							<option value="A">激活码设备</option>
+						</select>
+						<select
+								class="pull-left m-r-xs"
+								style="height: 32px;"
+								ng-model="stateSelect"
+								ng-change="allDeviceCtrl.search(null,'select')">
+							<option value="">全部状态</option>
+							<option value="N">已激活</option>
+							<option value="A">未激活</option>
+							<option value="P">已禁止</option>
+						</select>
+						<input type='text' class="m-r-md pull-left col-xs-3" placeholder="输入设备序列号/备注进行查询" ng-model="keyword">
+						<button class="t-btn t-btn-green m-r-md pull-left" ng-click="allDeviceCtrl.search(null,'search')">查询</button>
+					</div>
+
+				</div>
+				<thead>
+				<th ng-repeat="title in allDeviceCtrl.titles">
+					{{title.name}}
+				</th>
+				</thead>
+				<tbody>
+				<tr ng-repeat="item in allDeviceCtrl.items | filter:keyword">
+					<td>{{ item.iBeaconID }}</td>
+						<td>{{(item.deviceType==0)?"普通设备":"激活码设备"}}</td>
+					<td ng-if="item.status === 'N'">已激活</td>
+					<td ng-if="item.status === 'A'">未激活</td>
+					<td ng-if="item.status === 'P'">已禁止</td>
+					<td>{{item.groupName?item.groupName:'未分组'}}</td>
+					<td >{{item.redPercent}}{{item.redPercent?'%':'-'}}</td>
+					<td>{{ item.storeName }}</td>
+					<td>{{ item.storeAddress }}</td>
+					<td style="width:90px;">
+						<div class="btn-group dropdown-select" style="cursor: pointer;display: inline-block;margin: 0;width: auto;">
+							<img src="images/device_group.png" style="width: 30px;" class="dropdown-toggle" data-toggle="dropdown">
+							</img>
+							<ul class="dropdown-menu" role="menu" style="height: 250px;overflow: auto; left: -165px;top:-200px">
+								<li
+										ng-repeat="group in allDeviceCtrl.selectGroups"
+										ng-click="allDeviceCtrl.updateGroup($index,item.dtoken)">
+									{{ group.name }}
+								</li>
+							</ul>
+						</div>
+						<div class="" style="cursor: pointer;display: inline-block;width: auto;" ng-click="allDeviceCtrl.settings($index)">
+							<img ng-if="item.status == 'A' && !item.redPercent" src="images/rebate_set.png" style="width:30px;margin-left: 10px"/>
+							<img ng-if="item.status != 'A' || item.redPercent" src="images/nobate_set.png" style="width:30px;margin-left: 10px"/>
+						</div>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="page-btn">
+			<button ng-click="allDeviceCtrl.pre()">上一页</button>
+			<span>第{{allDeviceCtrl.currentPage}}页,共{{allDeviceCtrl.totalPage}}页</span>
+			<button ng-click="allDeviceCtrl.next()">下一页</button>
+		</div>
+	</div>
+</div>

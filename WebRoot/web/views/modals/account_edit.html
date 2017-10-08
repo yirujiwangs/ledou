@@ -1,0 +1,90 @@
+<div class='account-edit-header'><i class="glyphicon glyphicon-remove" ng-click="accountEditCtrl.close()"></i></div>
+<form class="form-horizontal modal-form" name="accountEditForm">
+	<div class="form-group">
+		<label class="col-xs-4 control-label">商家账号:</label>
+		<div class="col-xs-5">
+			<span class="modal-span">{{form.account}}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">商家名称:</label>
+		<div class="col-xs-5">
+			<span class="modal-span">{{form.storeName}}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">登陆密码:</label>
+		<div class="col-xs-5">
+			<span class="modal-span">******</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">商家类型:</label>
+		<div class="col-xs-5">
+			<span class="modal-span">{{form.storeType}}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">分组个数限制:</label>
+		<div class="col-xs-5">
+			<input
+				name="maxGroupNum" 
+				type="number"
+				class="form-control"
+				placeholder="1~100"
+				required=""  
+				min="0" 
+				max="100"
+				ng-model='form.maxGroupNum' 
+			>
+			<!-- <p ng-show="accountEditForm.maxGroupNum.$dirty  &&accountEditForm.maxGroupNum.$error.required">请输入分组个数限制</p> -->
+			<p ng-show="accountEditForm.maxGroupNum.$dirty  &&accountEditForm.maxGroupNum.$error.min && accountEditForm.maxGroupNum.$error.required">分组个数最小为0</p>
+			<p ng-show="accountEditForm.maxGroupNum.$dirty  &&accountEditForm.maxGroupNum.$error.max">分组个数最大为100</p>
+		</div> 
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">子商户个数限制:</label>
+		<div class="col-xs-5" ng-if="form.storeType=='平台类型'">
+			<input
+				name="maxStoreNum" 
+				type="number"
+				class="form-control"
+				placeholder="1~100"
+				required=""  
+				min="0" 
+				max="100"
+				ng-model='form.maxStoreNum' 
+			>
+			<!-- <p ng-show="accountEditForm.minGroupNum.$dirty  &&accountEditForm.minGroupNum.$error.required">请输入分组个数限制</p> -->
+			<p ng-show="accountEditForm.maxStoreNum.$dirty  &&accountEditForm.maxStoreNum.$error.min && accountEditForm.maxStoreNum.$error.required">分组个数最小为0</p>
+			<p ng-show="accountEditForm.maxStoreNum.$dirty  &&accountEditForm.maxStoreNum.$error.max">分组个数最大为100</p>
+		</div>
+		<div class="col-xs-5" ng-if="form.storeType=='普通类型'">
+			<span class="modal-span">0</span>
+		</div> 
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">备注:</label>
+		<div class="col-xs-5">
+			<input
+				name="descr" 
+				type="text"
+				class="form-control"  
+				ng-model='form.descr'
+				maxlength="15"
+			>
+		</div>
+		<!-- <div class="col-xs-2 del-l-p">
+			<span class="form-num">0 / 15</span>
+		</div> -->
+	</div>
+	<div class="btn-group">
+		<button 
+				class="btn-g" 
+				ng-class="{'disabled-btn':accountEditForm.$invalid,'btn-g-green':accountEditForm.$valid}" 
+				ng-click="accountEditCtrl.update()" 
+				ng-disabled="accountEditForm.$invalid"
+		>提交</button>
+		<button class="btn-g btn-g-default" ng-click="accountEditCtrl.close()">取消</button>
+	</div>
+</form>

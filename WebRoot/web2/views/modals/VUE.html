@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>flex-layout</title>
+	<link rel="stylesheet" href="dist/flex-layout.css">
+	<link rel="stylesheet" href="example/layout.css">
+	<link rel="stylesheet" href="example/index.css">
+</head>
+<style type="text/css">
+	.demo > .flex-column, .demo > .flex-row, .demo.flex-column, .demo.flex-row {
+	background-image: linear-gradient(90deg, #F5F5F5 4.16666667%, #fdfdfd 4.16666667%, #fdfdfd 8.33333333%, #F5F5F5 8.33333333%, #F5F5F5 12.5%, #fdfdfd 12.5%, #fdfdfd 16.66666667%, #F5F5F5 16.66666667%, #F5F5F5 20.83333333%, #fdfdfd 20.83333333%, #fdfdfd 25%, #F5F5F5 25%, #F5F5F5 29.16666667%, #fdfdfd 29.16666667%, #fdfdfd 33.33333333%, #F5F5F5 33.33333333%, #F5F5F5 37.5%, #fdfdfd 37.5%, #fdfdfd 41.66666667%, #F5F5F5 41.66666667%, #F5F5F5 45.83333333%, #fdfdfd 45.83333333%, #fdfdfd 50%, #F5F5F5 50%, #F5F5F5 54.16666667%, #fdfdfd 54.16666667%, #fdfdfd 58.33333333%, #F5F5F5 58.33333333%, #F5F5F5 62.5%, #fdfdfd 62.5%, #fdfdfd 66.66666667%, #F5F5F5 66.66666667%, #F5F5F5 70.83333333%, #fdfdfd 70.83333333%, #fdfdfd 75%, #F5F5F5 75%, #F5F5F5 79.16666667%, #fdfdfd 79.16666667%, #fdfdfd 83.33333333%, #F5F5F5 83.33333333%, #F5F5F5 87.5%, #fdfdfd 87.5%, #fdfdfd 91.66666667%, #F5F5F5 91.66666667%, #F5F5F5 95.83333333%, #fdfdfd 95.83333333%);
+}
+.demo.flex-column .flex-column, .demo.flex-row .flex-column, .demo.flex-column .flex-row, .demo.flex-row .flex-row {
+	background: none;
+	box-shadow: none;
+} 
+.demo [class*=flex-item] {
+	background-color: rgba(72, 174, 255, 0.27);
+	box-shadow: inset 1px 1px rgba(78, 78, 78, 0.1), inset -1px -1px rgba(78, 78, 78, 0.1);
+	line-height: 40px;
+	text-align: center;
+}
+.panel {
+	margin-bottom:  40px;
+}
+.panel a[href] {
+	margin: 0 5px;
+	color: #007BC5;
+}
+
+.box {
+	margin: 20px 0;
+	border-radius: 8px;
+	border: solid 1px #d1d1d1;
+	box-shadow: 0 1px 3px #e1e1e1;
+}
+.box .head {
+	margin: 0;
+	padding: 10px 20px;
+	border-bottom: solid 1px #d1d1d1;
+	border-top: solid 1px #fff;
+	border-radius: 8px 8px 0 0;
+	background-color: #f4f4f4;
+}
+.box .head .title {
+	margin-right: 40px;
+	color: #007BC5;
+}
+.box .head .tip {
+	margin: 5px 0 0;
+	line-height: 2;
+	font-size: 12px;
+}
+.box .demo {
+	margin: 20px 0;
+	border-top: solid 1px #ddd;
+	border-bottom: solid 1px #ddd;
+}
+
+.demo1 {
+	border: solid 1px #ccc;
+}
+.demo1 [class^=flex-item] {
+	line-height: 60px;
+}
+
+
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: "Helvetica Neue", Helvetica,  "Microsoft YaHei", Arial, sans-serif;
+	font-size: 14px;
+	line-height: 1.5;
+	color: #34495e;
+}
+a {
+	color: #34495e;
+	text-decoration: none;
+}
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+ol {
+	margin: 0;
+	padding-left: 20px;
+}
+ol li {
+	margin-bottom: 10px;
+}
+h1, h2, h3, h4, h5, h6 {
+	color: #5C6B77;
+}
+br {
+	line-height: 2;
+}
+
+.m-container {
+	min-height: 100vh;
+}
+
+.m-header {
+	position: relative;
+	padding: 0 50px;
+	height: 80px;
+	border-bottom: solid 1px #e1e1e1;
+	box-shadow: 0 1px 2px #eee;
+}
+.m-header .logo {
+	width: 230px;
+	font-size: 24px;
+	font-weight: normal;
+	color: #555;
+}
+.m-header .menu {
+	margin-left: auto;
+}
+.m-header .menu a {
+	display: inline-block;
+	margin: 0 15px;
+	line-height: 4;
+	font-weight: 600;
+	color: #71B5DE;
+}
+
+.m-content {
+	background-color: #fdfdfd; 
+}
+.m-sidebar {
+	width: 270px;
+	background-color: #f8f8f8;
+}
+.m-nav {
+	padding-top: 20px;
+}
+.m-nav a {
+	display: block;
+	padding-left: 60px;
+	line-height: 4;
+	color: #666;
+}
+.m-nav li {
+	transition: background-color .1s;
+}
+.m-nav li:hover {
+	background-color: #fdfdfd;
+	box-shadow: inset 6px 0 #71B5DE;
+}
+
+.m-main {
+	flex: 1;
+	padding: 20px 40px 60px 40px;
+	max-width: 1300px;
+}
+
+
+.flex-column,
+.flex-row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+.flex-column:before,
+.flex-row:before,
+.flex-column:after,
+.flex-row:after {
+  content: " ";
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  box-sizing: border-box;
+  width: 0;
+  height: 0;
+  font-size: 0;
+}
+.flex-column:after,
+.flex-row:after {
+  clear: both;
+}
+.flex-column {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+.flex-row {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.flex-around {
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+}
+.flex-between {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.flex-baseline {
+  -webkit-box-align: baseline;
+  -webkit-align-items: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+}
+.flex-strech {
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+.flex-item {
+  float: left;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+.flex-item-1 {
+  float: left;
+  width: 4.16666667%;
+}
+.flex-offset-1 {
+  margin-left: 4.16666667%;
+}
+.flex-order-1 {
+  -webkit-box-ordinal-group: 2;
+  -webkit-order: 1;
+      -ms-flex-order: 1;
+          order: 1;
+}
+.flex-item-2 {
+  float: left;
+  width: 8.33333333%;
+}
+.flex-offset-2 {
+  margin-left: 8.33333333%;
+}
+.flex-order-2 {
+  -webkit-box-ordinal-group: 3;
+  -webkit-order: 2;
+      -ms-flex-order: 2;
+          order: 2;
+}
+.flex-item-3 {
+  float: left;
+  width: 12.5%;
+}
+.flex-offset-3 {
+  margin-left: 12.5%;
+}
+.flex-order-3 {
+  -webkit-box-ordinal-group: 4;
+  -webkit-order: 3;
+      -ms-flex-order: 3;
+          order: 3;
+}
+.flex-item-4 {
+  float: left;
+  width: 16.66666667%;
+}
+.flex-offset-4 {
+  margin-left: 16.66666667%;
+}
+.flex-order-4 {
+  -webkit-box-ordinal-group: 5;
+  -webkit-order: 4;
+      -ms-flex-order: 4;
+          order: 4;
+}
+.flex-item-5 {
+  float: left;
+  width: 20.83333333%;
+}
+.flex-offset-5 {
+  margin-left: 20.83333333%;
+}
+.flex-order-5 {
+  -webkit-box-ordinal-group: 6;
+  -webkit-order: 5;
+      -ms-flex-order: 5;
+          order: 5;
+}
+.flex-item-6 {
+  float: left;
+  width: 25%;
+}
+.flex-offset-6 {
+  margin-left: 25%;
+}
+.flex-order-6 {
+  -webkit-box-ordinal-group: 7;
+  -webkit-order: 6;
+      -ms-flex-order: 6;
+          order: 6;
+}
+.flex-item-7 {
+  float: left;
+  width: 29.16666667%;
+}
+.flex-offset-7 {
+  margin-left: 29.16666667%;
+}
+.flex-order-7 {
+  -webkit-box-ordinal-group: 8;
+  -webkit-order: 7;
+      -ms-flex-order: 7;
+          order: 7;
+}
+.flex-item-8 {
+  float: left;
+  width: 33.33333333%;
+}
+.flex-offset-8 {
+  margin-left: 33.33333333%;
+}
+.flex-order-8 {
+  -webkit-box-ordinal-group: 9;
+  -webkit-order: 8;
+      -ms-flex-order: 8;
+          order: 8;
+}
+.flex-item-9 {
+  float: left;
+  width: 37.5%;
+}
+.flex-offset-9 {
+  margin-left: 37.5%;
+}
+.flex-order-9 {
+  -webkit-box-ordinal-group: 10;
+  -webkit-order: 9;
+      -ms-flex-order: 9;
+          order: 9;
+}
+.flex-item-10 {
+  float: left;
+  width: 41.66666667%;
+}
+.flex-offset-10 {
+  margin-left: 41.66666667%;
+}
+.flex-order-10 {
+  -webkit-box-ordinal-group: 11;
+  -webkit-order: 10;
+      -ms-flex-order: 10;
+          order: 10;
+}
+.flex-item-11 {
+  float: left;
+  width: 45.83333333%;
+}
+.flex-offset-11 {
+  margin-left: 45.83333333%;
+}
+.flex-order-11 {
+  -webkit-box-ordinal-group: 12;
+  -webkit-order: 11;
+      -ms-flex-order: 11;
+          order: 11;
+}
+.flex-item-12 {
+  float: left;
+  width: 50%;
+}
+.flex-offset-12 {
+  margin-left: 50%;
+}
+.flex-order-12 {
+  -webkit-box-ordinal-group: 13;
+  -webkit-order: 12;
+      -ms-flex-order: 12;
+          order: 12;
+}
+.flex-item-13 {
+  float: left;
+  width: 54.16666667%;
+}
+.flex-offset-13 {
+  margin-left: 54.16666667%;
+}
+.flex-order-13 {
+  -webkit-box-ordinal-group: 14;
+  -webkit-order: 13;
+      -ms-flex-order: 13;
+          order: 13;
+}
+.flex-item-14 {
+  float: left;
+  width: 58.33333333%;
+}
+.flex-offset-14 {
+  margin-left: 58.33333333%;
+}
+.flex-order-14 {
+  -webkit-box-ordinal-group: 15;
+  -webkit-order: 14;
+      -ms-flex-order: 14;
+          order: 14;
+}
+.flex-item-15 {
+  float: left;
+  width: 62.5%;
+}
+.flex-offset-15 {
+  margin-left: 62.5%;
+}
+.flex-order-15 {
+  -webkit-box-ordinal-group: 16;
+  -webkit-order: 15;
+      -ms-flex-order: 15;
+          order: 15;
+}
+.flex-item-16 {
+  float: left;
+  width: 66.66666667%;
+}
+.flex-offset-16 {
+  margin-left: 66.66666667%;
+}
+.flex-order-16 {
+  -webkit-box-ordinal-group: 17;
+  -webkit-order: 16;
+      -ms-flex-order: 16;
+          order: 16;
+}
+.flex-item-17 {
+  float: left;
+  width: 70.83333333%;
+}
+.flex-offset-17 {
+  margin-left: 70.83333333%;
+}
+.flex-order-17 {
+  -webkit-box-ordinal-group: 18;
+  -webkit-order: 17;
+      -ms-flex-order: 17;
+          order: 17;
+}
+.flex-item-18 {
+  float: left;
+  width: 75%;
+}
+.flex-offset-18 {
+  margin-left: 75%;
+}
+.flex-order-18 {
+  -webkit-box-ordinal-group: 19;
+  -webkit-order: 18;
+      -ms-flex-order: 18;
+          order: 18;
+}
+.flex-item-19 {
+  float: left;
+  width: 79.16666667%;
+}
+.flex-offset-19 {
+  margin-left: 79.16666667%;
+}
+.flex-order-19 {
+  -webkit-box-ordinal-group: 20;
+  -webkit-order: 19;
+      -ms-flex-order: 19;
+          order: 19;
+}
+.flex-item-20 {
+  float: left;
+  width: 83.33333333%;
+}
+.flex-offset-20 {
+  margin-left: 83.33333333%;
+}
+.flex-order-20 {
+  -webkit-box-ordinal-group: 21;
+  -webkit-order: 20;
+      -ms-flex-order: 20;
+          order: 20;
+}
+.flex-item-21 {
+  float: left;
+  width: 87.5%;
+}
+.flex-offset-21 {
+  margin-left: 87.5%;
+}
+.flex-order-21 {
+  -webkit-box-ordinal-group: 22;
+  -webkit-order: 21;
+      -ms-flex-order: 21;
+          order: 21;
+}
+.flex-item-22 {
+  float: left;
+  width: 91.66666667%;
+}
+.flex-offset-22 {
+  margin-left: 91.66666667%;
+}
+.flex-order-22 {
+  -webkit-box-ordinal-group: 23;
+  -webkit-order: 22;
+      -ms-flex-order: 22;
+          order: 22;
+}
+.flex-item-23 {
+  float: left;
+  width: 95.83333333%;
+}
+.flex-offset-23 {
+  margin-left: 95.83333333%;
+}
+.flex-order-23 {
+  -webkit-box-ordinal-group: 24;
+  -webkit-order: 23;
+      -ms-flex-order: 23;
+          order: 23;
+}
+.flex-item-24 {
+  float: left;
+  width: 100%;
+}
+.flex-offset-24 {
+  margin-left: 100%;
+}
+.flex-order-24 {
+  -webkit-box-ordinal-group: 25;
+  -webkit-order: 24;
+      -ms-flex-order: 24;
+          order: 24;
+}
+.flex-column.flex-left {
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+.flex-column.flex-right {
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+.flex-column.flex-top {
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+.flex-column.flex-bottom {
+  -webkit-box-align: end;
+  -webkit-align-items: flex-end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+.flex-column.flex-center {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.flex-column.flex-middle {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.flex-row.flex-left {
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+.flex-row.flex-right {
+  -webkit-box-align: end;
+  -webkit-align-items: flex-end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+.flex-row.flex-top {
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+.flex-row.flex-bottom {
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+.flex-row.flex-center {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.flex-row.flex-middle {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+[class*=flex-item].flex-left {
+  margin-right: auto;
+}
+[class*=flex-item].flex-right {
+  margin-left: auto;
+}
+[class*=flex-item].flex-top {
+  margin-bottom: auto;
+}
+[class*=flex-item].flex-bottom {
+  margin-top: auto;
+}
+[class*=flex-item].flex-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+[class*=flex-item].flex-middle {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.flex-sm-show,
+.flex-md-show {
+  display: none;
+}
+@media (max-width: 992px) {
+  .flex-md {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .flex-md.flex-left {
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+  .flex-md.flex-right {
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+  }
+  .flex-md.flex-top {
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+  }
+  .flex-md.flex-bottom {
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+  }
+  .flex-md.flex-center {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .flex-md.flex-middle {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .flex-md [class*=flex-item] {
+    width: 100%;
+  }
+  .flex-md-hide {
+    display: none !important;
+  }
+  .flex-md-show {
+    display: -webkit-box !important;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+  }
+}
+@media (max-width: 768px) {
+  .flex-sm {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .flex-sm.flex-left {
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+  .flex-sm.flex-right {
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+  }
+  .flex-sm.flex-top {
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+  }
+  .flex-sm.flex-bottom {
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+  }
+  .flex-sm.flex-center {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .flex-sm.flex-middle {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .flex-sm [class*=flex-item] {
+    width: 100%;
+  }
+  .flex-sm-hide {
+    display: none !important;
+  }
+  .flex-sm-show {
+    display: -webkit-box !important;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+  }
+}
+</style>
+<body>
+	<div class="m-container flex-row">
+		<div class="m-header flex-column flex-middle">
+			<h1 class="logo">
+				<a href="https://github.com/Coffcer/flex-layout">Flex-Layout</a>
+			</h1>
+			<small class="subtitle">基于flexbox的栅格化布局库，提供更直观、丰富的布局方式</small>
+			<div class="menu">
+				<a href="https://github.com/Coffcer/flex-layout">Github</a>
+			</div>
+		</div>
+		<div class="m-content flex-column flex-item">
+			<div class="m-sidebar">
+				<ul class="m-nav">
+					<li class="active">
+						<a href="#summary">flex-layout 概述</a>
+					</li>
+					<li>
+						<a href="#usage">Usage 用法</a>
+					</li>
+					<li>
+						<a href="#responsive">Responsive 响应式</a>
+					</li>
+					<li>
+						<a href="#example">Example 实例</a>
+					</li>
+				</ul>
+			</div>
+			<div class="m-main">
+				<div id="summary" class="panel">
+					<h2>flex-layout</h2>
+					<p>flex-layout基于24个栅格布局，与传统栅格化的使用方式类同，但提供了更直观、丰富的布局方式。</p>
+					<div class="demo demo1">
+						<div class="flex-column">
+							<div class="flex-item-24">flex-item-24</div>
+							<div class="flex-item-12">flex-item-12</div>
+							<div class="flex-item-12">flex-item-12</div>
+							<div class="flex-item-8">flex-item-8</div>
+							<div class="flex-item">flex-item 自动填充宽度</div>
+							<div class="flex-item-8">flex-item-8</div>
+							<div class="flex-item-8">flex-item-8</div>
+							<div class="flex-item-8 flex-offset-8">flex-item-8 , flex-offset-8</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel">
+					<h2>概述</h2>
+					<p>与传统的栅格化一样，flex-layout基于[容器] (相当于Bootstrap的row) 和[栅格] (相当于Bootstrap的column) 来布局:</p>
+					<ol>
+						<li>[容器]有两种：
+							<p>flex-column: 容器里的[栅格]以横向排列，与传统栅格化的row一样<br>flex-row: 容器里的[栅格]以竖向排列，就像header、content、footer的排列一样</p>
+						</li>
+						<li>通常，只有[栅格]可以直接放在[容器]中，而你的内容应该放在[栅格]里。但这不是必须的，直接把内容放在[容器]里也没问题。</li>
+						<li>如果一个[容器]里包含的[栅格]超过24格，多出的部分将另起一行。</li>
+						<li>IE的话只兼容IE10+，其他主流浏览器都支持，具体可以看：<a href="http://caniuse.com/#search=flex" target="_blank">兼容性</a></li>
+						<li>Flexbox有主轴，副轴的概念，flex-layout已经封装好了，你不需要懂得flexbox，也无需针对不同轴使用不同的class。<br>
+							不过，如果你对Flexbox有所了解的话，用起来会更顺手，推荐阮一峰的<a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html">Flex 布局教程</a>
+						</li>
+						<li>与Bootstrap等栅格化不同的是：flex-layout不需要container，栅格本身不自带padding。</li>
+					</ol>
+				</div>
+				<div class="panel">
+					<h2>优势</h2>
+					<p>flex-layout解决了css布局的不少问题，这里所说的大多在下面的Example里可以看到:</p>
+					<ol>
+						<li>应用一个class就可以垂直居中。</li>
+						<li>轻松实现多栏同高。</li>
+						<li>自动计算间距，实现等宽布局，不需要再计算margin。</li>
+						<li>支持自动填充剩余宽度，以往我们需要通过触发BFC来实现。</li>
+						<li>支持自动填充剩余高度，比如将footer置于底部。</li>
+						<li>随意调整[栅格]顺序，比如让main比sidebar提前渲染出来。</li>
+						<li>丰富的对齐方式：上、下、左、右、左上、右上、左下、右下。</li>
+					</ol>
+				</div>
+				<div id="usage" class="panel">
+					<h2>用法</h2>
+					<div class="box">
+						<div class="head">
+							<span class="title">flex-middle 垂直居中</span>
+							<span class="title">flex-center 水平居中</span>
+							<p class="tip">这两个class应用在[容器]上时，所有子flex-item都会垂直或水平居中。也可以单独应用在[栅格]上，使特定栅格居中对齐。</p>
+						</div>
+						<div class="demo flex-row flex-middle flex-center" style="min-height: 180px">
+							<div class="flex-item-8" style="margin-bottom: 10px">无论是多行还是单行，都可以垂直居中</div>
+							<div class="flex-item-8">无论是多行还是单行，都可以垂直居中</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="head">
+							<span class="title">flex-offset-* 向左偏移</span>
+							<p class="tip">这个class应用在[栅格]上，指定[栅格]向左偏移多少格。</p>
+						</div>
+						<div class="demo flex-column">
+							<div class="flex-item-8">flex-item-8</div>
+						</div>
+						<div class="demo flex-column">
+							<div class="flex-item-8 flex-offset-8">flex-item-8, flex-offset-8</div>
+						</div>
+						<div class="demo flex-column">
+							<div class="flex-item-8 flex-offset-16">flex-item-8, flex-offset-16</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="head">
+							<span class="title">flex-order-* 排序 </span>
+							<p class="tip">这个class应用在[栅格]上，order越小排在越前面。</p>
+						</div>
+						<div class="demo flex-column">
+							<div class="flex-item-6 flex-order-4">flex-order-4</div>
+							<div class="flex-item-6 flex-order-3">flex-order-3</div>
+							<div class="flex-item-6 flex-order-2">flex-order-2</div>
+							<div class="flex-item-6 flex-order-1">flex-order-1</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="head">
+							<span class="title">flex-left 左对齐</span>
+							<span class="title">flex-right 右对齐</span>
+							<p class="tip">这两个class应用在[容器]上时，所有子flex-item都会左右对其。也可以单独应用在[栅格]上。</p>
+						</div>
+						<div class="demo flex-column flex-left">
+							<div class="flex-item-6">左对齐</div>
+							<div class="flex-item-6">左对齐</div>
+							<div class="flex-item-6">左对齐</div>
+						</div>
+						<div class="demo flex-column flex-right">
+							<div class="flex-item-6">右对齐</div>
+							<div class="flex-item-6">右对齐</div>
+							<div class="flex-item-6">右对齐</div>
+						</div>
+						<div class="demo flex-row flex-left">
+							<div class="flex-item-6">左对齐</div>
+							<div class="flex-item-6 flex-right">右对齐</div>
+							<div class="flex-item-6">左对齐</div>
+						</div>
+						<div class="demo flex-row flex-right">
+							<div class="flex-item-6">右对齐</div>
+							<div class="flex-item-6 flex-left">左对齐</div>
+							<div class="flex-item-6">右对齐</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="head">
+							<span class="title">flex-top 顶部对齐</span>
+							<span class="title">flex-bottom 底部对齐</span>
+							<p class="tip">这两个class应用在[容器]上时，所有子flex-item都会上下对其。也可以单独应用在[栅格]上。</p>
+						</div>
+						<div class="demo flex-column flex-top" style="height: 80px">
+							<div class="flex-item-6">顶部对齐</div>
+							<div class="flex-item-6">底部对齐</div>
+							<div class="flex-item-6">顶部对齐</div>
+						</div>
+						<div class="demo flex-column flex-bottom" style="height: 80px">
+							<div class="flex-item-6">底部对齐</div>
+							<div class="flex-item-6">顶部对齐</div>
+							<div class="flex-item-6">底部对齐</div>
+						</div>
+						<div class="demo flex-row flex-top" style="height: 140px">
+							<div class="flex-item-6">顶部对齐</div>
+							<div class="flex-item-6">顶部对齐</div>
+							<div class="flex-item-6 flex-bottom">底部对齐</div>
+						</div>
+						<div class="demo flex-row flex-bottom flex-right" style="height: 140px">
+							<div class="flex-item-6 flex-top">顶部对齐</div>
+							<div class="flex-item-6">底部对齐</div>
+							<div class="flex-item-6">底部对齐</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="head">
+							<span class="title">flex-between 等宽对齐</span>
+							<p class="tip">这个class应用在[容器]上，自动调整栅格间距，保持两边间距相同。</p>
+						</div>
+						<div class="demo flex-column flex-between">
+							<div class="flex-item-4">等宽对齐</div>
+							<div class="flex-item-4">等宽对齐</div>
+							<div class="flex-item-4">等宽对齐</div>
+							<div class="flex-item-4">等宽对齐</div>
+						</div>
+						<div class="demo flex-row flex-between flex-center" style="height: 250px">
+							<div class="flex-item-6">等宽对齐</div>
+							<div class="flex-item-6">等宽对齐</div>
+							<div class="flex-item-6">等宽对齐</div>
+							<div class="flex-item-6">等宽对齐</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="head">
+							<span class="title">flex-around 分散排列</span>
+							<p class="tip">这个class应用在[容器]上，与等宽对齐相同，但最左、最右、最上、最下的间距比[栅格]之间的间距大一倍。</p>
+						</div>
+						<div class="demo flex-column flex-around">
+							<div class="flex-item-4">分散排列</div>
+							<div class="flex-item-4">分散排列</div>
+							<div class="flex-item-4">分散排列</div>
+							<div class="flex-item-4">分散排列</div>
+						</div>
+						<div class="demo flex-row flex-around flex-center" style="height: 300px">
+							<div class="flex-item-6">分散排列</div>
+							<div class="flex-item-6">分散排列</div>
+							<div class="flex-item-6">分散排列</div>
+							<div class="flex-item-6">分散排列</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="head">
+							<span class="title">嵌套布局</span>
+						</div>
+						<div class="demo flex-column flex-center">
+							<div class="flex-item-12 flex-row">
+								<div class="flex-item">flex-item</div>
+								<div class="flex-item">flex-item</div>
+							</div>
+							<div class="flex-item-8 flex-row">
+								<div class="flex-item">flex-item</div>
+								<div class="flex-item">flex-item</div>
+								<div class="flex-item">flex-item</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="responsive" class="panel">
+					<h2>响应式</h2>
+					<p>flex-layout提供了基础的响应式功能，当分辨率小于某个阈值时，你可以指定：</p>
+					<ol>
+						<li>[容器]从横向排列变为竖向排列，并且[栅格]宽度为100%</li>
+						<li>隐藏指定[栅格]</li>
+						<li>显示指定[栅格]</li>
+					</ol>
+					<div class="box">
+						<div class="head">
+							<span class="title">flex-md</span>
+							<p class="tip">这个class应用在[容器]上，当分辨率低于992px的时候，使[容器]变为竖向排列</p>
+						</div>
+						<div class="demo flex-column flex-md">
+							<div class="flex-item">flex-item</div>
+							<div class="flex-item">flex-item</div>
+							<div class="flex-item">flex-item</div>
+							<div class="flex-item">flex-item</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="head">
+							<span class="title">flex-sm</span>
+							<p class="tip">这个class应用在[容器]上，当分辨率低于768px的时候，使[容器]变为竖向排列</p>
+						</div>
+						<div class="demo flex-column flex-sm">
+							<div class="flex-item">flex-item</div>
+							<div class="flex-item">flex-item</div>
+							<div class="flex-item">flex-item</div>
+							<div class="flex-item">flex-item</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="head">
+							<span class="title">flex-md-hide</span>
+							<p class="tip">这个class应用在[容器]或[栅格]上，当分辨率低于992px的时候，隐藏[栅格]或[容器]</p>
+						</div>
+						<div class="demo flex-column">
+							<div class="flex-item">flex-item</div>
+							<div class="flex-item flex-md-hide">低于992px则隐藏该栅格</div>
+							<div class="flex-item">flex-item</div>
+							<div class="flex-item">flex-item</div>
+						</div>
+						<div class="demo flex-column flex-md-hide">
+							<div class="flex-item">低于992px则隐藏整个容器</div>
+							<div class="flex-item">低于992px则隐藏整个容器</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="head">
+							<span class="title">flex-sm-hide</span>
+							<p class="tip">这个class应用在[容器]或[栅格]上，当分辨率低于768px的时候，隐藏[栅格]或[容器]</p>
+						</div>
+						<div class="demo flex-column">
+							<div class="flex-item">flex-item</div>
+							<div class="flex-item flex-sm-hide">低于768px则隐藏该栅格</div>
+							<div class="flex-item">flex-item</div>
+							<div class="flex-item">flex-item</div>
+						</div>
+						<div class="demo flex-column flex-sm-hide">
+							<div class="flex-item">低于768px则隐藏整个容器</div>
+							<div class="flex-item">低于768px则隐藏整个容器</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="head">
+							<span class="title">flex-md-show</span>
+							<p class="tip">这个class应用在[容器]或[栅格]上，当分辨率低于992px的时候，显示[栅格]或[容器]</p>
+						</div>
+						<div class="demo flex-column">
+							<div class="flex-item-24">把浏览器窗口调小试试</div>
+							<div class="flex-item flex-md-show">低于992px的时候出现</div>
+							<div class="flex-item flex-md-show">低于992px的时候出现</div>
+							<div class="flex-item flex-md-show">低于992px的时候出现</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="head">
+							<span class="title">flex-sm-show</span>
+							<p class="tip">这个class应用在[容器]或[栅格]上，当分辨率低于7682px的时候，显示[栅格]或[容器]</p>
+						</div>
+						<div class="demo flex-column">
+							<div class="flex-item-24">把浏览器窗口调小试试</div>
+							<div class="flex-item flex-sm-show">低于768px的时候出现</div>
+							<div class="flex-item flex-sm-show">低于768px的时候出现</div>
+							<div class="flex-item flex-sm-show">低于768px的时候出现</div>
+						</div>
+					</div>
+				</div>
+				<div id="example" class="panel">
+					<h2>实例</h2>
+					<div class="box">
+						<div class="head">
+							<span class="title">响应式圣杯布局</span>
+							<p class="tip">main优先显示，宽度低于992px时候main和side-right变为水平排列, side-left隐藏</p>
+						</div>
+						<div class="demo flex-row">
+							<div class="flex-item">header</div>
+							<div class="flex-column flex-md" style="min-height: 100px">
+								<div class="flex-item-14 flex-order-2">main</div>
+								<div class="flex-item flex-order-1 flex-md-hide">side-left</div>
+								<div class="flex-item flex-order-3">side-right</div>
+							</div>
+							<div class="flex-item">footer</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="head">
+							<span class="title">多栏同高，flex-column默认便是。</span>
+						</div>
+						<div class="demo flex-column">
+							<div class="flex-item-8">sidebar</div>
+							<div class="flex-item-16" style="height: 400px">main</div>
+						</div>
+					</div>
+				</div>
+				<a href="https://github.com/Coffcer/flex-layout" style="margin-right: 20px">Github</a>
+				<a href="#">返回顶部</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

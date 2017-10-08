@@ -1,0 +1,45 @@
+<style>
+	.CS-show{
+		display: inline-block;
+	}
+	.CS-hide{
+		display: none;
+	}
+	select{
+		margin-left: 5px;
+		height: 30px;
+		outline: none;
+	}
+	select:first-child{
+		margin-left: 0;
+	}
+</style>
+<div ng-class="{'pull-left': align,'pull-right': !align}">
+	<select 
+		class="pull-left"
+		ng-model="province" 
+		ng-options="province.name for province in provinces" 
+		ng-change="check('province')"
+	>
+		<!--ng-change只有在改变的时候触发事件，如果未改变不会触发-->
+		<option value="">省份</option>
+	</select>
+	<select 
+		class="pull-left"
+		ng-model="city" 
+		ng-options="city.name for city in cities"
+		ng-change="check('city')"
+		ng-class="{'CS-show':isCity,'CS-hide':!isCity}"
+	>
+		<option value="">城市</option>
+	</select>
+	<select 
+		class="pull-left"
+		ng-model="district" 
+		ng-options="district.name for district in districts"
+		ng-class="{'CS-show':isDistrict,'CS-hide':!isDistrict}"
+		ng-change="check()"
+	>
+		<option value="">区域</option>
+	</select>
+</div>

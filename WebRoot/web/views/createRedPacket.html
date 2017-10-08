@@ -1,0 +1,205 @@
+<div ng-include="'views/nav.html'"></div>
+
+<div class="main clearfix" style="height: 80%;padding-left:200px">
+
+    <form id="fromId" class="col-xs-9 form-horizontal"
+
+          name="createRedPacket" action="/ledou/red/addPowderRed.do" method="post" target="_blank" style="width: 75%"
+          onsubmit="return false"   novalidate>
+
+        <input type="hidden" name="type" value="screen"  required>
+
+        <div class="panel-ad">
+
+            <div class="panel-ad-header">红包信息</div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">红包名称</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <input class="form-control" name="publicName" type="text" ng-model="publicName"
+                           maxlength="9"
+                           placeholder="请输入红包名称，不超过9个字" required>
+
+                </div>
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">公众号选择</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <select
+                            class="pull-left chinacity"
+                            ng-model="accountInfo"
+                            ng-options="accountInfo.nickName for accountInfo in createRedPacketCtrl.allAccountsInfo"
+                            required
+                            >
+                        <option value="">请选择公众号</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">公众号appID</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <input class="form-control" name="appid" type="text" ng-model="appid"  ng-disabled="true" required>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="panel-ad">
+
+            <div class="panel-ad-header">投放设置</div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">投放时间段</span>
+
+                <div ng-include="'views/dateTime.html'"></div>
+
+            </div>
+
+            <input type="hidden" name="begin_time" value="{{ begin }}" required>
+
+            <input type="hidden" name="end_time" value="{{ end }}" required>
+
+            <div class="panel-ad-form clearfix" style="position: relative">
+
+                <span class="col-xs-12" style="color:red">注意：投放方式只能选择一种</span>
+
+            </div>
+
+            <div class="panel-ad-form clearfix" style="position: relative">
+
+                <span class="col-xs-3">投放方式</span>
+
+                <div class="col-xs-4 del-pad panel-ad-form-radio">
+
+                    <input type="radio" name="type" id="adDevice" ng-checked="true" value="D" ng-model="type" ng-checked="true">
+
+                    <label for="adDevice">选择投放设备分组</label>
+
+                    <section>可以选择多个分组的设备，进行投放</section>
+
+                </div>
+
+                <div class="col-xs-4 del-pad panel-ad-form-radio">
+
+                    <input type="radio" name="type" id="adArea" value="W" ng-model="type"  >
+
+                    <label for="adArea">选择投放区域分组</label>
+
+                    <section>可在全国范围内投放</section>
+
+                </div>
+
+                <a style="text-decoration: none;cursor: pointer;color:white;position:absolute;right:10px;top:5px;"
+
+                   ng-show="type=='D'"
+
+                   class="t-btn t-btn-green"
+
+                   ng-click="createRedPacketCtrl.setDevice()">配置设备分组</a>
+
+                <a style="text-decoration: none;cursor: pointer;color:white;position:absolute;right:10px;top:5px;"
+
+                   ng-show="type=='W'"
+
+                   class="t-btn t-btn-green"
+
+                   ng-click="createRedPacketCtrl.setArea()">配置区域分组</a>
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">计费模版</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <select ng-model="withdrawal" ng-change="preFeeChange()" ng-init="withdrawal='0'">
+
+                        <option value="0" hidden>--请选择计费方式--</option>
+
+                        <option value='{{Withdrawl.withdrawal}}' withdrawal='{{Withdrawl.withdrawal}}'
+                                ng-repeat="Withdrawl in Withdrawlsdata" id="{{Withdrawl.withdrawal.id}}">
+                            {{Withdrawl.withdrawal.name}}
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <input type="hidden" name="withdrawalId" value="{{ withdrawalData.id }}" required>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">吸粉人数</span>
+
+                <div class="col-xs-9 del-pad modal-form" style="padding-bottom:0!important;">
+
+                    <input id="Num" class="form-control" ng-keyup="preFeeChange()" name="touNum" type="number" min="100"
+                           placeholder="吸粉人数需在100次以上" ng-model="touNum" ng-pattern="pattern" required>
+
+                    <p ng-show="createRedPacket.touNum.$dirty  &amp;&amp;createRedPacket.touNum.$error.pattern"
+                       class="ng-hide">请输入正确的吸粉人数(不少于{{minNum}}次)</p>
+
+                    <p ng-show="createRedPacket.touNum.$dirty  &amp;&amp;createRedPacket.touNum.$error.required"
+                       class="">请输入吸粉人数</p>
+
+                </div>
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">投放预算</span>
+
+                <div class="col-xs-9 del-pad">
+
+
+                    <input id="form-control" name="preFee" style="border-style: none;height: 34px;font-size: 14px;"
+                           value="{{(preFee * touNum).toFixed(2)>=1?(preFee * touNum).toFixed(2):'0.00'}}"
+                           readonly type="text">
+
+                    元
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <input type="hidden" name="formData" value="{{ formData }}">
+
+        <button
+                type="submit"
+                id="payConfirm"
+                ng-click="createRedPacketCtrl.submit()"
+                ng-class="{'t-btn':createRedPacket.$invalid,'t-btn t-btn-green':createRedPacket.$valid}"
+                ng-disabled="createRedPacket.$invalid"
+                style="margin:0 auto!important;position:absolute;bottom:-13%;left:45%;"
+                class="t-btn panel-ad-submit">提交并支付
+        </button>
+
+    </form>
+
+</div>

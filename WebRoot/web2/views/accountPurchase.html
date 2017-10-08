@@ -1,0 +1,61 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<div class="pull-right">
+				<form class="form-inline clearfix">
+					<div class=" pull-right ">
+						<input type="text" placeholder="交易单号/运营商账号/运营商名称" ng-model="form.keyword" class="m-r-lg">
+						<button class="t-btn t-btn-green pull-right" ng-click="accountPurchaseCtrl.search()">搜索</button>
+					</div>
+					<div class="pull-right m-r-lg">
+						<div ng-include="'views/dateTime.html'"></div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<thead>
+			<th>交易时间</th>
+			<th>交易单号</th>
+			<th>运营商账号</th>
+			<th>运营商名称</th>
+			<th>账号类型</th>
+			<th>账号个数</th>
+			<th>交易金额</th>
+			<td class="w-md">
+				<div class="dropdown">
+					<a class="dropdown-toggle mousepointer" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="color:#717171;" >
+						状态
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu mydropdown" aria-labelledby="dropdownMenu1" >
+						<li><a 	class = "mousepointer" ng-click="accountPurchaseCtrl.search(1)">已核实</a></li>
+						<li><a  class = "mousepointer" ng-click="accountPurchaseCtrl.search(0)">未核实</a></li>
+					</ul>
+				</div></td>
+			</thead>
+			<tbody>
+				<tr ng-repeat="record in accountPurchaseCtrl.allRecord">
+					<td>{{ record.time | date: 'yy-MM-dd hh:mm:ss' }}</td>
+					<td>{{ record.orderNo }}</td>
+					<td>{{ record.account }}</td>
+					<td>{{ record.accountName }}</td>
+					<td ng-show = "record.userType =='normal'">普通商户</td>
+					<td ng-show = "record.userType =='platform'">平台商户</td>
+					<td>{{ record.userNum }}</td><!-- orderFee -->
+					<td>{{ record.tradeFee }}</td>
+					<td>
+						<span ng-show = "record.state ==1">已核实</span>
+						<button class="t-btn t-btn-blue" ng-click="accountPurchaseCtrl.check($index)" ng-show = "record.state ==0">核实</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="page-btn">
+			<button ng-click="accountPurchaseCtrl.pre()" style="background: #fff;"><img src="images/pre.png" alt=""/></button>
+			<span>{{accountPurchaseCtrl.currentPage}}/{{accountPurchaseCtrl.totalPage}}</span>
+			<button ng-click="accountPurchaseCtrl.next()" style="background: #fff;"><img src="images/next.png" alt=""/></button>
+			<input type='text' class="preinputwid jumppage"  placeholder=""  ng-model="jumppage">
+			<button class="t-btn t-btn-green m-r-md " ng-click="accountPurchaseCtrl.jump()">跳转</button>
+		</div>
+	</div> 

@@ -1,0 +1,53 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h3 class="panel-title">数据指标</h3>
+	    </div>
+	    <div class="panel-body">
+	    	<div class='panel-items col-xs-4'>
+	    		<p>活跃设备</p>
+	    		<p class="panel-items-num">{{incomeAdDetailCtrl.items.activityDevice}}</p>
+	    	</div>
+	    	<div class='panel-items col-xs-4'>
+	    		<p>累计销售设备</p>
+	    		<p class="panel-items-num">{{incomeAdDetailCtrl.items.totalSelledDevice}}</p>
+	    	</div>
+	    	<div class='panel-items col-xs-4'>
+	    		<p>当日发放金额</p>
+	    		<p class="panel-items-num">{{incomeAdDetailCtrl.items.todayPostMoney/100}}</p>
+	    	</div>
+	    </div>
+	</div>
+	<table class="table table-hover table-reponsive">
+		<!--<div class='table-func clearfix'>-->
+		  <!--<span>活跃设备列表</span>-->
+		<!--</div>-->
+		<thead>
+			<th>设备序列号</th>
+		<!--	<th>设备备注</th>-->
+			<th>品牌红包发放金额</th>
+			<th>服务商平台自定义红包分成</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="record in incomeAdDetailCtrl.allAdRecord">
+				<td>LD{{ record.deviceNo }}</td>
+			<!--	<td>{{ record.deviceRemark }}</td>-->
+				<td>{{ record.payment/100 }}</td>
+				<td>{{ record.proxyPayment/100 }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<!--<div class="page-btn">-->
+		<!--<button ng-click="incomeAdDetailCtrl.pre()">上一页</button>-->
+		<!--<span>第{{incomeAdDetailCtrl.currentPage}}页,共{{incomeAdDetailCtrl.totalPage}}页</span>-->
+		<!--<button ng-click="incomeAdDetailCtrl.next()">下一页</button>-->
+	<!--</div>-->
+	<div class="page-btn " id="pageHide">
+		<button ng-click="incomeAdDetailCtrl.pre()" style="background: #fff;"><img src="images/pre.png" alt=""/></button>
+		<span>{{incomeAdDetailCtrl.currentPage}}/{{incomeAdDetailCtrl.totalPage}}</span>
+		<button ng-click="incomeAdDetailCtrl.next()" style="background: #fff;"><img src="images/next.png" alt=""/></button>
+		<input type='text' class="preinputwid jumppage" style="text-align: center;" placeholder=""  ng-model="jumppage">
+		<button class="t-btn t-btn-green m-r-md " ng-click="incomeAdDetailCtrl.jump()">跳转</button>
+	</div>
+</div>

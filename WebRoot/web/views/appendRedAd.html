@@ -1,0 +1,283 @@
+<div ng-include="'views/nav.html'"></div>
+
+
+<div class="main clearfix" style="height: 80%;">
+
+    <form id="fromId" class="col-xs-9 form-horizontal "
+
+          name="appendRedAd" action="/ledou/advertise/leAdvPost.do" method="post" target="_blank" style="width: 75%"
+          onsubmit="return false"   novalidate>
+
+
+        <div class="panel-ad">
+
+            <div class="panel-ad-header">惊喜红包广告说明</div>
+
+            <div class="panel-ad-form clearfix" style="padding-left: 20px">
+                <span style="font-weight: 700">最低金额说明：</span><br/>
+                为了保证用户体验度以及体现惊喜红包的特殊属性，系统对惊喜红包的最低金额进行了限制，请理解并遵循此系统设置。
+            </div>
+
+            <div class="panel-ad-form clearfix" style="padding-left: 20px">
+                 <span style="font-weight: 700">概率说明：</span><br/>
+                惊喜红包的概率统一采用万分制单位，请投放时注意！<br/>
+                惊喜红包的概率遵从最大概率的抽取规则，即：系统会抽取当前所有有效的惊喜红包中最大概率作为用户摇中惊喜红包的概率；
+                在判定用户摇中后，系统会从有效惊喜红包中按照相对概率比进行具体惊喜红包的随机抽取，并为最终用户领取结果！
+            </div>
+
+            <div class="panel-ad-form clearfix" style="padding-left: 20px">
+                <span style="font-weight: 700">投放预算：</span><br/>
+                由于系统目前不支持剩余金额退款，请投放惊喜红包时，评估区域用户活跃热度，合理投放。
+             </div>
+        </div>
+
+        <div class="panel-ad">
+
+            <div class="panel-ad-header">广告信息</div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">商户名称</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <input class="form-control" name="storeName" type="text" ng-model="proxyName"
+                           ng-change="appendRedAdCtrl.previewName()" maxlength="9" required
+                           placeholder="请输入商户名称，不超过9个字">
+
+                </div>
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">商户logo</span>
+
+                <img style="border: 1px solid #ccc;" class="panel-ad-logo" ng-src="{{ logoUrl }}" alt="">
+
+                <section class="panel-ad-notice" style="position:absolute;right:40%;">上传商家logo图片，建议大小：100*100px
+                </section>
+
+                <button id="uploadLogo" style="margin-right: 50px;" class="t-btn t-btn-green pull-right">上传</button>
+
+            </div>
+
+            <input type="hidden" name="logo" value="{{ logoUrl }}">
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">广告图片</span>
+
+                <img style="border: 1px solid #ccc;" class="panel-ad-pic" ng-src="{{ picUrl }}" alt="" >
+
+                <section class="panel-ad-notice" style="position:absolute;right:40%;">上传广告图片，建议大小：640*427px</section>
+
+                <button id="uploadPic" style="margin-right: 50px;" class="t-btn t-btn-green pull-right">上传</button>
+
+            </div>
+
+            <input type="hidden" name="pic" value="{{ picUrl }}">
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">广告链接</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <input class="form-control" name="advUrl" type="text" ng-model="advUrl" >
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-ad">
+
+            <div class="panel-ad-header">投放设置</div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">投放时间段</span>
+
+                <div ng-include="'views/dateTime.html'"></div>
+
+            </div>
+
+            <input type="hidden" name="beginTime" value="{{ begin }}" required>
+
+            <input type="hidden" name="endTime" value="{{ end }}" required>
+
+            <div class="panel-ad-form clearfix" style="position: relative">
+
+                <span class="col-xs-12" style="color:red">注意：投放方式只能选择一种</span>
+
+            </div>
+
+            <div class="panel-ad-form clearfix" style="position: relative">
+
+                <span class="col-xs-3">投放方式</span>
+
+                <div class="col-xs-4 del-pad panel-ad-form-radio">
+
+                    <input type="radio" name="method" id="adDevice" ng-checked="true" value='device' ng-model="method" ng-checked="true">
+
+                    <label for="adDevice">选择投放设备分组</label>
+
+                    <section>可以选择多个分组的设备，进行投放</section>
+
+                </div>
+
+                <div class="col-xs-4 del-pad panel-ad-form-radio">
+
+                    <input type="radio" name="method" id="adArea" value='area' ng-model="method"  >
+
+                    <label for="adArea">选择投放区域分组</label>
+
+                    <section ng-if="proxyType=='M'">市级代理商可以投放在下属所有区县</section>
+
+                    <section ng-if="proxyType=='P'">区级代理商目前只能投放在自身区域</section>
+
+                </div>
+
+                <a style="text-decoration: none;cursor: pointer;color:white;position:absolute;right:10px;top:5px;"
+
+                   ng-show="method=='device'"
+
+                   class="t-btn t-btn-green"
+
+                   ng-click="appendRedAdCtrl.setDevice()">配置设备分组</a>
+
+                <a style="text-decoration: none;cursor: pointer;color:white;position:absolute;right:10px;top:5px;"
+
+                   ng-show="method=='area'"
+
+                   class="t-btn t-btn-green"
+
+                   ng-click="appendRedAdCtrl.setArea()">配置区域分组</a>
+
+            </div>
+
+            <input id="hiddenDevice" type="hidden" name="advStrategyList" value="{{putDevice}}">
+
+            <input  id="hiddenArea" type="hidden" name="area_code" value="{{putArea}}">
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">红包金额</span>
+
+                <div class="col-xs-9 del-pad">
+                    <input class="form-control" type="number" ng-model="redPacketMoney" min="0.66" step="0.01" placeholder="红包金额最低为0.66元,最小单位为分" ng-change="appendRedAdCtrl.setRedPacketMoney()" required/>
+                </div>
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">红包概率</span>
+
+                <div class="col-xs-9 del-pad">
+                    <input id="probability" class="form-control" type="number" name="probability"  ng-model="probability" min="0" step="1" placeholder="惊喜红包的概率统一采用万分制单位" ng-change="appendRedAdCtrl.setProbability()" required/>
+                    <p  ng-show="appendRedAd.probability.$dirty  &amp;&amp;appendRedAd.probability.$invalid  &amp;&amp; !appendRedAd.probability.$error.required" style="color:red;margin-top:5px;">
+                        红包概率为0到10000之间的值，请输入正确的值</p>
+                    <p  ng-show="appendRedAd.probability.$dirty  &amp;&amp;appendRedAd.probability.$error.required" style="color:red;margin-top:5px;">请输入红包概率</p>
+                </div>
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">计费模版</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <!--<select ng-model="withdrawal" ng-change="preFeeChange()" ng-init="withdrawal='0'" >-->
+
+                    <select ng-model="withdrawal" ng-change="preFeeChange()" ng-init="withdrawal='0'">
+
+                        <option value="0" hidden>--请选择计费方式--</option>
+
+                        <!--<option value="{{Withdrawl.withdrawal}}" ng-repeat="Withdrawl in Withdrawlsdata" id="{{Withdrawl.withdrawal.id}}" selected="{{select}}" > {{Withdrawl.withdrawal.name}} </option>-->
+
+                        <option value='{{Withdrawl.withdrawal}}' withdrawal='{{Withdrawl.withdrawal}}'
+                                ng-repeat="Withdrawl in Withdrawlsdata" id="{{Withdrawl.withdrawal.id}}">
+                            {{Withdrawl.withdrawal.name}}
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <input type="hidden" name="withdrawalId" value="{{ withdrawalData.id }}" required>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">投放次数</span>
+
+                <div class="col-xs-9 del-pad modal-form" style="padding-bottom:0!important;">
+
+                    <input id="Num" class="form-control" ng-keyup="preFeeChange()" name="touNum" type="number" min="100"
+                           placeholder="投放次数需在100次以上" ng-model="touNum" ng-pattern="pattern" required>
+
+                    <p  ng-show="appendRedAd.touNum.$dirty  &amp;&amp;appendRedAd.touNum.$error.pattern" class="ng-hide">
+                        请输入正确的投放次数(不少于{{minNum}}次)</p>
+
+                    <p ng-show="appendRedAd.touNum.$dirty  &amp;&amp;appendRedAd.touNum.$error.required" class="">请输入投放次数</p>
+
+                </div>
+
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">投放预算</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <input id="form-control" style="border-style: none;height: 34px;font-size: 14px;" name="preFee"
+                           value="{{(preFee * touNum  + redPacketMoney * touNum).toFixed(2)>=1?(preFee * touNum  + redPacketMoney * touNum).toFixed(2):'0.00'}}"
+                           readonly type="text" required>
+                    元
+                </div>
+
+            </div>
+
+        </div>
+
+        <input type="hidden" name="formData" value="{{ formData }}">
+
+        <button
+
+                type="submit"
+
+                id="payConfirm"
+
+                ng-click="appendRedAdCtrl.submit()"
+
+                ng-class="{'t-btn':appendRedAd.$invalid,'t-btn t-btn-green':appendRedAd.$valid}"
+
+                ng-disabled="appendRedAd.$invalid"
+
+                style="margin:0 auto!important;position:absolute;bottom:-7%;left:45%;"
+
+                class="t-btn panel-ad-submit">提交并支付
+        </button>
+
+    </form>
+
+    <div class="panel-ad panel-ad-right col-xs-3 adPreview" style="margin-right: 0%; width: 22%;">
+
+        <div class="panel-ad-header">手机端预览</div>
+
+        <div class="panel-preview" style="margin: 10px auto;width: 90%;height:60vh;">
+
+            <iframe src="images/adpreview/redAdPreview.html" width="100%" height="100%" style="border:none;"></iframe>
+
+        </div>
+
+    </div>
+
+</div>

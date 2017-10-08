@@ -1,0 +1,71 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="intro">
+		<span class="intro-header">结算中心</span>
+		<div class="intro-body">
+			<dl>
+				<dt>结算规则:</dt>
+				<dd>1.每月的8日-15日，服务商可申请结算；我司将在每月的16-30日处理相应结算申请。</dd>
+				<dd>2.申请结算目前仅支持“支付宝”、“对公银行账户”两种结算方式，提交前请仔细核对。</dd>
+				<dd>3.申请结算后，需向我司开具增值税普通发票（可找人代开）：发票抬头（西安绿豆芽信息科技有限公司），发票金额（含税）等于结算金额，我司将根据收到的发票，进行结算处理。</dd>
+			</dl>
+			<button class="intro-btn" ng-click="balanceCtrl.withdraw()">申请结算</button>
+		</div>
+	</div>
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h3 class="panel-title">数据指标</h3>
+	    </div>
+	    <div class="panel-body">
+	    	<div ng-repeat="item in balanceCtrl.generalNum" class='panel-items col-xs-3'>
+	    		<p>{{item.name}}/元</p>
+	    		<p class="panel-items-num">{{item.number}}</p>
+	    	</div>
+	    </div>
+	</div>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<div class="pull-right col-xs-12">
+				<form class="form-inline clearfix">
+					<div class="form-group col-xs-6 pull-left m-t-lg">
+						<label class="control-label pull-left del-l-p">时间:</label>
+						<div ng-include="'views/dateTime.html'"></div>
+					</div>
+					<div class="col-xs-3 pull-right m-t-lg">
+						<button class="t-btn t-btn-green pull-right" ng-click="balanceCtrl.search()">查询</button>
+						<select
+								class="pull-right"
+							ng-model="form.keyword" 
+							ng-options="option.name as option.name for option in balanceCtrl.status" 
+							ng-change="balanceCtrl.search()" 
+							style="width:90px; margin-right: 8px"
+						></select>
+
+					</div>
+				</form>
+			</div>
+		</div>
+		<thead>
+			<th ng-repeat="title in balanceCtrl.titles">
+				{{title.name}}
+			</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="data in balanceCtrl.allData">
+				<td>{{data.createtime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+				<td>{{data.fee}}</td>
+				<td ng-if="data.state===0">待结算</td>
+				<td ng-if="data.state===1">已结算</td>
+				<td ng-if="data.state===2">已拒绝</td>
+				<td>
+					<button class="t-btn t-btn-green" ng-click="balanceCtrl.detail($index)">详情</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="balanceCtrl.pre()">上一页</button>
+		<span>第{{balanceCtrl.currentPage}}页,共{{balanceCtrl.totalPage}}页</span>
+		<button ng-click="balanceCtrl.next()">下一页</button>
+	</div>
+</div>

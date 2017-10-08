@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <!-- 优先使用 IE 最新版本和 Chrome -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- 强制缓存 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!-- 为移动设备添加 viewport -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+    <title>微信预览</title>
+    
+    <style>
+
+body, h2, h3, h4, h5, p, ul, li, img {
+        margin: 0;
+        padding: 0;
+        font-weight: normal;
+}
+html, body {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: url('images/bg.png');        /* background-color: #ac0018; */
+        background-size: contain;
+        -webkit-background-size: 100%;
+        text-align: center;
+        font: normal 75% "microsoft yahei", Arial, Helvetica, sans-serif;
+        overflow: hidden;
+}
+html {
+        font-size: 62.5%;
+}
+li {
+        list-style: none;
+}
+a {
+        text-decoration: none;
+}
+.tree {
+        position: absolute;
+        left: 18%;
+        top: 30%;
+        width: 68%;
+}
+
+.tree.on {
+        animation: shake-rotate 100ms ease-in-out 0s infinite;
+        -webkit-animation: shake-rotate 100ms ease-in-out 0s infinite;
+        transform-origin: center 85%;
+        -webkit-transform-origin: center 85%;
+}
+
+.tree-shake{
+        position: absolute;
+        left: 18%;
+        top: 31%;
+        width: 72%;
+}
+
+.shake-me {
+        position: absolute;
+        left: 66%;
+        top: 27%;
+        width: 28%;
+}
+
+.girl{
+        position: absolute;
+        right: 5%;
+        bottom: 0;
+        width: 35%;
+        border: 0;
+}
+
+.card-window{
+        width: 100%;
+        height: 100%;
+}
+
+.shake-body {
+        width: 100%;
+        height: 100%;
+}
+
+
+.shake-body .circle-wrap {
+        display: inline-block;
+}
+
+.shake-body .circle {
+        display: table-cell;
+        vertical-align: middle;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background-color: #F39801;
+}
+
+.shake-body .shake-hand {
+        vertical-align: middle;
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        -webkit-backface-visibility: hidden;
+        -webkit-perspective: 1000;
+        -webkit-transform-origin: bottom center;
+}
+.tips {
+        color: #fff;
+        position: absolute;
+        bottom: 6.5%;
+        left: 10%;
+        width: 46%;
+        text-align: center;       /* line-height: 2.4rem; */
+}
+.tips li {
+        text-align: left;
+        color: #fff;
+        font-size: .4rem;
+}
+.tips .no-prize{
+        font-size: 18px;
+        color: #fff602;
+}
+.tips h4 {
+        font-size: 14px;
+        color: #fff;
+}
+.tips h5 {
+        font-size: 14px;
+        color: #fff;
+        padding-top: 12px;
+}
+.enter-card {
+        display: inline-block;
+        width: 50%;
+        height: 30px;
+        color: #fff;
+        font-weight: 600;
+        line-height: 30px;
+        font-size: .5rem;
+        background-color: #f3ab4a;
+        border-radius: 50%;
+        margin-bottom: 5px;
+}
+.shake-times {
+        padding: 0 4px;
+        font-size: 2rem;
+        color: #fff602;
+}
+
+
+@-webkit-keyframes shake-hand {
+        0% {
+                -webkit-transform: rotate(-30deg);
+                opacity: 0;
+                -webkit-transform: translate(0, 0);
+        }
+        50% {
+                -webkit-transform: rotate(30deg);
+                -webkit-transform: translate(0, -20px);
+                opacity: 1;
+        }
+        100% {
+                -webkit-transform: rotate(0deg);
+                -webkit-transform: translate(0, 0);
+                opacity: 0;
+        }
+}
+
+.shake-hand-once {
+        animation: shake-hand 2s 1;
+        -moz-animation: shake-hand 2s 1;
+        -webkit-animation: shake-hand 2s 1;
+}
+
+@-webkit-keyframes translateTips {
+        0% {
+                -webkit-transform: translate(0, 0);
+                opacity: 0;
+        }
+        50% {
+                -webkit-transform: translate(0, -10px);
+                opacity: 1;
+        }
+        100% {
+                -webkit-transform: translate(0, 0);
+                opacity: 0;
+        }
+}
+.translate-tips {
+        -webkit-animation: translateTips 2s 1;
+}
+
+@-webkit-keyframes shakeCircle {
+        0% {
+                opacity: 0;
+        }
+        50% {
+                opacity: 1;
+        }
+        100% {
+                opacity: 0;
+        }
+}
+.shake-irclec {
+        -webkit-animation: translateTips 2s 1;
+}
+
+/* card.css */
+.col-10 {
+        width: 100%;
+        height: 10%;
+}
+.col-20 {
+        width: 100%;
+        height: 20%;
+}
+.col-25 {
+        width: 100%;
+        height: 25%;
+}
+.col-30 {
+        width: 100%;
+        height: 30%;
+}
+.col-35 {
+        width: 100%;
+        height: 35%;
+}
+.col-40 {
+        width: 100%;
+        height: 40%;
+}
+.col-50 {
+        width: 100%;
+        height: 50%;
+}
+.col-60 {
+        width: 100%;
+        height: 60%;
+}
+.col-70 {
+        width: 100%;
+        height: 70%;
+}
+.col-80 {
+        width: 100%;
+        height: 80%;
+}
+.window-show{     
+        transform: scale(1);
+        -webkit-transform: scale(1);
+}
+
+#mask{
+     height: 100%;
+     width: 100%;
+     background: rgba(0,0,0,0.90);
+     opacity: 0.9;
+     z-index: 40;
+     position: absolute;
+     top: 0;
+     left: 0;
+}
+.card-window{
+        position: relative;
+        bottom: 100%;
+        opacity: 1;
+        /*background: rgba(0,0,0,0.90);*/
+        z-index: 50;        
+        transition: transform .3s;
+        -webkit-transition: transform .3s;
+}
+
+.wrapInfor {
+    position: absolute;
+    height:40%;
+    top: 0;
+    left: 50%;
+    bottom: 10%;
+    width: 100%;
+    transform: translate(-50%,0);
+    }
+
+.card-container {
+        position: absolute;
+        z-index: 999;
+        top:15%;
+        bottom: 23%;
+        left: 10%;
+        width: 80%;
+        text-align: center;
+        background: #fff;
+}
+.card-close {
+        float: right;
+        margin: 2px 5% 5px 0;
+        font-size: 1.6rem;
+        color: #999;
+}
+.card-head {
+        position: relative;
+        height: 60%;
+        color: #fff;
+}
+.ad-link{
+        position: relative;
+        display: block;
+        /* padding-bottom: 10px; */
+        width: 100%;
+        color: #333;
+}
+.card-head-img {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60%;
+        background-size: 100%;
+}
+.card-head-img img{
+        width: 100%;
+        max-height: 100%;
+        min-height: 100%;
+}
+.card-head-img-span {
+        padding: .5rem 1rem;
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+        width: 100%;
+        background: #000;
+        font-size: 1.5rem;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: right;
+        color: #fff;
+        box-sizing: border-box;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+        background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+}
+.card-logo {
+        position: absolute;
+        top:-3rem;
+        left: 50%;
+        border-radius: 50%;    
+        width: 5.5rem;
+        height: 5.5rem;
+        background: #fff;
+        transform: translate(-50%,0);
+}
+.card-logo img {
+        margin-top: 6px;
+        width: 4.5rem;
+        height: 4.5rem;
+        border-radius: 50%;
+        /*border: 1px solid #999;*/
+}
+.headLogo{
+        position: absolute;
+        left: 50%;
+        margin-top: 0.5em;
+        margin-left: -2.75rem;
+        width: 5.5rem;
+        height: 5.5rem;
+        border-radius: 50%;
+        border: 1px solid #999;        
+}
+#viewDetail{
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        width: 5rem;
+        height: 1.5rem;
+        line-height: 1.5rem;
+        background: rgba(255,255,255,0.50);
+        border: 1px solid #979797;
+}
+#viewDetail span{ 
+        font-family: PingFangSC-Light;
+        color: #000000;
+}
+.card-body {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        display: table;
+}
+.wrap {
+        display: table-cell;
+        vertical-align: middle;
+}
+.card-body-outer {
+        display: inline-block;
+        -webkit-background-size: contain;
+        background-size: contain;
+        width: 100%;
+}
+.card-body .s2 {
+        width: 100%;
+        height: 20px;
+        position: absolute;
+        top: 40%;
+}
+.s2-main,.s3-main {
+        font-size: 1.4rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #000;
+        width: 70%; 
+        margin: 0 auto;
+}
+.s2-sub{
+        position:relative;
+        /*top: 95%;*/
+        min-height: 2rem;
+}
+.s2-sub,.s3-sub {
+        font-size: 1.5rem;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: rgb(235, 79, 56);
+}
+
+.s2-sub span{
+        font-size: 14px;
+        font-weight: 400;
+}
+.s2-footer,.s3-footer {
+        margin-top: .1rem;
+        font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #999;
+}
+.card-body .s3 {
+        padding-bottom: 3rem;
+        width: 100%;
+        height: 20px;
+        background-size: 90%;
+        background-position: 15px;
+        position: absolute;
+        top: 85%;
+}
+
+.s3-main {
+        padding-bottom: .3rem;
+        text-align: center;
+}
+.s3-side{
+        position: relative;
+        margin: 15px 10% 0 32%;
+        height: 100px;
+}
+.s3-footer,.s3-sub{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        -webkit-transform: translate(-50%, 0);
+}
+.s3-sub {
+        /* margin-top: 35px; */
+        top: 18px;
+        text-align: center;
+}
+.s3-footer {
+        /* margin-top: 5px; */
+        top: 55px;
+        text-align: center;
+}
+.total-text{
+        position: absolute;
+        bottom: -2.5rem;
+        font-family: SimHei;
+        font-size: 2em;
+        color: #969090;
+        width: 100%;
+}
+.total-money{
+        color: #ea4146;
+}
+ul {
+        margin-top: 10px;
+}
+li {
+        display: block;
+        margin: 0 auto 10px;
+        width: 80%;
+        padding: 0.3em 0;
+        font-size: .5rem;
+        border: none;
+        border-radius: 50%;        /* box-shadow: 1px 1px 1px rgba(0, 0, 0, .3); */
+}
+.card-foot{
+        display: block;
+        position: absolute;
+        z-index: 999;
+        padding-top: 2px;
+        width: 100%;
+        height: 7rem;
+        left: 0;
+        bottom: 10%;
+       
+}
+.btn{
+        border: none;
+}
+.btn #again{
+        position: absolute;
+        bottom: 0;
+        left: 10%;
+        background: #E55048;
+        border-radius: 0.5rem;
+        color: #fff;
+        display: block;
+        height: 3rem;
+        line-height: 3rem;
+        text-align: center;
+        font-size: 1.5rem;
+        width: 80%;
+}
+
+.packet-window{
+        height: 100%;
+        width: 100%;
+        position: relative;
+        bottom: 100%;
+        opacity: 0;   
+        z-index: 999;   
+        transition: transform .3s;
+        -webkit-transition: transform .3s;
+       
+             
+}
+.mask{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 99;
+        display: none;
+         background: rgba(27,27,27,0.9);        
+}
+.redpacket-container{
+        height: 70%;
+        width: 80%;
+        position: absolute;
+        left: 10%;
+        bottom: 15%;
+        z-index: 999;
+        background-image: url('images/redpacket-bg.png');  
+        background-repeat: no-repeat;     
+        background-size: contain;
+        -webkit-background-size: 100%;        
+}
+.head-text{
+        font-family: SimHei;
+        font-size: 2.7em;
+        color: #c8cbc8;
+        margin-top: 10px;
+}
+.QRcode img{
+        max-height: 70%;
+        max-width: 70%;
+        margin-top: 5em;
+}
+.foot-text{
+        padding: 0 4px;
+        margin-top: 10px;
+        font-size: 1.2rem;        
+}
+.foot-money {
+       
+        color: #fff602;
+}
+
+    #shake{
+        width:100%;
+        text-align: center;
+    }
+#shake_img {
+    width: 56%;
+    position: absolute;
+    top: -2.5%;
+    right: 0;
+    bottom: 0%;
+    left: 1.7%;
+    margin: auto;
+}
+    #turn {
+        width: 70%;
+        position: absolute;
+        top:0;
+        right:0;
+        bottom:0%;
+        left:0;
+        margin: auto;
+    }
+    .shake {
+        -webkit-animation: tada .6s .1s ease both infinite;
+        -moz-animation: tada .6s .1s ease both infinite;
+    }
+    #desert{
+        width:100%;
+    }
+    #desert img{
+        position: fixed;
+        left: 0;
+        bottom:0px;
+        width:100%;
+    }
+
+
+   #footer{
+    z-index: 10;
+    position: fixed;
+    bottom:10px;
+    text-align: center;
+    width:50%;
+    left:25%;
+    font-size: 14px;
+    font-family: 'SimHei';
+    color:#000;
+    font-weight: 500;
+   }
+   #footer span{
+    display: inline-block;
+
+   }
+   #shake_num{
+    color:#ed3d28;
+   }
+    .gift_box{
+        position: fixed;
+        bottom: 42%;
+        right: 6%;
+        -webkit-animation-name: swing;
+        -webkit-animation-duration: 0.75s;
+        -webkit-animation-iteration-count: 20;
+        z-index: 555555;
+        display: block;
+        transform-origin:top;
+    }
+#cardPage{
+    width: 100%; 
+    height: 100%; 
+    z-index: 888888888; 
+    background: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0; 
+    bottom: 0; 
+    display: none;
+}
+#card_background{
+    width: 100%;
+    height: 23%;
+    background-image: url('images/cp-bg.png');  
+    background-repeat: no-repeat;     
+    background-size: contain;
+}
+#cp_right{
+    width: 58%;
+    height: 100%;
+    float: right;
+    display: table;
+}
+#cp_left{
+    float: left;
+    width: 42%;
+    height: 100%;
+}
+#card_title{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size:2rem;
+    color:white;
+}
+#cp-text{
+    width: 70%;
+    margin: 10px auto;
+    font-size: 1.5rem;
+}
+#card_logo{
+    width:40px;
+    border-radius:50%;
+    margin-top:10px;
+}
+#getCard{
+    font-size: 2rem;
+    background: #7BB11F;
+    border-radius: 50%;
+    color:white;
+    border-color:#7BB11F;
+    width:70%;
+    height:4rem;
+    border: none;
+    outline: none;
+}
+  .shake_money_1,
+    .shake_money_2,.shake_money_4,.shake_money_5,.shake_money_6,
+    .shake_money_3 {
+        width: 6%;
+        position: absolute;
+        top:22%;
+        opacity: 1;
+    }
+
+    .shake_money_1 {
+        left: 70%;
+    }
+
+    .shake_money_2 {
+        left: 60%;
+    }
+
+    .shake_money_3 {
+        left: 85%;
+    }
+    .shake_money_4 {
+        left: 5%;
+    }
+    .shake_money_5 {
+        left: 30%;
+    }
+    .shake_money_6 {
+        left: 20%;
+    }
+
+html {
+    font-size: 62.5%;
+}
+@media only screen and (min-width: 401px){
+    html {
+         font-size: 22.5% !important;
+    }
+}
+@media only screen and (min-width: 428px){
+    html {
+        font-size: 32.5% !important;
+    }
+}
+@media only screen and (min-width: 481px){
+    html {
+        font-size: 42.5% !important; 
+    }
+}
+@media only screen and (min-width: 569px){
+    html {
+        font-size: 52.5% !important; 
+    }
+}
+@media only screen and (min-width: 641px){
+    html {
+        font-size: 62.5% !important; 
+    }
+}
+    </style>
+    </head>
+<body>
+    <!-- 内容 -->
+    <div class="shake-body">
+<img src="images/shake_turn.png" id='turn'>
+<div id="shake">
+    <img id='shake_img' src="images/hand.png">
+    <img class='shake_money_1' src="images/money_1.png">
+    <img class='shake_money_2' src="images/money_7.png">
+    <img class='shake_money_3' src="images/money_3.png">
+    <img class='shake_money_4' src="images/money_6.png">
+    <img class='shake_money_5' src="images/money_2.png">
+    <img class='shake_money_6' src="images/money_4.png">
+</div>
+
+<div id='desert'>
+    <img src="images/desert.png">
+</div>
+<div id="footer">
+    <span>摇动手机 立即领钱</span><br>
+    <span>今天还有<span id="shake_num">&nbsp;3&nbsp;</span>次机会</span>
+</div>
+    </div>
+    <!-- 摇中红包或卡券弹出层 -->
+    <div id="mask"></div>
+    <div class="card-window window-show">
+        <div class="card-container">
+            <div class="wrapInfor">
+                <div class="card-logo">
+                    <img id="logo" src="images/logo.png" />
+                </div>
+                <div class="card-body">
+                    <div class="card-body-outer">
+                        <div class="s2">
+                            <div id="head-name" class="s2-main">乐豆呀的现金红包</div>
+                            <div class="s2-sub">
+                                0.88
+                                <span>元</span>
+                            </div>
+                        </div>
+<!--                        <div class="gift_box" id="gift" style="display: block;">
+                            <img src="images/gift.png" alt="" style= "width:45px;">
+                            <span style="width:60px;position: absolute;font-size: 8px;text-align: center;display: block">点击拆礼包</span>
+                        </div> -->
+
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-head-img">
+                <img id="head-img" src="images/card-head.png" alt="">
+                <div id="viewDetail"><a href="#" id="ad-link"><span>查看详情</span></a></div>
+            </div>
+
+        </div>
+        <div class="card-foot">
+            <li class="btn">
+                <a id="again" href="##">再摇一次</a>
+            </li>
+<!--            <div class="s3">
+                <p class="total-text">
+                    已累计摇到了
+                    <span class="total-money">5.00</span>
+                    元，继续加油
+                </p>
+            </div> -->
+        </div>
+    </div>
+
+<div id="cardPage">
+    <div style="position:relative;left:7.5%;width:85%;height:100%;margin-top: 45%;" id="card">
+        
+        <div id="card_background">
+            <div id="cp_right">
+                <p id="card_title">清爽一夏九折券</p>
+            </div>
+
+            <div id="cp_left">
+                <img src="images/logo.png" id="card_logo">
+                <p id="card_name" style="font-size:0.1em;">乐豆呀</p>
+                <div id="cp-text">恭喜您获得了一张卡券</div>
+            </div>  
+       
+        </div>
+        <div style="text-align:center;padding-top:3.5rem;color:black;">
+            <button id="getCard">前去领取</button>
+        </div>      
+
+    </div>
+
+    <div id="card_close">
+        <img src="images/x.png" style="position: absolute;width:24px;height:24px;top:2%;right: 20%;color: white;" alt="">
+        <span style="display: block;position: absolute;top: 3%;right: 5%;color: white;">点击关闭</span>
+    </div>
+</div>
+
+</body>
+</html>

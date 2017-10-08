@@ -1,0 +1,30 @@
+<div class='header'>
+    <div class='header-logo'>
+        <img src="images/logo.png">
+    </div>
+    <div class='header-title'>
+        运营商服务系统
+    </div>
+    <div class='header-logoOut' ng-click="logOut()">
+        退出
+    </div>
+    <div class='header-user'>
+        <span>{{user}}</span>
+    </div>
+    <div class='header-user-logo'>
+    </div>
+    <div style='clear:both'></div>
+</div>
+<div class='container-home'>
+	<div>欢迎来到乐豆呀控制中心！今天是{{date}}，祝您工作顺利！</div>
+	<div class='container-home-nav-wapper'>
+		<div class='container-home-nav' ng-repeat="nav in navs" 
+		ng-class="{'container-home-nav-right':$index==2}" 
+		ng-click="changeView($index)">		
+			<a ng-href="#{{nav.url}}">{{nav.name}}</a>
+		</div>
+		<div style='clear:both'></div>
+	</div>
+</div>
+
+

@@ -1,0 +1,53 @@
+<style>
+	.CS-show{
+		display: inline-block;
+	}
+	.CS-hide{
+		display: none;
+	}
+	select{
+		margin-left: 5px;
+		height: 30px;
+		outline: none;
+	}
+	select:first-child{
+		margin-left: 0;
+	}
+	.chinacity{
+		height: 34px;
+		line-height: 34px;
+		width: 100px;
+		margin-right: 16px;
+		background: #FFFFFF;
+		border: 1px solid #979797;
+		border-radius: 4px;
+	}
+</style>
+<div  ng-class="{'pull-left': align}">
+	<select 
+		class="pull-left chinacity"
+		ng-model="province" 
+		ng-options="province.name for province in provinces" 
+		ng-change="check('province')"
+	>
+		<option value="">省份</option>
+	</select>
+	<select 
+		class="pull-left chinacity"
+		ng-model="city" 
+		ng-options="city.name for city in cities"
+		ng-change="check('city')"
+		ng-class="{'CS-show':isCity,'CS-hide':!isCity}"
+	>
+		<option value="">城市</option>
+	</select>
+	<select 
+		class="pull-left chinacity"
+		ng-model="district" 
+		ng-options="district.name for district in districts"
+		ng-class="{'CS-show':isDistrict,'CS-hide':!isDistrict}"
+		ng-change="check()"
+	>
+		<option value="">区域</option>
+	</select>
+</div>

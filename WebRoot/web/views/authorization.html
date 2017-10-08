@@ -1,0 +1,65 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+
+    <div class="intro">
+        <span class="intro-header">授权列表</span>
+        <div class="intro-body">
+            <dl class="imgsizequestion">
+                <dt>授权规则:</dt>
+                <dd>1.吸粉红包是平台提供给代理商的一项营销服务，主要用于公众号（服务号、订阅号）的吸粉。</dd>
+                <dd>2.公众号授权目前只支持认证的订阅号、服务号。</dd>
+                <dd>3.授权后如果公众号信息发生变动，请进行重新授权。</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class='panel-items col-xs-3'>
+                <a
+                        class="t-btn btn-sm t-btn-green panel-items-btn"
+                        style="display:block;margin-left:auto;margin-right:auto;width:65%;outline:none;color:#FFF;text-align: center "
+                        target="_blank"
+                        ng-click="authorizationCtrl.isRefresh()"
+                       ng-href="{{href}}">
+                    我要授权
+                </a>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-reponsive">
+        <thead>
+        <th ng-repeat="title in authorizationCtrl.titles">
+            {{title.name}}
+        </th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="info in authorizationCtrl.allInfo">
+            <td>
+                <img style="width: 50px;height: 50px;" ng-src="{{ info.mpinfo.head_img }}" alt="">
+            </td>
+            <td>{{ info.mpinfo.nick_name}}</td>
+            <td>{{ info.mpinfo.service_type_info | GetServiceType }}({{ info.mpinfo.verify_type_info | GetVerifyType }})</td>
+            <td>{{ info.mpinfo.public_type }}</td>
+            <td>{{ info.mpinfo.application_status | ShowAuthorizationStatus }}</td>
+            <td>{{ info.mpinfo.time*1000 | date:'yyyy-MM-dd' }}</td>
+            <td>
+                <div class="btn-group dropdown-select" style="display: inline-block;margin: 0;width: auto;">
+                    <button type="button" class="dropdown-toggle t-btn t-btn-green"  data-toggle="dropdown" >
+                        操作&nbsp;<b class="caret"></b>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" style="left:initial;right:0;">
+                        <li style="text-align: center;margin-bottom: 4px;" ng-click="authorizationCtrl.cancelAuthorization($index)">取消授权</li>
+                        <li style="text-align: center;margin-bottom: 4px;" ng-click="authorizationCtrl.reAuthorization($index)">重新授权</li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn">
+        <button ng-click="authorizationCtrl.pre()">上一页</button>
+        <span> 第{{authorizationCtrl.currentPage}}页，共{{authorizationCtrl.totalPage}}页 </span>
+        <button ng-click="authorizationCtrl.next()">下一页</button>
+    </div>
+</div>

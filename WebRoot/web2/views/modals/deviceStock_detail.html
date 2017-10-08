@@ -1,0 +1,110 @@
+<div class=" panel-default" >
+    <div class="panel-heading title-middle" style="    height: 46px;">
+        <h3 class="panel-title ">我要报备</h3>
+    </div>
+</div>
+<form class="form-horizontal" name="accountAddForm" novalidate>
+
+    <div class="form-group">
+        <label class="col-xs-4 control-label" style="line-height: 34px;
+    height: 34px;">订单状态</label>
+        <div id="typeradio" class="col-xs-5" style="line-height: 48px; height: 34px;">
+            <input
+                    name="status"
+                    type="radio"
+                    id="refuse"
+                    ng-model="status"
+                    value="D"
+                    >
+            <label >拒绝</label>
+            <input
+                    name="status"
+                    type="radio"
+                    id="normal"
+                    ng-model="status"
+                    value="B"
+                    ng-checked="true"
+                    >
+            <label >备货中</label>
+            <input
+                name="status"
+                type="radio"
+                id="activecode"
+                ng-model="status"
+                value="F"
+                >
+            <label >已发货</label>
+        </div>
+    </div>
+
+    <div class="form-group" ng-if="status!='D'">
+        <label class="col-xs-4 control-label">选择快递</label>
+        <div class="col-xs-5">
+            <select
+                    ng-model="form.logisticCompany"
+                    required
+                    class="form-control">
+                     <option value="">请选择快递公司</option>
+                    <option value="申通快递">申通快递</option>
+                    <option value="圆通快递">圆通快递</option>
+                    <option value="韵达快递">韵达快递</option>
+                    <option value="中通快递">中通快递</option>
+                    <option value="顺丰快递">顺丰快递</option>
+                    <option value="宅急送快运">宅急送快运</option>
+                    <option value="汇通快递">汇通快递</option>
+                    <option value="鑫飞鸿速递">鑫飞鸿速递</option>
+                    <option value="天天快递">天天快递</option>
+                    <option value="星晨急便">星晨急便</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group" ng-if="status!='D'">
+        <label class="col-xs-4 control-label">输入单号</label>
+        <div class="col-xs-5">
+            <input
+                    name="logisticNo"
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    required
+                    minlength="6"
+                    ng-model='form.logisticNo'
+                    >
+            <p style="color:red;margin-top: 10px;" ng-show="accountAddForm.logisticNo.$dirty && accountAddForm.logisticNo.$error.required">请输入单号</p>
+            <p style="color:red;margin-top: 10px;" ng-show="accountAddForm.logisticNo.$dirty && accountAddForm.logisticNo.$error.minlength">请正确长度的单号</p>
+        </div>
+    </div>
+
+    <div class="form-group" ng-if="status =='D'">
+        <label class="col-xs-4 control-label">拒绝原因</label>
+        <div class="col-xs-5">
+            <textarea
+                    name="reason"
+                    id="reason"
+                    type="text"
+                    class="form-control"
+                    style="resize:none;"
+                    placeholder="请输入您的拒绝原因"
+                    rows="5"
+                    required
+                    ng-model='form.reason'
+                    >
+            </textarea>
+        </div>
+    </div>
+
+</form>
+
+<div class="myreportedbtn">
+    <div class="btn-group" style="padding-top: 1.5%;">
+        <button
+                style="background: #4bcc5f;"
+                class="btn-g btn-mt"
+                ng-class="{'disabled-btn':accountAddForm.$invalid,'btn-g-green':accountAddForm.$valid}"
+                ng-click="deviceStockDetailCtrl.add()"
+                ng-disabled="accountAddForm.$invalid"
+                >提交</button>
+        <button class="btn-g btn-g-default btn-mt" ng-click="deviceStockDetailCtrl.close()">取消</button>
+    </div>
+</div>

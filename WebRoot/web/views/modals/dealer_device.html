@@ -1,0 +1,72 @@
+<div class="panel panel-default" style="margin-bottom: 0;">
+	<div class="panel-heading">
+		<h1 class="panel-title">
+			分配商户
+			<i style="float: right;cursor: pointer;" class="glyphicon glyphicon-remove" ng-click="deviceAllotCtrl.close()"></i>
+		</h1>
+
+	</div>
+	<div class="panel-body" style="padding: 15px 0px;">
+		<div class='clearfix' style="padding:0px 10px 10px 10px;">
+			<div class="pull-left" style="width: 100%;">
+				<input type='text'
+					   class="m-r-md pull-left col-xs-2"
+					   placeholder="输入查询"
+					   ng-model="keyword"
+						style="padding: 5px 10px; min-width: 100px;max-width: 100%;outline: none;border: 1px solid #ececec;">
+				<button class="t-btn t-btn-green m-r-md pull-left" ng-model="keyword">查询</button>
+				<p style="font-family: PingFangSC-Regular;
+			font-size: 14px;color: #BEBEBE;margin: 0;;
+			letter-spacing: -0.38px;line-height: 32px;float: left;">注：分配给经销商的设备无法撤销，也无法再管理。</p>
+				<p style="font-family: PingFangSC-Regular;
+				font-size: 14px;color: #333333;
+				letter-spacing: -0.38px;
+				line-height: 32px;margin: 0;
+				float: right;">已选择设备：<span>{{deviceAllotCtrl.selectNum}}</span>(个)</p>
+			</div>
+		</div>
+		<div style="width: 100%;height: 50vh;overflow: scroll;overflow-x: hidden;">
+			<table class="table table-hover table-reponsive">
+				<thead>
+					<!--<th>-->
+						<!--<input-->
+						<!--type="checkbox"-->
+						<!--ng-model="deviceAllotCtrl.isAll"-->
+						<!--ng-click="deviceAllotCtrl.allToggle($event)"/></th>-->
+					<th></th>
+					<th>设备序列号</th>
+					<th>设备状态</th>
+					<th>设备备注</th>
+					<th>创建时间</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in deviceAllotCtrl.items | filter:keyword">
+						<td>
+							<input
+							 type="checkbox"
+							 ng-model="item.ischecked"
+							 ng-click="deviceAllotCtrl.checkToggle($event,item.iBeaconID)"></td>
+						<td>LD{{ item.iBeaconID }}</td>
+						<td ng-if="item.status === 'N'">已激活</td>
+						<td ng-if="item.status === 'A'">未激活</td>
+						<td ng-if="item.status === 'P'">已禁止</td>
+						<td>{{ item.remark }}</td>
+						<td>{{ 1000*item.createTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="page-btn" style="margin-right: 25px;">
+				<button ng-click="deviceAllotCtrl.pre()">上一页</button>
+				<span>第{{deviceAllotCtrl.currentPage}}页,共{{deviceAllotCtrl.totalPage}}页</span>
+				<button ng-click="deviceAllotCtrl.next()">下一页</button>
+			</div>
+		</div>
+
+		</div>
+	</div>
+	<div class="panel-footer" style="text-align: center;">
+		<div class="btn-group" style="display: inline-block;margin: 0 auto;">
+			<button class="btn-g btn-g-green" ng-click="deviceAllotCtrl.ok()">确定</button>
+			<button class="btn-g btn-g-default" ng-click="deviceAllotCtrl.close()">取消</button>
+		</div>
+	</div>

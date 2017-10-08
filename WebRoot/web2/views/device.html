@@ -1,0 +1,52 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">关键指标</h3>
+		</div>
+		<div class="panel-body">
+			<div ng-repeat="item in deviceCtrl.generalNum" class='panel-items col-xs-3'>
+				<p>{{item.name}}</p>
+				<p class="panel-items-num">{{item.number}}</p>
+			</div>
+		</div>
+	</div>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<button class="t-btn t-btn-green pull-left" ng-click="deviceCtrl.undistributed()">未分配设备</button>
+			<button class="t-btn t-btn-green pull-left" ng-click="deviceCtrl.setting()" style="margin-left: 20px;">设备政策设置</button>
+			<div class="pull-right m-b-md-n">
+				<form class="form-inline clearfix">
+					<div class=" pull-right ">
+						<input type="text" placeholder="运营商账号/运营商名称" ng-model="form.keyword" class="m-r-lg">
+						<button class="t-btn t-btn-green pull-right" ng-click="deviceCtrl.search()">搜索</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<thead>
+			<th ng-repeat="title in deviceCtrl.titles">
+				{{title.name}}
+			</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="record in deviceCtrl.allRecord">
+				<td>{{record.account}}</td>
+				<td>{{record.accountName}}</td>
+				<td>{{record.accountArea}}</td>
+				<td>{{record.totalDevices}}/{{record.enableDevices}}</td>
+				<td>{{record.workingDevicesToday}}/{{record.enableDevicesToday}}</td>
+				<td>{{record.workingDevicesYesterday}}/{{record.enableDevicesYesterday}}</td>
+				<td>{{record.remark}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="deviceCtrl.pre()" style="background: #fff;"><img src="images/pre.png" alt=""/></button>
+		<span>{{deviceCtrl.currentPage}}/{{deviceCtrl.totalPage}}</span>
+		<button ng-click="deviceCtrl.next()" style="background: #fff;"><img src="images/next.png" alt=""/></button>
+		<input type='text' class="preinputwid jumppage"  placeholder=""  ng-model="jumppage">
+		<button class="t-btn t-btn-green m-r-md " ng-click="deviceCtrl.jump()">跳转</button>
+
+	</div>
+</div> 

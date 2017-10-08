@@ -1,0 +1,51 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="deviceAddCtrl.close()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 style="margin:0;">绑定设备</h4>
+    </div>
+    <div class="modal-body m-t-md" style="padding:0;">
+        <div class="col-xs-12 m-b-lg">
+        	<label>绑定到商户</label>
+        	<span>{{deviceAddCtrl.storeName}}({{deviceAddCtrl.account}})</span>
+        </div>
+        <div class="m-l-lg m-b-lg clearfix">
+        	<input type="text" class="col-xs-5 device-add-input" placeholder="设备序列号/微信ID/备注" ng-model="form.keyword">
+        	<button type="button" class="t-btn t-btn-green m-l-lg" ng-click="deviceAddCtrl.search()">查询</button>
+        	<div class="col-xs-3 pull-right">
+        		<p class="pull-right">已选择设备<span class="m-l-md chosen-device">{{deviceAddCtrl.choiceNum}}</span></p>
+        	</div>
+        </div>
+        <div class="scroll-table">
+	        <div class="table-func clearfix device-add">
+	        	<ul>
+	        		<li><input type="checkbox" class="allChoice" ng-model="deviceAddCtrl.allChoice" ng-click="deviceAddCtrl.allCheck()"></li>
+	        		<li>设备序列号</li>
+	        		<li>微信ID</li>
+	        		<li>备注</li>
+	        	</ul>
+	        </div>
+        	<table class="table table-hover table-reponsive device-add-table">
+        		<tbody>
+        			<tr ng-repeat="data in deviceAddCtrl.allData">
+        				<td width="50px"><input type="checkbox" class="choice" ng-click="deviceAddCtrl.check()"></td>
+        				<td width="174px">{{data.serialNum}}</td>
+        				<td width="174px">{{data.weixinId}}</td>
+        				<td width="174px">{{data.descr}}</td>
+        			</tr>
+        			<!-- <tr>
+        				<td><input type="checkbox" class="choice" ng-click="deviceAddCtrl.check()"></td>
+        				<td>data.account</td>
+        				<td>data.storeName</td>
+        				<td>data.storeType</td>
+        			</tr> -->
+        		</tbody>
+        	</table>
+        </div>
+    </div>
+    <div class="modal-footer modal-footer-bg">
+        <div class="btn-group">
+        	<button type="button" class="btn-g btn-g-green" ng-click="deviceAddCtrl.add()">添加</button>
+        	<button type="button" class="btn-g btn-g-default" ng-click="deviceAddCtrl.close()">取消</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ProxyFinanceRecordMapper">
+    <resultMap id="BaseResultMap" type="model.ProxyFinanceRecord">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="fee" jdbcType="DOUBLE" property="fee"/>
+        <result column="proxy_phone" jdbcType="VARCHAR" property="proxy_phone"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="deposit_out_trade_no" jdbcType="VARCHAR" property="deposit_out_trade_no"/>
+        <result column="deposit_userphone" jdbcType="VARCHAR" property="deposit_userphone"/>
+
+        <result column="contract_name" jdbcType="INTEGER" property="contract_name"/>
+        <result column="contract_phone" jdbcType="INTEGER" property="contract_phone"/>
+        <result column="alipay_account_name" jdbcType="DOUBLE" property="alipay_account_name"/>
+        <result column="alipay_account_num" jdbcType="VARCHAR" property="alipay_account_num"/>
+        <result column="bank_account_num" jdbcType="INTEGER" property="bank_account_num"/>
+        <result column="bank_account_name" jdbcType="DOUBLE" property="bank_account_name"/>
+        <result column="bank_name" jdbcType="VARCHAR" property="bank_name"/>
+
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                                <when test="criterion.likeValue">
+                                    and ${criterion.condition} #{criterion.value} ${criterion.condition2}
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, type, fee, proxy_phone, state, deposit_out_trade_no, deposit_userphone,contract_name,contract_phone
+    ,alipay_account_name,alipay_account_num,bank_account_num,bank_account_name,bank_name
+     ,createtime
+  </sql>
+    <select id="selectByExample" parameterType="model.ProxyFinanceRecordExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from proxy_finance_record
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        order by createtime DESC
+        <!--低效的分页方法，因为涉及到组合查询，所以暂时只能使用这种方法-->
+        <if test="limitValue">
+            limit #{startSize},#{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from proxy_finance_record
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="getSumBenefitByTime" parameterType="model.ProxyFinanceRecordExample" resultType="java.lang.Double">
+        select
+        sum(fee)
+        from proxy_finance_record
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from proxy_finance_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="model.ProxyFinanceRecordExample">
+        delete from proxy_finance_record
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="model.ProxyFinanceRecord">
+    insert into proxy_finance_record (id, type, fee, 
+      proxy_phone, state, deposit_out_trade_no, 
+      deposit_userphone, createtime)
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{fee,jdbcType=DOUBLE}, 
+      #{proxy_phone,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{deposit_out_trade_no,jdbcType=VARCHAR}, 
+      #{deposit_userphone,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="model.ProxyFinanceRecord">
+        insert into proxy_finance_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="fee != null">
+                fee,
+            </if>
+            <if test="proxy_phone != null">
+                proxy_phone,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="deposit_out_trade_no != null">
+                deposit_out_trade_no,
+            </if>
+            <if test="deposit_userphone != null">
+                deposit_userphone,
+            </if>
+            <if test="contract_name != null">
+                contract_name,
+            </if>
+
+            <if test="contract_phone != null">
+                contract_phone,
+            </if>
+            <if test="bank_account_name != null">
+                bank_account_name,
+            </if>
+            <if test="bank_account_num != null">
+                bank_account_num,
+            </if>
+            <if test="bank_name != null">
+                bank_name,
+            </if>
+            <if test="alipay_account_name != null">
+                alipay_account_name,
+            </if>
+            <if test="alipay_account_num != null">
+                alipay_account_num,
+            </if>
+
+
+            <if test="createtime != null">
+                createtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="fee != null">
+                #{fee,jdbcType=DOUBLE},
+            </if>
+            <if test="proxy_phone != null">
+                #{proxy_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="deposit_out_trade_no != null">
+                #{deposit_out_trade_no,jdbcType=VARCHAR},
+            </if>
+            <if test="deposit_userphone != null">
+                #{deposit_userphone,jdbcType=VARCHAR},
+            </if>
+            <if test="contract_name != null">
+                #{contract_name,jdbcType=VARCHAR},
+            </if>
+            <if test="contract_phone != null">
+                #{contract_phone,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bank_account_name != null">
+                #{ bank_account_name,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bank_account_num != null">
+                #{bank_account_num,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bank_name != null">
+                #{bank_name,jdbcType=TIMESTAMP},
+            </if>
+            <if test="alipay_account_name != null">
+                #{alipay_account_name,jdbcType=TIMESTAMP},
+            </if>
+            <if test="alipay_account_num != null">
+                #{alipay_account_num,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="model.ProxyFinanceRecordExample" resultType="java.lang.Integer">
+        select count(*) from proxy_finance_record
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update proxy_finance_record
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.type != null">
+                type = #{record.type,jdbcType=INTEGER},
+            </if>
+            <if test="record.fee != null">
+                fee = #{record.fee,jdbcType=DOUBLE},
+            </if>
+            <if test="record.proxy_phone != null">
+                proxy_phone = #{record.proxy_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.state != null">
+                state = #{record.state,jdbcType=INTEGER},
+            </if>
+            <if test="record.deposit_out_trade_no != null">
+                deposit_out_trade_no = #{record.deposit_out_trade_no,jdbcType=VARCHAR},
+            </if>
+            <if test="record.deposit_userphone != null">
+                deposit_userphone = #{record.deposit_userphone,jdbcType=VARCHAR},
+            </if>
+            <if test="contract_name != null">
+                contract_name = #{contract_name,jdbcType=VARCHAR},
+            </if>
+            <if test="contract_phone != null">
+                contract_phone = #{contract_phone,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bank_account_name != null">
+                bank_account_name =#{ bank_account_name,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bank_account_num != null">
+                bank_account_num = #{bank_account_num,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bank_name != null">
+                bank_name= #{bank_name,jdbcType=TIMESTAMP},
+            </if>
+            <if test="alipay_account_name != null">
+                alipay_account_name= #{alipay_account_name,jdbcType=TIMESTAMP},
+            </if>
+            <if test="alipay_account_num != null">
+                alipay_account_num = #{alipay_account_num,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="record.createtime != null">
+                createtime = #{record.createtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update proxy_finance_record
+        set id = #{record.id,jdbcType=INTEGER},
+        type = #{record.type,jdbcType=INTEGER},
+        fee = #{record.fee,jdbcType=DOUBLE},
+        proxy_phone = #{record.proxy_phone,jdbcType=VARCHAR},
+        state = #{record.state,jdbcType=INTEGER},
+        deposit_out_trade_no = #{record.deposit_out_trade_no,jdbcType=VARCHAR},
+        deposit_userphone = #{record.deposit_userphone,jdbcType=VARCHAR},
+        contract_name = #{contract_name,jdbcType=VARCHAR},
+        contract_phone = #{contract_phone,jdbcType=TIMESTAMP},
+        bank_account_name =#{ bank_account_name,jdbcType=TIMESTAMP},
+        bank_account_num = #{bank_account_num,jdbcType=TIMESTAMP},
+        bank_name= #{bank_name,jdbcType=TIMESTAMP},
+        alipay_account_name= #{alipay_account_name,jdbcType=TIMESTAMP},
+        alipay_account_num = #{alipay_account_num,jdbcType=TIMESTAMP},
+        createtime = #{record.createtime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="model.ProxyFinanceRecord">
+        update proxy_finance_record
+        <set>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="fee != null">
+                fee = #{fee,jdbcType=DOUBLE},
+            </if>
+            <if test="proxy_phone != null">
+                proxy_phone = #{proxy_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="deposit_out_trade_no != null">
+                deposit_out_trade_no = #{deposit_out_trade_no,jdbcType=VARCHAR},
+            </if>
+            <if test="deposit_userphone != null">
+                deposit_userphone = #{deposit_userphone,jdbcType=VARCHAR},
+            </if>
+            <if test="contract_name != null">
+                contract_name = #{contract_name,jdbcType=VARCHAR},
+            </if>
+            <if test="contract_phone != null">
+                contract_phone = #{contract_phone,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bank_account_name != null">
+                bank_account_name =#{ bank_account_name,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bank_account_num != null">
+                bank_account_num = #{bank_account_num,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bank_name != null">
+                bank_name= #{bank_name,jdbcType=TIMESTAMP},
+            </if>
+            <if test="alipay_account_name != null">
+                alipay_account_name= #{alipay_account_name,jdbcType=TIMESTAMP},
+            </if>
+            <if test="alipay_account_num != null">
+                alipay_account_num = #{alipay_account_num,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="model.ProxyFinanceRecord">
+    update proxy_finance_record
+    set type = #{type,jdbcType=INTEGER},
+      fee = #{fee,jdbcType=DOUBLE},
+      proxy_phone = #{proxy_phone,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      deposit_out_trade_no = #{deposit_out_trade_no,jdbcType=VARCHAR},
+      deposit_userphone = #{deposit_userphone,jdbcType=VARCHAR},
+       contract_name = #{contract_name,jdbcType=VARCHAR},
+       contract_phone = #{contract_phone,jdbcType=TIMESTAMP},
+    bank_account_name =#{ bank_account_name,jdbcType=TIMESTAMP},
+    bank_account_num = #{bank_account_num,jdbcType=TIMESTAMP},
+    bank_name=  #{bank_name,jdbcType=TIMESTAMP},
+    alipay_account_name= #{alipay_account_name,jdbcType=TIMESTAMP},
+    alipay_account_num =  #{alipay_account_num,jdbcType=TIMESTAMP},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,123 @@
+<div ng-include="'views/nav.html'"></div>
+<div class="main">
+    <div class="panel panel-primary">
+        <div class="panel-heading colorgray">
+            <h3 class="panel-title">设备采购</h3>
+        </div>
+        <div class="view">
+            <div class="media">
+                <div  class="pull-left  decmgtop">
+                    <img src="images/ibcon.png" class="media-object"></div>
+                <div class="media-body" >
+                    <h4 class="media-heading">乐豆呀红包盒--场景互动营销专家</h4>
+                    市场建议零售价：998元<br>市场指导经销价：998元<br>
+                    【注意事项】<br>
+                    下单后，1-4个工作日内会及时发货；<br>第5个工作日左右，会将订单的物流信息进行更新；<br>如有问题，请联系您的销售经理或拨打400-6865539！<br>
+                </div>
+            </div>
+        </div>
+        <div class="panel-purchase">
+            <div class="panel-purchase-body">
+                <form method="post"    name="devicePurchastPurchaseForm" target="_blank" class="m-t-lg">
+                    <!--<div class="form-group clearfix">-->
+                        <!--<span class="col-xs-2">当前库存</span>-->
+                        <!--<div class="col-xs-6 del-l-p" ng-model="devicePurchaseCtrl.generalNum"  >-->
+                            <!--<label name="deviceplot" for="normal">{{generalNum.name}}个激活码设备</label>-->
+                            <!--<label name="deviceplot">{{generalNum.number}}个普通设备</label>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="form-group clearfix">
+                        <span class="col-xs-2">设备类型</span>
+
+                        <div class="col-xs-6 del-l-p">
+                            <input
+                                    name="accountType"
+                                    type="radio"
+                                    id="normal"
+                                    value="N"
+                                    ng-checked="true"
+                                    ng-model="deviceType"
+
+                                    >
+                            <label for="normal">普通设备</label>
+                            <input
+                                    name="accountType"
+                                    type="radio"
+                                    id="active"
+                                    value="S"
+                                    ng-model="deviceType"
+                                    >
+                            <label for="active">激活码设备</label>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <span class="col-xs-2">采购数量</span>
+                        <div class="col-xs-6 del-l-p">
+                            <div class="col-xs-6 counter">
+                                <span class="counter-minus" ng-click="devicePurchaseCtrl.minus()">-</span>
+                                <input
+                                    name="num"
+                                    class="counter-result"
+                                    ng-model="amount"
+                                    required=""
+                                    id="deviceNum"
+                                    type="text"
+                                    min="50"
+                                    max="10000"
+                                    >
+                                <span class="counter-add" ng-click="devicePurchaseCtrl.add()">+</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <span class="col-xs-2">采购单价</span>
+                        <div class="col-xs-6 del-l-p">
+                            <span >{{ (buyPrice/100).toFixed(2) }}元/台</span>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <span class="col-xs-2" >政策减免</span>
+                        <div class="col-xs-6 del-l-p" style="color: red;">
+                            <span >{{ (policyReduct/100).toFixed(2) }}元/台</span>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <span class="col-xs-2">所需金额</span>
+                        <div class="col-xs-6 del-l-p" style="color: red;">
+                            <span >{{ ((buyPrice-policyReduct)*amount/100).toFixed(2) }}</span>元
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <span class="col-xs-2">收货信息</span>
+                        <div class="col-xs-6 del-l-p">
+                            <div class="decinput dec-display">
+                                  <label >收货人</label>
+                                  <input required="true" id="name" name="name" ng-model="proxyName" type="text" class="form-control ng-pristine ng-untouched ng-valid"  placeholder="请输入您的姓名" >
+                            </div>
+                            <div class="decinput dec-display">
+                                <label >联系方式</label>
+                                <input required="true" id="context" name="context" ng-model="contact" type="text" class="form-control ng-pristine ng-untouched ng-valid" placeholder="请输入您的联系方式" >
+                            </div>
+                            <div class="decinput dec-display ">
+                                <label>收件地址</label>
+                                <input required="true" id="address" name="address" ng-model="address" type="text" class="form-control ng-pristine ng-untouched ng-valid" placeholder="请输入您的收件地址" >
+                            </div>
+                            <div class="decinput dec-display ">
+                                <label>设备用途</label>
+                                <textarea required="true" id="reason" name="reason" ng-model="reason" type="text"  rows="7" style="resize: none;width:75%;" class="form-control ng-pristine ng-untouched ng-valid" placeholder="请详细描述本次采购设备的具体用途以及大概周期安排，方便管理员进行快速审核。" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="col-xs-offset-2 center-block t-btn-green"
+                            id="confirm"
+                            ng-class="{'t-btn t-btn-green':devicePurchastPurchaseForm.$valid,'t-btn':devicePurchastPurchaseForm.$invalid}"
+                            ng-click="devicePurchaseCtrl.confirm()"
+                            ng-disabled="appendAd.$invalid"
+                            >提交订单</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>

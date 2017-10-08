@@ -1,0 +1,42 @@
+<div class='account-edit-header'><i class="glyphicon glyphicon-remove" ng-click="myaccountEditPasswdCtrl.close()"></i></div>
+<form class="form-horizontal modal-form" name="myaccountEditPasswdForm" novalidate>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">原密码:</label>
+		<div class="col-xs-5">
+			<input
+				name="oldpsw" 
+				type="text" 
+				class="form-control"
+				placeholder="请输入原密码"
+				required=""
+				ng-model='form.oldpsw'
+			>
+			<p ng-show="myaccountEditPasswdForm.oldpsw.$dirty  &&myaccountEditPasswdForm.oldpsw.$error.required">请输入原密码</p>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">新密码:</label>
+		<div class="col-xs-5">
+			<input
+				name="psw" 
+				type="text" 
+				class="form-control"
+				placeholder="6~20个字母/数字/符号的组合"
+				required=""
+				minlength="6"
+				ng-model='form.psw'
+			>
+			<p ng-show="myaccountEditPasswdForm.psw.$dirty  &&myaccountEditPasswdForm.psw.$error.required">请输入密码</p>
+			<p ng-show="myaccountEditPasswdForm.psw.$dirty  &&myaccountEditPasswdForm.psw.$error.minlength">密码最少为6个字母/数字/符号的组合</p>
+		</div>
+	</div>
+	<div class="btn-group">
+		<button 
+				class="btn-g" 
+				ng-class="{'disabled-btn':myaccountEditPasswdForm.$invalid,'btn-g-green':myaccountEditPasswdForm.$valid}" 
+				ng-click="myaccountEditPasswdCtrl.ok()" 
+				ng-disabled="myaccountEditPasswdForm.$invalid"
+		>提交</button>
+		<button class="btn-g btn-g-default" ng-click="myaccountEditPasswdCtrl.close()">取消</button>
+	</div>
+</form>

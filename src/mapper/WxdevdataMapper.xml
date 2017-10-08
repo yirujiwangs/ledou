@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.WxdevdataMapper" >
+  <resultMap id="BaseResultMap" type="model.Wxdevdata" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="deviceid" property="deviceid" jdbcType="VARCHAR" />
+    <result column="shakepv" property="shakepv" jdbcType="INTEGER" />
+    <result column="shakeuv" property="shakeuv" jdbcType="INTEGER" />
+    <result column="clickuv" property="clickuv" jdbcType="INTEGER" />
+    <result column="clickpv" property="clickpv" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="descr" property="descr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, deviceid, shakepv, shakeuv, clickuv, clickpv, date, descr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="model.WxdevdataExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from wxdevdata
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from wxdevdata
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from wxdevdata
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="model.WxdevdataExample" >
+    delete from wxdevdata
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="model.Wxdevdata" >
+    insert into wxdevdata (id, deviceid, shakepv, 
+      shakeuv, clickuv, clickpv, 
+      date, descr)
+    values (#{id,jdbcType=INTEGER}, #{deviceid,jdbcType=VARCHAR}, #{shakepv,jdbcType=INTEGER}, 
+      #{shakeuv,jdbcType=INTEGER}, #{clickuv,jdbcType=INTEGER}, #{clickpv,jdbcType=INTEGER}, 
+      #{date,jdbcType=DATE}, #{descr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="model.Wxdevdata" >
+    insert into wxdevdata
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deviceid != null" >
+        deviceid,
+      </if>
+      <if test="shakepv != null" >
+        shakepv,
+      </if>
+      <if test="shakeuv != null" >
+        shakeuv,
+      </if>
+      <if test="clickuv != null" >
+        clickuv,
+      </if>
+      <if test="clickpv != null" >
+        clickpv,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="descr != null" >
+        descr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deviceid != null" >
+        #{deviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="shakepv != null" >
+        #{shakepv,jdbcType=INTEGER},
+      </if>
+      <if test="shakeuv != null" >
+        #{shakeuv,jdbcType=INTEGER},
+      </if>
+      <if test="clickuv != null" >
+        #{clickuv,jdbcType=INTEGER},
+      </if>
+      <if test="clickpv != null" >
+        #{clickpv,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="descr != null" >
+        #{descr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="model.WxdevdataExample" resultType="java.lang.Integer" >
+    select count(*) from wxdevdata
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countDeviceByDate" parameterType="java.util.Date" resultType="java.lang.Integer" >
+    select count(DISTINCT(deviceid))
+    from wxdevdata
+    WHERE date >= #{date,jdbcType=DATE}
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update wxdevdata
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.deviceid != null" >
+        deviceid = #{record.deviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shakepv != null" >
+        shakepv = #{record.shakepv,jdbcType=INTEGER},
+      </if>
+      <if test="record.shakeuv != null" >
+        shakeuv = #{record.shakeuv,jdbcType=INTEGER},
+      </if>
+      <if test="record.clickuv != null" >
+        clickuv = #{record.clickuv,jdbcType=INTEGER},
+      </if>
+      <if test="record.clickpv != null" >
+        clickpv = #{record.clickpv,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.descr != null" >
+        descr = #{record.descr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update wxdevdata
+    set id = #{record.id,jdbcType=INTEGER},
+      deviceid = #{record.deviceid,jdbcType=VARCHAR},
+      shakepv = #{record.shakepv,jdbcType=INTEGER},
+      shakeuv = #{record.shakeuv,jdbcType=INTEGER},
+      clickuv = #{record.clickuv,jdbcType=INTEGER},
+      clickpv = #{record.clickpv,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=DATE},
+      descr = #{record.descr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="model.Wxdevdata" >
+    update wxdevdata
+    <set >
+      <if test="deviceid != null" >
+        deviceid = #{deviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="shakepv != null" >
+        shakepv = #{shakepv,jdbcType=INTEGER},
+      </if>
+      <if test="shakeuv != null" >
+        shakeuv = #{shakeuv,jdbcType=INTEGER},
+      </if>
+      <if test="clickuv != null" >
+        clickuv = #{clickuv,jdbcType=INTEGER},
+      </if>
+      <if test="clickpv != null" >
+        clickpv = #{clickpv,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="descr != null" >
+        descr = #{descr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.Wxdevdata" >
+    update wxdevdata
+    set deviceid = #{deviceid,jdbcType=VARCHAR},
+      shakepv = #{shakepv,jdbcType=INTEGER},
+      shakeuv = #{shakeuv,jdbcType=INTEGER},
+      clickuv = #{clickuv,jdbcType=INTEGER},
+      clickpv = #{clickpv,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      descr = #{descr,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

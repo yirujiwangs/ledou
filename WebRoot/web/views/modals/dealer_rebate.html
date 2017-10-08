@@ -1,0 +1,61 @@
+<div class="panel panel-default" style="margin-bottom: 0;">
+	<div class="panel-heading">
+		<h1 class="panel-title">
+			返利设置
+			<i style="float: right;cursor: pointer;" class="glyphicon glyphicon-remove" ng-click="rebateSetCtrl.close()"></i>
+		</h1>
+
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal modal-form" name="accountAddForm" novalidate>
+			<div class="form-group">
+				<label class="col-xs-4 control-label">设备激活返利:</label>
+				<div class="col-xs-5">
+					<p style="font-family: PingFangSC-Regular;font-size: 14px;color: #333333;letter-spacing: -0.38px;">总计100元</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label">代理商返利:</label>
+				<div class="col-xs-5">
+					<input
+							name="dealerArea"
+							type="text"
+							class="form-control"
+							ng-model='form.dealerArea'
+							style="width: 30%;float: left;"
+							><span style="float: none;line-height: 34px;margin-left: 5px;">元</span>
+					<p style="font-family: PingFangSC-Regular;
+					font-size: 14px;color: #BEBEBE;
+					letter-spacing: -0.38px;">
+						注：设备激活将结算至本账号。</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label">经销商返利:</label>
+				<div class="col-xs-5">
+					<p style="font-family: PingFangSC-Regular;font-size: 14px;color: #333333;letter-spacing: -0.38px;">70元</p>
+					<p style="font-family: PingFangSC-Regular;
+					font-size: 14px;color: #BEBEBE;
+					letter-spacing: -0.38px;">
+						注：设备激活时将直接返至激活码的拥有者。</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label"></label>
+				<div class="col-xs-5">
+					<p style="font-family: PingFangSC-Regular;
+					font-size: 14px;color: #777;
+					letter-spacing: -0.38px;">
+					注：每个经销商账户只能进行一次返利设置，不允许修改，请谨慎操作。</p>
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<div class="panel-footer" style="text-align: center;">
+		<div class="btn-group" style="display: inline-block;margin: 0 auto;">
+			<button class="btn-g btn-g-green" ng-click="rebateSetCtrl.ok()">确定</button>
+			<button class="btn-g btn-g-default" ng-click="rebateSetCtrl.close()">取消</button>
+		</div>
+	</div>
+</div>

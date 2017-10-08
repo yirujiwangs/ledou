@@ -1,0 +1,66 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <table class="table table-hover table-reponsive"  ng-if="proxyType=='M'">
+        <div class='table-marg clearfix'>
+            <!--select写ng-if会有问题找不到$scope.district始终是undefined-->
+                <select
+                        class="pull-left chinacity"
+                        ng-model="district"
+                        ng-options="district.name for district in districts"
+                        ng-change="searchByDistrict()"
+                        ng-show="proxyType=='M'"
+                        >
+                    <option value="">请选择区域</option>
+                </select>
+        </div>
+        <thead>
+        <th>日期</th>
+        <th>区域</th>
+        <th>乐现场奖励</th>
+        <th>乐豆呀生活圈收入奖励</th>
+        <th>乐豆客奖励</th>
+        <th>营销总提成</th>
+        <th>乐豆呀年服务费奖励</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="info in incomeSharingDetailCtrl.pageInfo">
+            <td>{{info.distProxyBenefit.createDate}}</td>
+            <td>{{info.distProxyBenefit.areaName}}</td>
+            <td>{{(info.distProxyBenefit.lesceneBenefit/100).toFixed(2)}}</td>
+            <td>{{(info.distProxyBenefit.liveCircleBenefit/100).toFixed(2)}}</td>
+            <td>{{(info.distProxyBenefit.lodoukeBenefit/100).toFixed(2)}}</td>
+            <td>{{(info.distProxyBenefit.totalBenefit/100).toFixed(2)}}</td>
+            <td>{{(info.distProxyBenefit.yearServiceBenefit/100).toFixed(2)}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-hover table-reponsive"  ng-if="proxyType=='P'">
+        <thead>
+        <th>日期</th>
+        <th>区域</th>
+        <th>乐现场奖励</th>
+        <th>乐豆呀生活圈收入奖励</th>
+        <th>乐豆客奖励</th>
+        <th>营销总提成</th>
+        <th>乐豆呀年服务费奖励</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="info in incomeSharingDetailCtrl.pageInfo">
+            <td>{{info.createDate}}</td>
+            <td>{{areaName}}</td>
+            <td>{{(info.lesceneBenefit/100).toFixed(2)}}</td>
+            <td>{{(info.liveCircleBenefit/100).toFixed(2)}}</td>
+            <td>{{(info.lodoukeBenefit/100).toFixed(2)}}</td>
+            <td>{{(info.totalBenefit/100).toFixed(2)}}</td>
+            <td>{{(info.yearServiceBenefit/100).toFixed(2)}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="page-btn">
+        <button ng-click="incomeSharingDetailCtrl.pre()">上一页</button>
+        <span>第{{incomeSharingDetailCtrl.currentPage}}页,共{{incomeSharingDetailCtrl.totalPage}}页</span>
+        <button ng-click="incomeSharingDetailCtrl.next()">下一页</button>
+    </div>
+</div>

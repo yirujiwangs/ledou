@@ -1,0 +1,51 @@
+<div ng-include="'views/nav.html'"></div>
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">关键指标</h3>
+        </div>
+        <div class="panel-body">
+            <div class='panel-items col-xs-6'>
+                <p>本月商户/门店数量</p>
+                <p class="panel-items-num">{{manageMerchantCtrl.generalNum.commercialMonthNum}}/{{manageMerchantCtrl.generalNum.storeMonthNum}}</p>
+            </div>
+            <div class='panel-items col-xs-6'>
+                <p>累计商户/门店数量</p>
+                <p class="panel-items-num">{{manageMerchantCtrl.generalNum.commercialNum}}/{{manageMerchantCtrl.generalNum.storeAllNum}}</p>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-reponsive">
+        <thead>
+        <th ng-repeat="title in manageMerchantCtrl.titles">
+            {{title.name}}
+        </th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="info in manageMerchantCtrl.allInfo">
+            <td>{{info.business_name}}</td>
+            <td>{{info.address}}</td>
+            <td>{{info.telephone}}</td>
+            <td>{{info.first_categories}}{{info.second_categories}}{{info.third_categories}}</td>
+            <td>{{info.nickname}}</td>
+            <td >{{info.add_time * 1000 | date: 'yyyy-MM-dd '}}</td>
+            <td>{{info.check_status | CheckStoreStatus}}</td>
+            <td>
+                <div class="btn-group dropdown-select" style="display: inline-block;margin: 0;width: auto;">
+                    <button type="button" class="dropdown-toggle" ng-class="{'t-btn':!manageMerchantCtrl.canSubmit(info.check_status),'t-btn t-btn-green':manageMerchantCtrl.canSubmit(info.check_status)}"  style="width:64px;" ng-disabled="!manageMerchantCtrl.canSubmit(info.check_status)"  data-toggle="dropdown" >
+                        操作&nbsp;<b class="caret"></b>
+                    </button>
+                    <div class="dropdown-menu" role="menu" style="left:initial;right:0;">
+                        <button  class="t-btn t-btn-green" ng-click="manageMerchantCtrl.checkStore($index)" style="width: 100%;">提交审核资料</button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn">
+        <button ng-click="manageMerchantCtrl.pre()">上一页</button>
+        <span>第{{manageMerchantCtrl.currentPage}}页,共{{manageMerchantCtrl.totalPage}}页</span>
+        <button ng-click="manageMerchantCtrl.next()">下一页</button>
+    </div>
+</div>

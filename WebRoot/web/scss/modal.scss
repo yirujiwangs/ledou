@@ -1,0 +1,153 @@
+.modal-content{
+	overflow: hidden;
+}
+.modal-span{
+	line-height: 34px;
+}
+.modal-form textarea .ng-dirty.ng-invalid,
+.modal-form select .ng-dirty.ng-invalid,
+.modal-form input.ng-dirty.ng-invalid {
+    border-color: #e9322d;
+    -webkit-box-shadow: 0 0 6px #f8b9b7;
+    -moz-box-shadow: 0 0 6px #f8b9b7;
+    box-shadow: 0 0 6px #f8b9b7;
+}
+.modal-form{
+	padding-bottom: 50px;
+	p{
+		color: #f00;
+		margin: 5px 0;
+	}
+	.form-num{
+		font-size: 16px;
+    line-height: 34px;
+   	color: #aaa;
+	}
+}
+.modal-header{
+	border-bottom: 0;
+	.modal-title{
+		text-align: center;
+	}
+}
+.modal-footer{
+	border-top: 0;
+}
+.modal-footer-bg{
+	padding-top: 0;
+	border-top: 1px solid #ddd;
+	background: $table-header;
+}
+.modal-body{
+	.img-center{
+		display: block;
+		width: 50px;
+		height: 50px;
+		margin: 0 auto 10px;
+	}
+	.p-center{
+		text-align: center;
+	}
+}
+// device_add.html
+.device-add-input{
+	height: 30px;
+	border: 1px solid $border-grey;
+	border-radius: 3px;
+	outline: none;
+}
+.chosen-device{
+	color: #e45e67
+}
+.scroll-table{
+	margin-right: -20px;
+	height: 195px;
+	overflow-y: auto;
+}
+.device-add{
+	position: absolute;
+	padding: 10px 0;
+	width: 100%;
+	height: 43px;
+	input[type="checkbox"]{
+		min-width: 0;
+	}
+	li{
+		float: left;
+		width: 189px;
+		text-align: center;
+		list-style: none;	
+	}
+	li:nth-child(1){
+		width: 50px;
+	}
+	li:nth-last-child(1){
+		width: 165px;
+	}
+}
+.device-add-table{
+	margin-top: 43px;
+}
+// appendAdArea
+.setArea{
+	padding-bottom: 100px;
+	h1{
+		margin: 0;
+		padding: 20px 20px;
+		font-size: 18px;
+		background: $table-header;
+	}
+	.setArea-table{
+		margin-right: -20px;
+		height: 300px;
+		overflow-y: scroll;
+	}
+	.setArea-addBtn{
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+	}
+	.setArea-btn-group{
+		position: absolute;
+		bottom: 10px;
+		left: 50%;
+		margin-left: -100px;
+	}
+	.setArea-choose{
+		margin: 20px 3% 0;
+		width: 360px;
+		border: 1px solid #eee;
+		overflow-x: hidden;
+		.setArea-choose-header{
+			margin: 0 0 30px 0;
+			padding: 10px 20px;
+			font-size: 14px;
+			background: $table-header;
+		}
+		table{
+			width: 100%;
+			thead{
+				position: absolute;
+				top: 114px;
+				margin-left: -1px;
+				width: 360px;
+				border: 1px solid #eee;
+				background: $table-header;
+			}
+			th{
+				width: 120px;
+				text-align: center;
+				font-weight: 400;
+			}
+			tbody{
+				padding-top: 30px;
+			}
+			td{
+				width: 120px;
+				height: 30px;
+				text-align: center;
+			}
+		}
+	}
+}

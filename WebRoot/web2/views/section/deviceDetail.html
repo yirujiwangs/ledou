@@ -1,0 +1,59 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">关键指标
+				<span>
+					{{deviceDetailCtrl.deviceDetailAccount.account}}
+					({{deviceDetailCtrl.deviceDetailAccount.phoneNum}})
+				</span>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div class='panel-items col-xs-3' ng-repeat="item in deviceDetailCtrl.items">
+				<p>{{ item.name }}</p>
+				<p class="panel-items-num-xs">
+					{{ item.number }}
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<form class="form-inline clearfix">
+				<button class="t-btn t-btn-green pull-left m-r-md" ng-click="deviceDetailCtrl.unbindDevice()">未绑定设备</button>
+				<!-- <button class="t-btn t-btn-green pull-left" ng-click="deviceDetailCtrl.distrbute()">分配设备</button> -->
+				<div class="form-group col-xs-4 pull-right" style="margin-bottom: 0;">
+					<input type="text" ng-model="form.searchkey" placeholder="商户账号/商户名称/备注" style="min-width: 170px;">	
+					<button class="t-btn t-btn-green pull-right" ng-click="deviceDetailCtrl.search()">搜索</button>
+				</div>
+				<!-- <div class="col-xs-4 pull-right m-r-lg">
+					<div ng-include="'views/dateTime.html'"></div>
+				</div> -->
+			</form>
+		</div>
+		<thead>
+			<th ng-repeat="title in deviceDetailCtrl.titles">
+				{{title.name}}
+			</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="shop in deviceDetailCtrl.shops">
+				<td>{{ shop.account }}</td>
+				<td>{{ shop.storeName }}</td>
+				<td>{{ shop.deviceNum }}</td>
+				<td>{{ shop.groupNum }}</td>
+				<td>{{ shop.remark }}</td>
+				<td>
+					<button class="t-btn t-btn-green" ng-click="deviceDetailCtrl.getDeviceShopDetail($index)">详情</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="deviceDetailCtrl.pre()">上一页</button>
+		<span>第{{deviceDetailCtrl.currentPage}}页,共{{deviceDetailCtrl.totalPage}}页</span>
+		<button ng-click="deviceDetailCtrl.next()">下一页</button>
+	</div>
+</div>

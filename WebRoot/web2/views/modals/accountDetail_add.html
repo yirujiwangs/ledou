@@ -1,0 +1,135 @@
+<div class='account-edit-header'><i class="glyphicon glyphicon-remove" ng-click="accountDetailAddCtrl.close()"></i></div>
+<form class="form-horizontal modal-form" name="accountAddForm" novalidate>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">商户账号:</label>
+		<div class="col-xs-5">
+			<input 
+				name="phoneNum"
+				type="text"
+				class="form-control"
+				placeholder="请输入手机号"
+				required=""
+				maxlength="11"
+				ng-model="form.phoneNum"
+				ng-pattern="/1[3|5|7|8|][0-9]{9}/"
+			>
+			<p ng-show="accountAddForm.phoneNum.$dirty  &&accountAddForm.phoneNum.$error.pattern">请输入正确的手机号</p>
+			<p ng-show="accountAddForm.phoneNum.$dirty  &&accountAddForm.phoneNum.$error.required">请输入手机号</p>
+		</div>
+		<!-- <div class="col-xs-2 del-l-p">
+			<span class="form-num">{{accountDetailAddCtrl.phoneNumChange}} / 11</span>
+		</div> -->
+		<!-- <div numchange phonenum="{{form.phoneNum}}"></div> -->
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">商户名称:</label>
+		<div class="col-xs-5">
+			<input 
+				name="storeName"
+				type="text"
+				class="form-control" 
+				placeholder="字数不超过12个"
+				required=""
+				maxlength="12" 
+				ng-model='form.storeName' 	
+			>
+		</div>
+		<p ng-show="accountAddForm.storeName.$dirty  &&accountAddForm.storeName.$error.required">请输入商户名称</p>
+		<!-- <div class="col-xs-2 del-l-p">
+			<span class="form-num">0 / 12</span>
+		</div> -->
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">登陆密码:</label>
+		<div class="col-xs-5">
+			<input
+				name="passwd" 
+				type="text" 
+				class="form-control"
+				placeholder="6~20个字母/数字/符号的组合"
+				required=""
+				minlength="6"
+				ng-model='form.passwd'
+			>
+			<p ng-show="accountAddForm.passwd.$dirty  &&accountAddForm.passwd.$error.required">请输入密码</p>
+			<p ng-show="accountAddForm.passwd.$dirty  &&accountAddForm.passwd.$error.minlength">密码最少为6个字母/数字/符号的组合</p>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">商家类型:</label>
+		<div class="col-xs-5">
+			<select class="form-control" ng-model="form.storeType" ng-options="option.name as option.name for option in accountDetailAddCtrl.storeTypes" required="">
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">分组个数限制:</label>
+		<div class="col-xs-5">
+			<input
+				name="maxGroupNum" 
+				type="number"
+				class="form-control"
+				placeholder="1~100"
+				required=""  
+				min="0" 
+				max="100"
+				ng-model='form.maxGroupNum' 
+			>
+			<!-- <p ng-show="accountAddForm.maxGroupNum.$dirty  &&accountAddForm.maxGroupNum.$error.required">请输入分组个数限制</p> -->
+			<p ng-show="accountAddForm.maxGroupNum.$dirty  &&accountAddForm.maxGroupNum.$error.min && accountAddForm.maxStoreNum.$error.required">分组个数最小为0</p>
+			<p ng-show="accountAddForm.maxGroupNum.$dirty  &&accountAddForm.maxGroupNum.$error.max">分组个数最大为100</p>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">子商户个数限制:</label>
+		<div class="col-xs-5" ng-if="form.storeType=='平台类型'">
+			<input 
+				name="maxStoreNum" 
+				type="number" 
+				class="form-control"
+				placeholder="1~100"
+				required=""
+				min="0"
+				max="100"
+				ng-model='form.maxStoreNum'
+			>
+			<!-- <p ng-show="accountAddForm.maxStoreNum.$dirty  &&accountAddForm.maxStoreNum.$error.required">请输入分组个数限制</p> -->
+			<p ng-show="accountAddForm.maxStoreNum.$dirty  &&accountAddForm.maxStoreNum.$error.min && accountAddForm.maxStoreNum.$error.required">分组个数最小为0</p>
+			<p ng-show="accountAddForm.maxStoreNum.$dirty  &&accountAddForm.maxStoreNum.$error.max">分组个数最大为100</p>
+		</div>
+		<div class="col-xs-5" ng-if="form.storeType=='普通类型'">
+			<input 
+				name="maxStoreNum" 
+				type="number" 
+				class="form-control"
+				ng-init="form.maxStoreNum=0"
+				ng-model='form.maxStoreNum'
+				disabled 
+			>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">备注:</label>
+		<div class="col-xs-5">
+			<input
+				name="descr" 
+				type="text"
+				class="form-control"  
+				ng-model='form.descr'
+				maxlength="15"
+			>
+		</div>
+		<!-- <div class="col-xs-2 del-l-p">
+			<span class="form-num">0 / 15</span>
+		</div> -->
+	</div>
+	<div class="btn-group">
+		<button 
+				class="btn-g" 
+				ng-class="{'disabled-btn':accountAddForm.$invalid,'btn-g-green':accountAddForm.$valid}" 
+				ng-click="accountDetailAddCtrl.add()" 
+				ng-disabled="accountAddForm.$invalid"
+		>提交</button>
+		<button class="btn-g btn-g-default" ng-click="accountDetailAddCtrl.close()">取消</button>
+	</div>
+</form>

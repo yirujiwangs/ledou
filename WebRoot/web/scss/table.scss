@@ -1,0 +1,128 @@
+.table{
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	thead{
+		background: #f5f6fa;
+	}
+	th,td{
+		font-weight: 400;
+		text-align: center;
+	}
+	thead>tr>th{
+		border-bottom: none;
+	}
+	tbody{
+		background: #fff;
+	}
+	tbody>tr>td{
+		vertical-align: middle;
+	}
+}
+.table-func{
+	position: relative;
+	padding: 10px 20px;
+	border: 1px solid #ddd;
+	border-bottom: 0;
+	background: #f5f6fa;
+	label{
+		line-height: 30px;
+	}
+	input{
+		padding: 5px 10px;
+		min-width: 240px;
+		max-width: 100%;
+		outline: none;
+		border: 1px solid $border-grey;
+	}
+	select{
+		height: 30px;
+		outline: none;
+		border: 1px solid $border-grey;
+	}
+	.timepicker{
+		min-width: 125px;
+		height: 30px;
+	}
+}
+.table-func-title{
+	display: inline-block;
+	margin-top: 5px;
+}
+.allDevice-table{
+	position: relative;
+	padding-left: 20%;
+}
+.allDevice-group{
+	position: absolute;
+	top: 0;
+	left: 0;
+	.btn-group{
+		display: inline-block;
+		margin: 0;
+		width: 90px;
+		height: 34px;
+	}
+}
+.allDevice-list{
+	width: 217px;
+	overflow-x: hidden;
+	.bold{
+		font-weight: 600;
+	}
+	h4{
+		margin: 20px 0;
+		font-size: 14px;
+	}
+	.list-group{
+		margin-right: -20px;
+		padding-bottom: 50px;
+		height: 240px;
+		overflow-y: auto;
+	}
+	.list-group-item{
+		padding-right: 35px;
+		background: transparent;
+		border: 0;
+		border-top: 1px solid #ddd;
+		cursor: pointer;
+		.glyphicon-pencil{
+			display: none;
+			margin-top: 3px;
+		}
+		&:hover{
+			.glyphicon-pencil{
+				display: block;
+			}
+		}
+		&:last-child{
+			border-bottom: 1px solid #ddd;
+		}
+	}
+}
+.dropdown-menu{
+	padding: 10px;
+	input{
+		margin-bottom: 10px;
+	}
+	li{
+		padding: 5px 10px;
+		color: #333;
+	}
+}
+.dropdown-select,.dropdown-del{
+	li{
+		cursor: pointer;
+		&:hover{
+			background: #ededed;
+		}
+	}
+}
+.dropdown-del-title{
+	color: #f00;
+}
+.dropdown-header{
+	padding: 5px 0;
+	font-size: 12px;
+  line-height: 1.4;
+  color: #999;
+}

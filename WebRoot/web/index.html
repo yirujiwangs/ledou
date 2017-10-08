@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>运营商服务系统</title>
+    <meta name="description" content="">
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/ledouyaControl.css">
+    <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+</head>
+<body>
+    <div ng-view style="width: 100%; height: 100%;padding-top:1px"></div>
+    <!-- build:js scripts/vendors.js -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/angular.js/1.4.0-beta.4/angular.min.js"></script>
+    <script src="http://cdn.bootcss.com/angular.js/1.3.0-beta.13/angular-route.min.js"></script>
+    <script src="http://cdn.bootcss.com/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script>
+    <script src="//cdn.bootcss.com/moment.js/2.10.6/moment-with-locales.min.js"></script>
+    <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+    <script src="scripts/directives/fileUpload/plupload.min.js"></script>
+    <script src="scripts/directives/fileUpload/qiniu.js"></script>
+
+
+    <!-- endbuild -->
+    <!-- <script src="scripts/ledouyaControl.js"></script> -->
+    <!-- build:js scripts/scripts.js -->
+    <script src="scripts/allcity.js"></script>
+
+    <script src="scripts/app.js"></script>
+    <script src="scripts/directives/datetimepicker.js"></script>
+    <script src="scripts/directives/deviceGroupEdit.js"></script>
+    <script src="scripts/directives/citySelector.js"></script>
+
+    <script src="scripts/controllers/main_ctrl.js"></script>
+    <script src="scripts/controllers/login_ctrl.js"></script>
+    <script src="scripts/controllers/account_ctrl.js"></script>
+    <script src="scripts/controllers/dealer_ctrl.js"></script>
+    <script src="scripts/controllers/accountPurchase_ctrl.js"></script>
+    <script src="scripts/controllers/devicePurchase_ctrl.js"></script>
+    <script src="scripts/controllers/reported_ctrl.js"></script><!--<报备-->
+    <script src="scripts/controllers/myreported_ctrl.js"></script><!--<我要报备-->
+    <script src="scripts/controllers/accountStock_ctrl.js"></script>
+    <script src="scripts/controllers/extendedProvider_ctrl.js"></script><!--<拓展业绩-->
+    <script src="scripts/controllers/juniorProvider_ctrl.js"></script><!--<下级服务商-->
+    <script src="scripts/controllers/allDevice_ctrl.js"> </script><!--<新加的device下面的左右-->
+    <script src="scripts/controllers/balance_ctrl.js"></script>
+    <script src="scripts/controllers/myaccount_ctrl.js"></script>
+    <script src="scripts/controllers/appendAd_ctrl.js"></script>
+    <script src="scripts/controllers/editAd_ctrl.js"></script>
+    <script src="scripts/controllers/listAd_ctrl.js"></script>
+    <script src="scripts/controllers/manageMerchant_ctrl.js"></script><!--管理商户模块-->
+    <script src="scripts/controllers/income_ctrl.js"></script>
+    <script src="scripts/controllers/oldIncome_ctrl.js"></script>
+    <script src="scripts/controllers/appendRedAd_ctrl.js"></script><!--创建惊喜红包广告-->
+    <script src="scripts/controllers/listRedAd_ctrl.js"></script><!--惊喜红包广告-->
+    <script src="scripts/controllers/editRedAd_ctrl.js"></script><!--编辑惊喜红包广告-->
+    <script src="scripts/controllers/editRed_ctrl.js"></script><!--编辑吸粉红包-->
+    <script src="scripts/controllers/attractFansRedPacket_ctrl.js"></script><!--吸粉红包-->
+    <script src="scripts/controllers/createRedPacket_ctrl.js"></script><!--创建吸粉红包-->
+    <script src="scripts/controllers/authorization_ctrl.js"></script><!--授权列表-->
+<!--    <script src="scripts/controllers/listCoupon.listCoupon_ctrl.js"></script>&lt;!&ndash;卡劵&ndash;&gt;
+    <script src="scripts/controllers/appendCoupon_ctrl.js"></script>&lt;!&ndash;创建卡劵&ndash;&gt;
+    <script src="scripts/controllers/editCoupon_ctrl.js"></script>&lt;!&ndash;编辑卡劵&ndash;&gt;-->
+    <script src="scripts/controllers/checkStore_ctrl.js"></script><!--门店审核-->
+    <script src="scripts/controllers/deviceStock_ctrl.js"></script> <!--<订单管理-->
+
+
+    <script src="scripts/controllers/startPageListAd_ctrl.js"></script>   <!--加的-->
+    <script src="scripts/controllers/appendPageListAd_ctrl.js"></script>   <!--加的-->
+    <script src="scripts/controllers/editStartPageAd_ctrl.js"></script>   <!--加的-->
+
+    <script src="scripts/controllers/modals/account_edit_ctrl.js"></script>
+    <script src="scripts/controllers/modals/deviceStock_status_ctrl.js"></script> <!--设备里面的订单管理的设备弹框-->
+    <script src="scripts/controllers/modals/account_add_ctrl.js"></script>
+    <script src="scripts/controllers/modals/account_status_ctrl.js"></script>
+    <script src="scripts/controllers/modals/devicePurchase_pay_ctrl.js"></script> <!--设备里面的设备采购的设备弹框-->
+    <script src="scripts/controllers/modals/account_del_ctrl.js"></script>
+    <script src="scripts/controllers/modals/account_pay_ctrl.js"></script>
+    <script src="scripts/controllers/modals/myreported_messge_ctrl.js"></script>
+    <script src="scripts/controllers/modals/devicePurchase_pay_ctrl.js"></script><!--设备-设备采购-支付-->
+    <script src="scripts/controllers/modals/alert_ctrl.js"></script>
+    <script src="scripts/controllers/modals/device_activeReturn_ctrl.js"></script>
+    <script src="scripts/controllers/modals/device_cancel_ctrl.js"></script>
+    <script src="scripts/controllers/modals/device_settings_ctrl.js"></script>
+    <script src="scripts/controllers/modals/alert_ctrl.js"></script>
+    <script src="scripts/controllers/modals/device_add_ctrl.js"></script>
+    <script src="scripts/controllers/modals/device_unbind_ctrl.js"></script>
+    <script src="scripts/controllers/modals/device_rev_ctrl.js"></script>
+    <script src="scripts/controllers/section/deviceDetail_ctrl.js"></script>
+    <script src="scripts/controllers/modals/device_edit_ctrl.js"></script>
+    <script src="scripts/controllers/modals/allDevice_rev_ctrl.js"></script>
+    <script src="scripts/controllers/modals/appendAdArea_ctrl.js"></script>
+    <script src="scripts/controllers/modals/appendAdDevice_ctrl.js"></script>
+    <script src="scripts/controllers/modals/AfArea_ctrl.js"></script>
+    <script src="scripts/controllers/modals/AfDevice.js"></script>
+    <script src="scripts/controllers/modals/listAdArea_ctrl.js"></script>
+    <script src="scripts/controllers/modals/appendAd_pay_ctrl.js"></script>
+
+    <script src="scripts/controllers/section/juniorPurchaseDetail_ctrl.js"></script><!--下级采购记录详情-->
+    <script src="scripts/controllers/section/surprisedRedPacketDetail_ctrl.js"></script><!--惊喜红包详情-->
+    <script src="scripts/controllers/section/juniorProviderDetail_ctrl.js"></script><!--下级服务商详情-->
+    <script src="scripts/controllers/section/incomeStoreAdDepositDetail_ctrl.js"></script><!--广告金充值详情-->
+    <script src="scripts/controllers/section/attractFansRedPacketDetail_ctrl.js"></script>
+    <script src="scripts/controllers/section/del_ctrl.js"></script>
+    <!--<script src="scripts/controllers/fortune_ctrl.js"></script>-->
+    <script
+    src="scripts/controllers/section/fortuneRecharge_ctrl.js">
+    </script>
+    <script
+    src="scripts/controllers/section/fortuneWithdrawn_ctrl.js">
+    </script>
+    <script
+    src="scripts/controllers/section/fortuneDetail_ctrl.js">
+    </script>
+    <script
+    src="scripts/controllers/section/incomeAdDetail_ctrl.js">
+    </script>
+    <script
+            src="scripts/controllers/section/incomerecordDetail_ctrl.js">
+    </script>
+    <script src="scripts/controllers/section/incomeDealerDetail_ctrl.js"></script>
+    <script src="scripts/controllers/section/incomeSharingDetail_ctrl.js"></script>
+    <script src="scripts/controllers/section/districtRedDetail_ctrl.js"></script>
+      <!--<script-->
+      <!--src="scripts/controllers/section/allDevice_ctrl.js">-->    <!--<之前的device点击全部设备的弹出框4月19改-->
+      <!--</script>-->
+    <script src="scripts/controllers/modals/fortune_confirm_ctrl.js"></script>
+    <script src="scripts/controllers/modals/fortune_reject_ctrl.js"></script>
+    <script src="scripts/controllers/section/deviceBind_ctrl.js"></script>
+    <script src="scripts/controllers/modals/deviceBind_active_ctrl.js"></script>
+    <script src="scripts/controllers/modals/DeviceBind_add_ctrl.js"></script>
+    <script src="scripts/controllers/modals/balance_withdraw.js"></script>
+    <script src="scripts/controllers/modals/balance_detail.js"></script>
+    <script src="scripts/controllers/modals/myaccountEditPasswd.js"></script>
+    <script src="scripts/controllers/modals/qrcodeBind_ctrl.js"></script>
+    <script src="scripts/controllers/modals/qrcodeStoreBind_ctrl.js"></script>
+    <script src="scripts/controllers/modals/dealer_add_ctrl.js"></script>
+    <script src="scripts/controllers/modals/dealer_update_ctrl.js"></script>
+    <script src="scripts/controllers/modals/dealer_merchant_ctrl.js"></script>
+    <script src="scripts/controllers/modals/dealer_device_ctrl.js"></script>
+    <script src="scripts/controllers/modals/dealer_confirm_ctrl.js"></script>
+    <script src="scripts/controllers/modals/listAd_showStrategy_ctrl.js"></script>
+    <script src="scripts/controllers/modals/redPacketDetail_ctrl.js"></script>
+    <script src="scripts/controllers/modals/authorizationRefresh_ctrl.js"></script>
+
+    <script src="scripts/services/data_service.js"></script>
+    <script src="scripts/services/base64_service.js"></script>
+
+    <script src="scripts/services/account_service.js"></script>
+    <script src="scripts/services/dealer_service.js"></script>
+
+    <script src="scripts/services/util_service.js"></script>
+    <script src="scripts/services/alert_service.js"></script>
+    <script src="scripts/services/device_service.js"></script>
+    <script src="scripts/services/income_service.js"></script>
+    <script src="scripts/services/oldIncome_service.js"></script>
+    <script src="scripts/services/manageMerchant_service.js"></script><!--管理商户模块-->
+    <script src="scripts/services/accountPurchase_service.js"></script>
+    <script src="scripts/services/balance_service.js"></script>
+    <!--<script src="scripts/services/fortune_service.js"></script>-->
+    <script src="scripts/services/person_service.js"></script>
+    <script src="scripts/services/ad_service.js"></script>
+    <script src="scripts/services/devicePurchase_service.js"></script><!--<设备里面的设备采购-->
+    <script src="scripts/services/reported_service.js"></script><!--<报备-->
+    <script src="scripts/services/extendedProvider_service.js"></script><!--<拓展业绩-->
+    <script src="scripts/services/juniorProvider_service.js"></script><!--<下级服务商-->
+    <script src="scripts/services/deviceStock_service.js"></script> <!--<订单管理-->
+    <script src="scripts/services/myreported_service.js"></script> <!--<我要报备-->
+    <script src="scripts/services/attractFansRedPacket_service.js"></script><!--吸粉红包-->
+    <script src="scripts/services/checkStore_service.js"></script><!--门店审核-->
+
+    <script src="scripts/daos/base_http.js"></script>
+    <script src="scripts/daos/account_dao.js"></script>
+    <script src="scripts/daos/dealer_dao.js"></script>
+    <script src="scripts/daos/login_dao.js"></script>
+    <script src="scripts/daos/device_dao.js"></script>
+    <script src="scripts/daos/manageMerchant_dao.js"></script><!--管理商户模块-->
+    <script src="scripts/daos/income_dao.js"></script>
+    <script src="scripts/daos/oldIncome_dao.js"></script>
+    <script src="scripts/daos/balance_dao.js"></script>
+    <script src="scripts/daos/accountPurchase_dao.js"></script>
+    <!--<script src="scripts/daos/fortune_dao.js"></script>-->
+    <script src="scripts/daos/person_dao.js"></script>
+    <script src="scripts/daos/ad_dao.js"></script>
+    <script src="scripts/daos/devicePurchase_dao.js"></script><!--<设备里面的设备采购-->
+    <script src="scripts/daos/reported_dao.js"></script><!--<报备-->
+    <script src="scripts/daos/extendedProvider_dao.js"></script><!--<拓展业绩-->
+    <script src="scripts/daos/juniorProvider_dao.js"></script><!--<下级服务商-->
+    <script src="scripts/daos/deviceStock_dao.js"></script> <!--<订单管理-->
+    <script src="scripts/daos/myreported_dao.js"></script> <!--<我要报备-->
+    <script src="scripts/daos/attractFansRedPacket_dao.js"></script><!--吸粉红包-->
+    <script src="scripts/daos/checkStore_dao.js"></script><!--门店审核-->
+
+    <script src="scripts/filter/checkStatus.js"></script>
+    <script src="scripts/filter/codeToArea.js"></script>
+    <script src="scripts/filter/toSce.js"></script>
+    <script src="scripts/filter/showAuthorizationStatus.js"></script>
+    <script src="scripts/filter/getServiceType.js"></script>
+    <script src="scripts/filter/getVerifyType.js"></script>
+    <script src="scripts/filter/attractFansRedPacketStatus.js"></script>
+
+    <script src="scripts/bootstrap.js"></script>
+    <!-- endbuild -->
+</body>
+</html>

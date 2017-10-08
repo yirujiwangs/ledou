@@ -1,0 +1,87 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">数据指标</h3>
+		</div>
+		<div class="panel-body">
+			<div class='panel-items col-xs-3'>
+				<p>运营商累计余额</p>
+				<p class="panel-items-num">{{(refundCtrl.generalNum.totalAvaiable/100)=="NaN"?"0":refundCtrl.generalNum.totalAvaiable/100}}</p>
+			</div>
+			<div class='panel-items col-xs-3'>
+				<p>累计总收益</p>
+				<p class="panel-items-num">{{(refundCtrl.generalNum.totalIncome/100)=="NaN"?"0":refundCtrl.generalNum.totalIncome/100}}</p>
+			</div>
+			<div class='panel-items col-xs-3'>
+				<p>累计已结算</p>
+				<p class="panel-items-num">{{(refundCtrl.generalNum.totalBalanced/100)=="NaN"?"0":refundCtrl.generalNum.totalBalanced/100}}</p>
+			</div>
+			<div class='panel-items col-xs-3'>
+				<p>累计未结算</p>
+				<p class="panel-items-num">{{(refundCtrl.generalNum.totalBalancing/100)=="NaN"?"0":refundCtrl.generalNum.totalBalancing/100}}</p>
+			</div>
+		</div>
+	</div>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<div class="pull-right">
+				<form class="form-inline clearfix">
+					<div class=" pull-right ">
+						<input type="text" placeholder="运营商账号/运营商名称" ng-model="form.keyword" class="m-r-lg">
+						<button class="t-btn t-btn-green pull-right" ng-click="refundCtrl.search()">搜索</button>
+					</div>
+					<div class="pull-right m-r-lg">
+						<div ng-include="'views/dateTime.html'"></div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<thead>
+			<td>交易时间</td>
+			<td>交易单号</td>
+			<td>运营商账号</td>
+			<td>运营商名称</td>
+			<td>代理区域</td>
+			<!--<td>付款方式</td>-->
+			<td>结算金额</td>
+			<td class="w-md">
+			<div class="dropdown">
+			<a class="dropdown-toggle mousepointer" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="color:#717171;" >
+					结算状态
+					<span class="caret"></span>
+					</a>
+				<ul class="dropdown-menu mydropdown" aria-labelledby="dropdownMenu1" >
+					<li><a 	class = "mousepointer" ng-click="refundCtrl.search(0)">待结算</a></li>
+					<li><a  class = "mousepointer" ng-click="refundCtrl.search(1)">已结算</a></li>
+					<li><a  class = "mousepointer" ng-click="refundCtrl.search(2)">已拒绝</a></li>
+				</ul>
+			</div></td>
+			<td>操作</td>
+		</thead>
+		<tbody>
+			<tr ng-repeat="record in refundCtrl.allRecord">
+				<td>{{record.tradeTime | date:"yy-MM-dd hh:mm:ss"}}</td>
+				<td>{{record.tradeId}}</td>
+				<td>{{record.account}}</td>
+				<td>{{record.accountName}}</td>
+				<td>{{record.area_name}}</td>
+				<td>{{record.tradeFee/100}}</td>
+				<td ng-show="record.tradeState == '0'">待结算</td>
+				<td ng-show="record.tradeState == '1'">已结算</td>
+				<td ng-show="record.tradeState == '2'">已拒绝</td>
+				<td>
+					<button class="t-btn t-btn-green" ng-click="refundCtrl.process($index)" ng-show="record.tradeState == '0'">处理</button>
+					<button class="t-btn t-btn-blue" ng-click="refundCtrl.detail($index)">详情</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="refundCtrl.pre()" style="background: #fff;"><img src="images/pre.png" alt=""/></button>
+		<span>{{refundCtrl.currentPage}}/{{refundCtrl.totalPage}}</span>
+		<button ng-click="refundCtrl.next()" style="background: #fff;"><img src="images/next.png" alt=""/></button>
+		<input type='text' class="preinputwid jumppage"  placeholder=""  ng-model="jumppage">
+		<button class="t-btn t-btn-green m-r-md " ng-click="refundCtrl.jump()">跳转</button>
+	</div>
+</div>

@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.DeviceMapper" >
+  <resultMap id="BaseResultMap" type="model.Device" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ibeaconId" property="ibeaconId" jdbcType="VARCHAR" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="pageId" property="pageid" jdbcType="INTEGER" />
+    <result column="groopName" property="groopname" jdbcType="VARCHAR" />
+    <result column="tagid" property="tagid" jdbcType="INTEGER" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="storeName" property="storename" jdbcType="VARCHAR" />
+    <result column="no" property="no" jdbcType="VARCHAR" />
+    <result column="descr" property="descr" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="weixinId" property="weixinId" jdbcType="INTEGER" />
+    <result column="UUID" property="uuid" jdbcType="VARCHAR" />
+    <result column="major" property="major" jdbcType="INTEGER" />
+    <result column="minor" property="minor" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="serialNum" property="serialNum" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, ibeaconId, group_id, pageId, groopName, tagid, phone, storeName, no, descr, type, 
+    remark, status, weixinId, UUID, major, minor, createTime,serialNum
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="model.DeviceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ibeacon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause} DESC
+    </if>
+
+    <if test="limitValue">
+      limit #{startSize},#{pageSize}
+    </if>
+
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ibeacon
+    where id = #{id,jdbcType=INTEGER}
+    ORDER by id desc
+  </select>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ibeacon
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="model.DeviceExample" >
+    delete from ibeacon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="model.Device" >
+    insert into ibeacon (id, ibeaconId, group_id, 
+      pageId, groopName, tagid, 
+      phone, storeName, no, 
+      descr, type, remark, 
+      status, weixinId, UUID,
+      major, minor, createTime,
+      serialNum
+      )
+    values (#{id,jdbcType=INTEGER}, #{ibeaconId,jdbcType=VARCHAR}, #{groupId,jdbcType=INTEGER},
+      #{pageid,jdbcType=INTEGER}, #{groopname,jdbcType=VARCHAR}, #{tagid,jdbcType=INTEGER}, 
+      #{phone,jdbcType=VARCHAR}, #{storename,jdbcType=VARCHAR}, #{no,jdbcType=VARCHAR}, 
+      #{descr,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{weixinId,jdbcType=INTEGER}, #{uuid,jdbcType=VARCHAR},
+      #{major,jdbcType=INTEGER}, #{minor,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+      #{serialNum,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="model.Device" >
+    insert into ibeacon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ibeaconId != null" >
+        ibeaconId,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="pageid != null" >
+        pageId,
+      </if>
+      <if test="groopname != null" >
+        groopName,
+      </if>
+      <if test="tagid != null" >
+        tagid,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="storename != null" >
+        storeName,
+      </if>
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="descr != null" >
+        descr,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="weixinId != null" >
+        weixinId,
+      </if>
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="major != null" >
+        major,
+      </if>
+      <if test="minor != null" >
+        minor,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="serialNum !=null">
+      	serialNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ibeaconId != null" >
+        #{ibeaconId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="pageid != null" >
+        #{pageid,jdbcType=INTEGER},
+      </if>
+      <if test="groopname != null" >
+        #{groopname,jdbcType=VARCHAR},
+      </if>
+      <if test="tagid != null" >
+        #{tagid,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="storename != null" >
+        #{storename,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null" >
+        #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="descr != null" >
+        #{descr,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinId != null" >
+        #{weixinId,jdbcType=INTEGER},
+      </if>
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        #{major,jdbcType=INTEGER},
+      </if>
+      <if test="minor != null" >
+        #{minor,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serialNum !=null">
+      	#{serialNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="model.DeviceExample" resultType="java.lang.Integer" >
+    select count(*) from ibeacon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectSerialNum" resultMap="BaseResultMap">
+	select serialNum from ibeacon
+	where status='激活' limit 0,10;
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ibeacon
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.ibeaconId != null" >
+        ibeaconId = #{record.ibeaconId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupId != null" >
+        group_id = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pageid != null" >
+        pageId = #{record.pageid,jdbcType=INTEGER},
+      </if>
+      <if test="record.groopname != null" >
+        groopName = #{record.groopname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tagid != null" >
+        tagid = #{record.tagid,jdbcType=INTEGER},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storename != null" >
+        storeName = #{record.storename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.no != null" >
+        no = #{record.no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.descr != null" >
+        descr = #{record.descr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinId != null" >
+        weixinId = #{record.weixinId,jdbcType=INTEGER},
+      </if>
+      <if test="record.uuid != null" >
+        UUID = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major != null" >
+        major = #{record.major,jdbcType=INTEGER},
+      </if>
+      <if test="record.minor != null" >
+        minor = #{record.minor,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.serialNum != null">
+      	serialNum = #{record.serialNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ibeacon
+    set id = #{record.id,jdbcType=INTEGER},
+      ibeaconId = #{record.ibeaconId,jdbcType=VARCHAR},
+      group_id = #{record.groupId,jdbcType=INTEGER},
+      pageId = #{record.pageid,jdbcType=INTEGER},
+      groopName = #{record.groopname,jdbcType=VARCHAR},
+      tagid = #{record.tagid,jdbcType=INTEGER},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      storeName = #{record.storename,jdbcType=VARCHAR},
+      no = #{record.no,jdbcType=VARCHAR},
+      descr = #{record.descr,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      weixinId = #{record.weixinId,jdbcType=INTEGER},
+      UUID = #{record.uuid,jdbcType=VARCHAR},
+      major = #{record.major,jdbcType=INTEGER},
+      minor = #{record.minor,jdbcType=INTEGER},
+      createTime = #{record.createTime,jdbcType=TIMESTAMP}
+      serialNum = #{record.serialNum,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="model.Device" >
+    update ibeacon
+    <set >
+      <if test="ibeaconId != null" >
+        ibeaconId = #{ibeaconId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="pageid != null" >
+        pageId = #{pageid,jdbcType=INTEGER},
+      </if>
+      <if test="groopname != null" >
+        groopName = #{groopname,jdbcType=VARCHAR},
+      </if>
+      <if test="tagid != null" >
+        tagid = #{tagid,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="storename != null" >
+        storeName = #{storename,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null" >
+        no = #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="descr != null" >
+        descr = #{descr,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinId != null" >
+        weixinId = #{weixinId,jdbcType=INTEGER},
+      </if>
+      <if test="uuid != null" >
+        UUID = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        major = #{major,jdbcType=INTEGER},
+      </if>
+      <if test="minor != null" >
+        minor = #{minor,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serialNum != null">
+      	serialNum =#{serialNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.Device" >
+    update ibeacon
+    set ibeaconId = #{ibeaconId,jdbcType=VARCHAR},
+      group_id = #{groupId,jdbcType=INTEGER},
+      pageId = #{pageid,jdbcType=INTEGER},
+      groopName = #{groopname,jdbcType=VARCHAR},
+      tagid = #{tagid,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      storeName = #{storename,jdbcType=VARCHAR},
+      no = #{no,jdbcType=VARCHAR},
+      descr = #{descr,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      weixinId = #{weixinId,jdbcType=INTEGER},
+      UUID = #{uuid,jdbcType=VARCHAR},
+      major = #{major,jdbcType=INTEGER},
+      minor = #{minor,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP}
+      serialNum = #{serialNum, jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateStatusById" parameterType="java.lang.String">
+  	update ibeacon
+  	set status='激活'
+  	where ibeaconId=#{ibeaconId,jdbcType=VARCHAR}
+  </update>
+</mapper>

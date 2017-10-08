@@ -1,0 +1,33 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<span class="table-func-title">未绑定的设备</span>
+			<!-- <button class="t-btn t-btn-green pull-right" ng-click="deviceBindCtrl.addToWeixin()">向微信申请设备</button>	 -->
+		</div>
+		<thead>
+			<th ng-repeat="title in deviceBindCtrl.titles">
+				{{title.name}}
+			</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in deviceBindCtrl.items">
+				<td>{{item.serialNum}}</td>
+				<td>{{item.ibeaconId}}</td>
+				<!-- <td>{{item.uuid}}</td> -->
+				<!-- <td>{{item.major}}</td> -->
+				<!-- <td>{{item.minor}}</td> -->
+				<!-- <td>{{item.type}}</td> -->
+				<td>{{item.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+				<!-- <td>{{item.status}}</td> -->
+				<td ng-if="!deviceBindCtrl.judge($index)"><button class="t-btn t-btn-green" ng-click="deviceBindCtrl.active($index)">激活</button></td>
+				<td ng-if="deviceBindCtrl.judge($index)" class='deviceBind-nonactive'>已{{item.status}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="deviceBindCtrl.pre()">上一页</button>
+		<span>第{{deviceBindCtrl.currentPage}}页,共{{deviceBindCtrl.totalPage}}页</span>
+		<button ng-click="deviceBindCtrl.next()">下一页</button>
+	</div>
+</div>

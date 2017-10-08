@@ -1,0 +1,23 @@
+<div class='account-edit-header'><i class="glyphicon glyphicon-remove" ng-click="deviceEditCtrl.close()"></i></div>
+<form class="form-horizontal">
+	<div class="form-group">
+		<label class="col-xs-3 control-label">设备序列号:</label>
+		<div class="col-xs-7">
+			<input class="form-control" type='text' ng-model='form.serialNum'>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-3 control-label">设备型号:</label>
+		<div class="col-xs-7">
+			<select class="form-control" ng-model="form.type" ng-options="option.name as option.name for option in deviceEditCtrl.types"></select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-3 control-label">备注:</label>
+		<div class="col-xs-7">
+			<input class="form-control" type='text' ng-model='form.remark'>
+		</div>
+	</div>
+	<button class="m-btn m-btn-green btn-center" ng-click="deviceEditCtrl.ok()">确定</button>
+	<!-- <button class="btn btn-default" ng-click="deviceEditCtrl.close()">取消</button> -->
+</form>

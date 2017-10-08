@@ -1,0 +1,177 @@
+<div ng-include="'views/nav.html'"></div>
+<div class="main">
+	<div class="panel-person">
+		<div class="panel-person-header clearfix">
+			<h4>基本信息</h4>
+		</div>
+		<div class="panel-person-body">
+			<div class="panel-person-item panel-person-item-info">
+				<span class="col-xs-2">微信信息</span>
+				<div class="col-xs-6">
+					<img class="pull-left" ng-src="{{myaccountCtrl.info.logourl}}" src="images/logo.png" alt="images/logo.png">
+					<div class="pull-left m-l-md">
+						<p>微信昵称：{{myaccountCtrl.info.nickname}}</p>
+						<p>openID：{{myaccountCtrl.account.openid}}</p>
+					</div>
+				</div>
+				<button class="t-btn t-btn-green pull-right m-t-xs">{{isBind}}</button>
+			</div>
+			<div class="panel-person-item">
+				<span class="col-xs-2">运营商账号</span>
+				<span class="col-xs-4">
+					{{myaccountCtrl.account.phoneNum}}
+				</span>
+			</div>
+			<div class="panel-person-item">
+				<span class="col-xs-2">账号级别</span>
+				<span class="col-xs-4">
+					{{myaccountCtrl.account.level}}
+				</span>
+			</div>
+			<div class="panel-person-item">
+				<span class="col-xs-2">代理区域</span>
+				<span class="col-xs-4">
+					{{myaccountCtrl.account.areaName}}
+				</span>
+			</div>
+			<div class="panel-person-item">
+				<span class="col-xs-2">账号名称</span>
+				<span class="col-xs-4">
+					{{myaccountCtrl.account.username}}
+				</span>	
+			</div>
+			<div class="panel-person-item">
+				<span class="col-xs-2">登陆密码</span>
+				<span class="col-xs-4">
+					******
+					<i class="glyphicon glyphicon-pencil panel-person-edit pull-right" ng-click="myaccountCtrl.editPasswd()"></i>
+				</span>
+			</div>
+			<div class="panel-person-item">
+				<span class="col-xs-2">企业名称</span>
+				<span class="col-xs-4" ng-if="!myaccountCtrl.company_name">
+					{{myaccountCtrl.info.company_name}}
+					<i class="glyphicon glyphicon-pencil panel-person-edit pull-right" ng-click="myaccountCtrl.edit('company_name')"></i>
+				</span>
+				<div class="col-xs-4 edit-form" ng-if="myaccountCtrl.company_name">
+					<input type="text" ng-model="myaccountCtrl.info.company_name">
+					<button class="t-btn t-btn-green" ng-click="myaccountCtrl.update('company_name')">确定</button>
+					<button class="t-btn" ng-click="myaccountCtrl.edit('company_name')">取消</button>
+				</div>
+			</div>
+			<div class="panel-person-item">
+				<span class="col-xs-2">联系人</span>
+				<span class="col-xs-4" ng-if="!myaccountCtrl.contract_name">
+					{{myaccountCtrl.info.contract_name}}
+					<i class="glyphicon glyphicon-pencil panel-person-edit pull-right" ng-click="myaccountCtrl.edit('contract_name')"></i>
+				</span>
+				<div class="col-xs-4 edit-form" ng-if="myaccountCtrl.contract_name">
+					<input type="text" ng-model="myaccountCtrl.info.contract_name">
+					<button class="t-btn t-btn-green" ng-click="myaccountCtrl.update('contract_name')">确定</button>
+					<button class="t-btn" ng-click="myaccountCtrl.edit('contract_name')">取消</button>
+				</div>
+			</div>
+			<div class="panel-person-item">
+				<span class="col-xs-2">联系电话</span>
+				<span class="col-xs-4" ng-if="!myaccountCtrl.contract_phone">
+					{{myaccountCtrl.info.contract_phone}}
+					<i class="glyphicon glyphicon-pencil panel-person-edit pull-right" ng-click="myaccountCtrl.edit('contract_phone')"></i>
+				</span>
+				<div class="col-xs-4 edit-form" ng-if="myaccountCtrl.contract_phone">
+					<input type="text" ng-model="myaccountCtrl.info.contract_phone">
+					<button class="t-btn t-btn-green" ng-click="myaccountCtrl.update('contract_phone')">确定</button>
+					<button class="t-btn" ng-click="myaccountCtrl.edit('contract_phone')">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-person">
+		<div class="panel-person-header clearfix">
+			<h4>结算账户</h4>
+			<div class="panel-tab pull-right">
+				<span ng-class="{'panel-tab-active':myaccountCtrl.alipay,'panel-tab-index':myaccountCtrl.public}" ng-click="myaccountCtrl.changeAccount('alipay')">支付宝账户</span><!--
+				--><span ng-class="{'panel-tab-active':myaccountCtrl.public,'panel-tab-index':myaccountCtrl.alipay}" ng-click="myaccountCtrl.changeAccount('public')">对公账户</span>
+			</div>
+		</div>
+		<!-- 支付宝账户 -->
+		<div class="panel-person-body" ng-show="myaccountCtrl.alipay">
+			<div class="panel-person-item">
+				<span class="col-xs-2">支付宝账号</span>
+				<span class="col-xs-4" ng-if="!myaccountCtrl.alipay_account_num">
+					{{myaccountCtrl.info.alipay_account_num}}
+					<i class="glyphicon glyphicon-pencil panel-person-edit pull-right" ng-click="myaccountCtrl.edit('alipay_account_num')"></i>
+				</span>
+				<div class="col-xs-4 edit-form" ng-if="myaccountCtrl.alipay_account_num">
+					<input type="text" ng-model="myaccountCtrl.info.alipay_account_num">
+					<button class="t-btn t-btn-green" ng-click="myaccountCtrl.update('alipay_account_num')">确定</button>
+					<button class="t-btn" ng-click="myaccountCtrl.edit('alipay_account_num')">取消</button>
+				</div>
+			</div>
+			<div class="panel-person-item">
+				<span class="col-xs-2">支付宝姓名</span>
+				<span class="col-xs-4" ng-if="!myaccountCtrl.alipay_account_name">
+					{{myaccountCtrl.info.alipay_account_name}}
+					<i class="glyphicon glyphicon-pencil panel-person-edit pull-right" ng-click="myaccountCtrl.edit('alipay_account_name')"></i>
+				</span>
+				<div class="col-xs-4 edit-form" ng-if="myaccountCtrl.alipay_account_name">
+					<input type="text" ng-model="myaccountCtrl.info.alipay_account_name">
+					<button class="t-btn t-btn-green" ng-click="myaccountCtrl.update('alipay_account_name')">确定</button>
+					<button class="t-btn" ng-click="myaccountCtrl.edit('alipay_account_name')">取消</button>
+				</div>
+			</div>
+		</div>
+		<!-- end -->
+		<!-- 对公账户 -->
+		<div class="panel-person-body" ng-show="myaccountCtrl.public">
+			<div class="panel-person-item">
+				<span class="col-xs-2">银行账户名称</span>
+				<span class="col-xs-4" ng-if="!myaccountCtrl.bank_account_name">
+					{{myaccountCtrl.info.bank_account_name}}
+					<i class="glyphicon glyphicon-pencil panel-person-edit pull-right" ng-click="myaccountCtrl.edit('bank_account_name')"></i>
+				</span>
+				<div class="col-xs-4 edit-for," ng-if="myaccountCtrl.bank_account_name">
+					<input type="text" ng-model="myaccountCtrl.info.bank_account_name">
+					<button class="t-btn t-btn-green" ng-click="myaccountCtrl.update('bank_account_name')">确定</button>
+					<button class="t-btn" ng-click="myaccountCtrl.edit('bank_account_name')">取消</button>
+				</div>
+			</div>
+			<div class="panel-person-item">
+				<span class="col-xs-2">银行账户卡号</span>
+				<span class="col-xs-4" ng-if="!myaccountCtrl.bank_account_num">
+					{{myaccountCtrl.info.bank_account_num}}
+					<i class="glyphicon glyphicon-pencil panel-person-edit pull-right" ng-click="myaccountCtrl.edit('bank_account_num')"></i>
+				</span>
+				<div class="col-xs-4 edit-for," ng-if="myaccountCtrl.bank_account_num">
+					<input type="text" ng-model="myaccountCtrl.info.bank_account_num">
+					<button class="t-btn t-btn-green" ng-click="myaccountCtrl.update('bank_account_num')">确定</button>
+					<button class="t-btn" ng-click="myaccountCtrl.edit('bank_account_num')">取消</button>
+				</div>
+			</div> 
+			<div class="panel-person-item">
+				<span class="col-xs-2">开户银行-支行</span>
+				<span class="col-xs-4" ng-if="!myaccountCtrl.bank_name">
+					{{myaccountCtrl.info.bank_name}}
+					<i class="glyphicon glyphicon-pencil panel-person-edit pull-right" ng-click="myaccountCtrl.edit('bank_name')"></i>
+				</span>
+				<div class="col-xs-4 edit-for," ng-if="myaccountCtrl.bank_name">
+					<input type="text" ng-model="myaccountCtrl.info.bank_name">
+					<button class="t-btn t-btn-green" ng-click="myaccountCtrl.update('bank_name')">确定</button>
+					<button class="t-btn" ng-click="myaccountCtrl.edit('bank_name')">取消</button>
+				</div>
+			</div>
+			<div class="panel-person-item">
+				<span class="col-xs-2">常用邮箱</span>
+				<span class="col-xs-4" ng-if="!myaccountCtrl.email">
+					{{myaccountCtrl.info.email}}
+					<i class="glyphicon glyphicon-pencil panel-person-edit pull-right" ng-click="myaccountCtrl.edit('email')"></i>
+				</span>
+				<div class="col-xs-4 edit-for," ng-if="myaccountCtrl.email">
+					<input type="text" ng-model="myaccountCtrl.info.email">
+					<button class="t-btn t-btn-green" ng-click="myaccountCtrl.update('email')">确定</button>
+					<button class="t-btn" ng-click="myaccountCtrl.edit('email')">取消</button>
+				</div>
+			</div>
+		</div>
+		<!-- end -->
+	</div>
+</div>

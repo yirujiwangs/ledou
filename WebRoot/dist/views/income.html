@@ -1,0 +1,61 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="intro">
+		<span class="intro-header">收益明细</span>
+		<div class="intro-body">
+			<dl>
+				<dt>收益规则:</dt>
+				<dd>1.该运营商开通的所有商户账号，商户进行充值时，运营商将会获得收益：每笔充值金额*3%。</dd>
+				<dd>2.运营商的收益数据，将存在对应账号里，可在结算中心进行结算。</dd>
+			</dl>
+		</div>
+	</div>
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h3 class="panel-title">数据指标</h3>
+	    </div>
+	    <div class="panel-body">
+	    	<div ng-repeat="item in incomeCtrl.generalNum" class='panel-items col-xs-4'>
+	    		<p>{{item.name}}/元</p>
+	    		<p class="panel-items-num">{{item.number}}</p>
+	    	</div>
+	    </div>
+	</div>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<div class="pull-right col-xs-12">
+				<form class="form-inline clearfix">
+					<div class="form-group col-xs-6 pull-left m-t-lg">
+						<label class="control-label pull-left del-l-p">时间:</label>
+						<div ng-include="'views/dateTime.html'"></div>
+					</div>
+					<div class="col-xs-4 pull-right m-t-lg">
+						<input type="text" placeholder="交易单号/商户账号/商户名称/备注" ng-model="form.keyword">
+						<button class="t-btn t-btn-green pull-right" ng-click="incomeCtrl.search()">查询</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<thead>
+			<th ng-repeat="title in incomeCtrl.titles">
+				{{title.name}}
+			</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="record in incomeCtrl.allRecord">
+				<td>{{record.date_time| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+				<td>{{record.out_trade_no}}</td>
+				<td>{{record.phoneNum}}</td>
+				<td>{{record.shopName}}</td>
+				<td>{{record.fee}}</td>
+				<td>{{record.proxy_taxes_money}}</td>
+				<td>{{record.remark}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="incomeCtrl.pre()">上一页</button>
+		<span>第{{incomeCtrl.currentPage}}页,共{{incomeCtrl.totalPage}}页</span>
+		<button ng-click="incomeCtrl.next()">下一页</button>
+	</div>
+</div>

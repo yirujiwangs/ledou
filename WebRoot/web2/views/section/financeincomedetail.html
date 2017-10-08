@@ -1,0 +1,64 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">数据指标
+				<span>
+					{{ financeIncomeDetailCtrl.financeIncomeDetailAccount.account }}
+					({{ financeIncomeDetailCtrl.financeIncomeDetailAccount.phoneNum }})
+				</span>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div class='panel-items col-xs-4'>
+				<p>今日收益</p>
+				<p class="panel-items-num-xs">
+					{{ financeIncomeDetailCtrl.items.todayBenefit }}
+				</p>
+			</div>
+			<div class='panel-items col-xs-4'>
+				<p>本月收益</p>
+				<p class="panel-items-num-xs">
+					{{ financeIncomeDetailCtrl.items.monthBenefit }}
+				</p>
+			</div>
+			<div class='panel-items col-xs-4'>
+				<p>累计收益</p>
+				<p class="panel-items-num-xs">
+					{{ financeIncomeDetailCtrl.items.totalBenefit }}
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<form class="form-inline clearfix">
+				<div class="form-group col-xs-3 pull-right" style="margin-bottom:0;">
+				  <button class="t-btn t-btn-green pull-right" ng-click="financeIncomeDetailCtrl.search()">搜索</button>
+					<input type="text" class="pull-right m-r-md" ng-model="form.searchkey" placeholder="交易单号/商户账号/商户名称/备注" style="min-width: 170px;">	
+				</div>
+				<div class="col-xs-4 pull-right" style="padding: 0;">
+					<div class="pull-right" ng-include="'views/dateTime.html'"></div>
+				</div>
+			</form>
+		</div>
+		<thead>
+			<th ng-repeat="title in financeIncomeDetailCtrl.titles">
+				{{ title.name }}
+			</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="data in financeIncomeDetailCtrl.allData">
+				<td>{{ data.date_time|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+				<td>{{ data.out_trade_no }}</td>
+				<td>{{ data.phoneNum }}</td>
+				<td>{{ data.shopName }}</td>
+				<td>{{ data.fee }}</td>
+				<td>{{ data.proxy_taxes_money }}</td>
+				<td>{{ data.remark }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>

@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ProxyAreaReportLogMapper">
+  <resultMap id="BaseResultMap" type="model.ProxyAreaReportLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="utoken" jdbcType="VARCHAR" property="utoken" />
+    <result column="area_rid" jdbcType="VARCHAR" property="area_rid" />
+    <result column="area_name" jdbcType="VARCHAR" property="area_name" />
+    <result column="start_date" jdbcType="DATE" property="start_date" />
+    <result column="end_date" jdbcType="DATE" property="end_date" />
+    <result column="proxy_level" jdbcType="INTEGER" property="proxy_level" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="contact_name" jdbcType="VARCHAR" property="contact_name" />
+    <result column="contact_way" jdbcType="VARCHAR" property="contact_way" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.likeValue">
+                  and ${criterion.condition} #{criterion.value} ${criterion.condition2}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, utoken, area_rid, area_name, start_date, end_date, proxy_level, status, company, 
+    contact_name, contact_way, comment, createtime
+  </sql>
+  <select id="selectByExample" parameterType="model.ProxyAreaReportLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from proxy_area_report_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause} desc
+    </if>
+    <if test="limitValue">
+      limit #{startSize},#{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from proxy_area_report_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+
+  <select id="countBySearchRid" resultType="java.lang.Integer">
+    select count(1) from proxy_area_report_log
+    where  1=1
+    <if test="rid != null">
+      and  #{rid,jdbcType=INTEGER} in (area_rid,concat(left(area_rid,2),'0000'),concat(left(area_rid,4),'00'));
+    </if>
+
+  </select>
+
+  <select id="selectBySearchRid" resultType="model.ProxyAreaReportLog">
+    select * from proxy_area_report_log
+    where  1=1
+    <if test="rid != null">
+      and  #{rid,jdbcType=INTEGER} in (area_rid,concat(left(area_rid,2),'0000'),concat(left(area_rid,4),'00'))
+    </if>
+    ORDER  by id DESC
+    limit #{startSize},#{pageSize}
+  </select>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from proxy_area_report_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="model.ProxyAreaReportLogExample">
+    delete from proxy_area_report_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="model.ProxyAreaReportLog">
+    insert into proxy_area_report_log (id, utoken, area_rid, 
+      area_name, start_date, end_date, 
+      proxy_level, status, company, 
+      contact_name, contact_way, comment, 
+      createtime)
+    values (#{id,jdbcType=INTEGER}, #{utoken,jdbcType=VARCHAR}, #{area_rid,jdbcType=VARCHAR}, 
+      #{area_name,jdbcType=VARCHAR}, #{start_date,jdbcType=DATE}, #{end_date,jdbcType=DATE}, 
+      #{proxy_level,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
+      #{contact_name,jdbcType=VARCHAR}, #{contact_way,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="model.ProxyAreaReportLog">
+    insert into proxy_area_report_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="utoken != null">
+        utoken,
+      </if>
+      <if test="area_rid != null">
+        area_rid,
+      </if>
+      <if test="area_name != null">
+        area_name,
+      </if>
+      <if test="start_date != null">
+        start_date,
+      </if>
+      <if test="end_date != null">
+        end_date,
+      </if>
+      <if test="proxy_level != null">
+        proxy_level,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="contact_name != null">
+        contact_name,
+      </if>
+      <if test="contact_way != null">
+        contact_way,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="utoken != null">
+        #{utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="area_rid != null">
+        #{area_rid,jdbcType=VARCHAR},
+      </if>
+      <if test="area_name != null">
+        #{area_name,jdbcType=VARCHAR},
+      </if>
+      <if test="start_date != null">
+        #{start_date,jdbcType=DATE},
+      </if>
+      <if test="end_date != null">
+        #{end_date,jdbcType=DATE},
+      </if>
+      <if test="proxy_level != null">
+        #{proxy_level,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="contact_name != null">
+        #{contact_name,jdbcType=VARCHAR},
+      </if>
+      <if test="contact_way != null">
+        #{contact_way,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="model.ProxyAreaReportLogExample" resultType="java.lang.Integer">
+    select count(*) from proxy_area_report_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update proxy_area_report_log
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.utoken != null">
+        utoken = #{record.utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area_rid != null">
+        area_rid = #{record.area_rid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area_name != null">
+        area_name = #{record.area_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.start_date != null">
+        start_date = #{record.start_date,jdbcType=DATE},
+      </if>
+      <if test="record.end_date != null">
+        end_date = #{record.end_date,jdbcType=DATE},
+      </if>
+      <if test="record.proxy_level != null">
+        proxy_level = #{record.proxy_level,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.company != null">
+        company = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contact_name != null">
+        contact_name = #{record.contact_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contact_way != null">
+        contact_way = #{record.contact_way,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update proxy_area_report_log
+    set id = #{record.id,jdbcType=INTEGER},
+      utoken = #{record.utoken,jdbcType=VARCHAR},
+      area_rid = #{record.area_rid,jdbcType=VARCHAR},
+      area_name = #{record.area_name,jdbcType=VARCHAR},
+      start_date = #{record.start_date,jdbcType=DATE},
+      end_date = #{record.end_date,jdbcType=DATE},
+      proxy_level = #{record.proxy_level,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=VARCHAR},
+      company = #{record.company,jdbcType=VARCHAR},
+      contact_name = #{record.contact_name,jdbcType=VARCHAR},
+      contact_way = #{record.contact_way,jdbcType=VARCHAR},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="model.ProxyAreaReportLog">
+    update proxy_area_report_log
+    <set>
+      <if test="utoken != null">
+        utoken = #{utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="area_rid != null">
+        area_rid = #{area_rid,jdbcType=VARCHAR},
+      </if>
+      <if test="area_name != null">
+        area_name = #{area_name,jdbcType=VARCHAR},
+      </if>
+      <if test="start_date != null">
+        start_date = #{start_date,jdbcType=DATE},
+      </if>
+      <if test="end_date != null">
+        end_date = #{end_date,jdbcType=DATE},
+      </if>
+      <if test="proxy_level != null">
+        proxy_level = #{proxy_level,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="contact_name != null">
+        contact_name = #{contact_name,jdbcType=VARCHAR},
+      </if>
+      <if test="contact_way != null">
+        contact_way = #{contact_way,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.ProxyAreaReportLog">
+    update proxy_area_report_log
+    set utoken = #{utoken,jdbcType=VARCHAR},
+      area_rid = #{area_rid,jdbcType=VARCHAR},
+      area_name = #{area_name,jdbcType=VARCHAR},
+      start_date = #{start_date,jdbcType=DATE},
+      end_date = #{end_date,jdbcType=DATE},
+      proxy_level = #{proxy_level,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      contact_name = #{contact_name,jdbcType=VARCHAR},
+      contact_way = #{contact_way,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

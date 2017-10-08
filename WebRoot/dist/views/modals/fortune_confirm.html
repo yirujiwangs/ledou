@@ -1,0 +1,18 @@
+<div class='fortune-confirm-header' ng-if="show==0">
+	<h4>您需要超级管理员的账号权限方可进行当前操作</h4>
+	<form>
+		<label>超级管理员账号:</label>
+		<input type='text' ng-model='form.username'>
+		<label>超级管理员密码:</label>
+		<input type='password' ng-model='form.password'></br>
+		<button ng-click="fortuneConfirmCtrl.ok()">确定</button>
+		<button ng-click="fortuneConfirmCtrl.close()">取消</button>
+	</form>
+</div>
+<div class='fortune-confirm-header' ng-if="show==1">
+	<h2>请到支付宝页面进行人工转账</h2>	
+	<button ng-click="fortuneConfirmCtrl.ok()" 
+	class='fortune-confirm-Withdrawn-button'>确定</button>
+	<button ng-click="fortuneConfirmCtrl.close()" 
+	class='fortune-confirm-Withdrawn-button'>取消</button>
+</div>

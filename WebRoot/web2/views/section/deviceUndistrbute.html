@@ -1,0 +1,30 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<span class="table-func-title">未分配的设备</span>
+		</div>
+		<thead>
+			<th ng-repeat="title in undistrbuteDeviceCtrl.titles">
+				{{title.name}}
+			</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="record in undistrbuteDeviceCtrl.allRecord">
+				<td>{{record.serialNum}}</td>
+				<td>{{record.deviceId}}</td>
+				<td>{{record.createTime | date :"yyyy-mm-dd hh:mm:ss"}}</td>
+				<td>{{record.status}}</td>
+				<td>{{record.remark}}</td>
+				<td>
+					<button class="t-btn t-btn-green" ng-click="undistrbuteDeviceCtrl.updateRemark($index)"">修改备注</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="undistrbuteDeviceCtrl.pre()">上一页</button>
+		<span>第{{undistrbuteDeviceCtrl.currentPage}}页,共{{undistrbuteDeviceCtrl.totalPage}}页</span>
+		<button ng-click="undistrbuteDeviceCtrl.next()">下一页</button>
+	</div>
+</div>

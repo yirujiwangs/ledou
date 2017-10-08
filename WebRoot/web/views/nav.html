@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="styles/ledouyaControl.css">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<div ng-controller="MainCtrl">
+    <div class='header'>
+        <div class='header-logo'>
+            <img src="images/logo-sign.png" style="width: 145px;height: 37px;margin-top: 16px;">
+        </div>
+        <div class='header-title'>
+            运营商服务系统
+        </div>
+        <div class='header-logoOut' ng-click="logOut()">
+            退出
+        </div>
+        <div class='header-user'>
+            <span>{{user}}</span>
+        </div>
+        <!-- <div class='header-user-logo'>
+        </div> -->
+    </div>
+    <div class="sidebar-warp">
+        <ul class='sidebar'>
+            <li ng-repeat='nav in navs' ng-click="changView($index)">
+                <i class="glyphicon {{nav.icon}}"></i>
+                <a>
+                    {{nav.name}}
+                </a>
+                <ul class="subnav">
+                    <li ng-repeat='subnav in nav.subnav' ng-class="{'active':subnav.click}" ng-click="changSubView($index,$parent.$index,$event);$event.stopPropagation();">
+                        <a ng-if="isShow(subnav.name)">{{subnav.name}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="title">
+        <span class="title-first" style="cursor:pointer" ng-click="changeRouting()">{{title}}</span>
+        <span>></span>
+        <span style="cursor:pointer" ng-click="changeSubRouting()">{{subTitle}}</span>
+        <span ng-show="showThirdTitle" >></span>
+        <span ng-show="showThirdTitle" style="cursor:pointer">{{thirdTitle}}</span>
+    </div>
+</div>

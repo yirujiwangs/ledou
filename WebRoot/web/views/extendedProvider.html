@@ -1,0 +1,67 @@
+<div ng-include="'views/nav.html'"></div>
+<div class="main">
+    <div class="intro">
+        <span class="intro-header">拓展业绩</span>
+        <div class="intro-body">
+            <dl class="exttopimg">
+                <dd>1.为增加已签约服务商的收益点，特制定关于已签约服务商拓展新服务商的奖励政策</dd>
+                <dd>2.组合采购量=直接推荐服务商采购量+自己采购量，均算为考核业绩，也享受相应奖励<a style="text-decoration: none" href="javascript:" data-toggle="tooltip" data-placement="right" title="组合采购量额外设备奖励：
+L6级：每月组合采购 10000台及以上设备，每台奖励15元。
+L5级：每月组合采购 5000-9999台设备，每台奖励12元。
+L4级：每月组合采购 1000-4999台设备，每台奖励9元。
+L3级：每月组合采购 500-999台设备，每台奖励6元。
+L2级：每月组合采购 300-499台设备，每台奖励4元。
+L1级：每月组合采购 200-299台设备，每台奖励3元。
+L0级：每月组合采购 0-199台设备，每台奖励0元。">查看详情<img src="images/question_mark.png" style="width: 15px;margin-right: 6px"></button></a></dd>
+                <dd>2.间接推荐服务商采购量是指直接推荐的服务商又推荐了新的服务商，也享受相应奖励<a style="text-decoration: none" href="javascript:" data-toggle="tooltip" data-placement="bottom" title="间接推荐服务商采购量额外设备奖励：
+L5级：每月累计采购 10000台及以上设备，每台奖励6元。
+L4级：每月累计采购 5000-9999台设备，每台奖励5元。
+L3级：每月累计采购 2000-4999台设备，每台奖励4元。
+L2级：每月累计采购 1000-1999台设备，每台奖励3元。
+L1级：每月累计采购 500-999台设备，每台奖励2元。
+L0级：每月累计采购 0-499台设备，每台奖励1元。">查看详情<img src="images/question_mark.png" style="width: 15px;margin-right: 6px"></button></a></dd>
+
+            </dl>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">关键指标</h3>
+        </div>
+        <div class="panel-body">
+            <div class='panel-items col-xs-4'>
+                <p>直接拓展服务商数量</p>
+                <p class="panel-items-num">{{extendedProviderCtrl.generalNum.dealerNum}}</p>
+            </div>
+            <div class='panel-items col-xs-4'>
+                <p>上月/本月直接推荐采购量</p>
+                <p class="panel-items-num">{{extendedProviderCtrl.generalNum.fDealerDeviceNumLast}}/{{extendedProviderCtrl.generalNum.fDealerDeviceNumNow}}</p>
+            </div>
+            <div class='panel-items col-xs-4'>
+                <p>上月/本月间接推荐采购量</p>
+                <p class="panel-items-num">{{extendedProviderCtrl.generalNum.sDealerDeviceNumLast}}/{{extendedProviderCtrl.generalNum.sDealerDeviceNumNow}}</p>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-reponsive">
+        <thead>
+        <th ng-repeat="title in extendedProviderCtrl.titles">
+            {{title.name}}
+        </th>
+        </thead>
+        <tbody>   {{store.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+        <tr ng-repeat="store in extendedProviderCtrl.allStore">
+            <td>{{store.createTime | date: 'yyyy-MM-dd '}}</td>
+            <td >{{store.account.replace((store.account).substr(3,5),"*****")}}</td>
+            <td>{{(store.recommend_type=="D")?"直接推荐":"间接推荐"}}</td>
+            <td>{{store.lastAmount}}/{{store.nowAmount}}</td>
+            <td>{{store.lastAmount+store.nowAmount+store.onceAmount}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn">
+        <button ng-click="extendedProviderCtrl.pre()">上一页</button>
+        <span>第{{extendedProviderCtrl.currentPage}}页,共{{extendedProviderCtrl.totalPage}}页</span>
+        <button ng-click="extendedProviderCtrl.next()">下一页</button>
+    </div>
+</div>

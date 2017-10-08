@@ -1,0 +1,50 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <table class="table table-hover table-reponsive">
+
+        <div class='table-func clearfix'>
+            <!-- <button class="t-btn t-btn-green pull-left m-b-md-n" ng-click="refundCtrl.incomeDetail()">收益明细</button> -->
+            <button class="t-btn t-btn-green pull-left" ng-click="deviceStockCtrl.deviceList()">创建设备订单</button>
+            <div class="pull-right">
+                <form class="form-inline clearfix">
+                    <div class=" pull-right ">
+                        <input type="text" placeholder="交易单号/运营商账号/运营商名称" ng-model="form.keyword" class="m-r-lg">
+                        <button class="t-btn t-btn-green pull-right" ng-click="deviceStockCtrl.search()">搜索</button>
+                    </div>
+                    <div class="pull-right m-r-lg">
+                        <div ng-include="'views/dateTime.html'"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <thead>
+        <td>订单编号</td>
+        <td>订单状态</td>
+        <td>创建时间</td>
+        <td>设备类型</td>
+        <td>设备数量</td>
+        <td>运营商名称</td>
+        <td>收件人信息</td>
+        <td>操作</td>
+        </thead>
+        <tbody>
+        <tr ng-repeat="record in deviceStockCtrl.allRecord">
+            <td>{{record.partner_trade_no}}</td>
+            <td>{{record.statusName}}</td>
+            <td>{{record.time  | date:"yy-MM-dd hh:mm:ss"}}</td>
+            <td>{{(record.device_type=="N")?"普通设备":"激活设备"}}</td>
+            <td>{{record.amount}}</td>
+            <td>{{record.username}}</td>
+            <td><span style="display: inline-block;margin-right: 20px;">{{record.consignee}}</span><span>{{record.contact_way}}</span><br><span>{{ record.delivery_address}}</span></td>
+            <td ng-click="deviceStockCtrl.detail($index)" style="color: #008FFF;cursor:pointer">
+                操作
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn">
+        <button ng-click="deviceStockCtrl.pre()">上一页</button>
+        <span>第{{deviceStockCtrl.currentPage}}页,共{{deviceStockCtrl.totalPage}}页</span>
+        <button ng-click="deviceStockCtrl.next()">下一页</button>
+    </div>
+</div>

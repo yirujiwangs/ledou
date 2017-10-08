@@ -1,0 +1,47 @@
+<div ng-include="'views/nav.html'"></div>
+<div class="container-normal">
+	<div class="history-main-wapper">  
+		<div class="history-main-content-head">
+			<p class="history-main-content-operate-history">操作历史</p>
+			<div class="history-main-content-head-filter">
+				<form action="" method="get">
+					<label>筛选条件：</label>
+					<select ng-model="form.type" ng-options="type for type in historyCtrl.types">					
+					</select>
+					
+					<select ng-model="form.staff" ng-options="staff for staff in historyCtrl.staffs" >
+					</select>
+					<select ng-model="form.customer" ng-options="customer for customer in historyCtrl.customers">										
+					</select>
+					<label style="margin-left: 20px">时间：</label>
+					<!-- dateTimePicker -->
+					<div style='display:inline-block;color:#000' ng-include="'views/dateTime.html'" ></div>
+					<!-- dateTimePicker -->
+					<button ng-click="historyCtrl.historyFilterSubmit()" class="button-style">提交</button>
+				</form>
+			</div>
+		</div>
+		<div class="history-main-body">
+			<table class="table table-bordered text-center">
+				<thead>
+					<tr>
+						<th>时间</th>
+						<th>操作对象</th>
+						<th>操作类型</th>
+						<th>操作内容</th>
+						<th>操作员</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="history in historyCtrl.historys">
+						<td>{{historyCtrl.conversion(history.createTime)}}</td>
+						<td>{{history.username}}</td>
+						<td>{{history.type}}</td>
+						<td>{{history.content}}</td>					
+						<td>{{history.adminname}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

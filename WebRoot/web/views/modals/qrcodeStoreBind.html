@@ -1,0 +1,13 @@
+<div class="modal-content">
+    <div class="modal-header">
+    	<h4 class="modal-title" style="display: inline-block;
+    margin-left: 82px;">绑定商户微信</h4>
+    	<button type="button" class="close" ng-click="qrcodeStoreBindCtrl.close()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+      <p style="margin:0;text-align:center;">请使用商户微信号扫描下方二维码</p>
+      <p style="margin:0;text-align:center;">目前暂不支持更换绑定微信号</p>
+      <img style="display: block;margin: 0 auto;" ng-src="{{ qrcodeUrl }}">
+      <p style="margin:0;text-align:center;">绑定后，微信号所有设备将同步至商户号</p>
+    </div>
+</div>

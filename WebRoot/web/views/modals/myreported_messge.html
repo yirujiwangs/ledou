@@ -1,0 +1,111 @@
+<div class=" panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">我要报备</h3>
+    </div>
+</div>
+<form class="form-horizontal" name="myreportForm" novalidate>
+    <div class="form-group">
+        <label class="col-xs-4 control-label">报备区域</label>
+        <span class="cityarea">{{area}}</span>
+    </div>
+    <div class="form-group" style="margin-top: 15px;margin-bottom: 0px">
+        <label class="col-xs-4 control-label">企业名称</label>
+        <div class="col-xs-5">
+            <input
+                    name="company"
+                    type="text"
+                    class="form-control"
+                    placeholder="如无，可不填"
+                    required=""
+                    minlength="2"
+                    ng-model='company'
+                    id="company"
+                    >
+            <p style="color: red" ng-show="myreportForm.company.$dirty  &&myreportForm.company.$error.required">请输入公司名称名称</p>
+            <p style="color: red" ng-show="myreportForm.company.$dirty  &&myreportForm.company.$error.minlength">请输入正确的公司名称</p>
+        </div>
+    </div>
+    <div class="form-group" style="margin-top: 15px;margin-bottom: 0px">
+        <label class="col-xs-4 control-label">联系人</label>
+        <div class="col-xs-5">
+            <input
+                    name="contact_name"
+                    type="text"
+                    class="form-control"
+                    placeholder="请输入您的名称"
+                    required=""
+                    minlength="2"
+                    ng-model='contactName'
+                    id="contactName"
+                    >
+            <p style="color: red" ng-show="myreportForm.contact_name.$dirty  &&myreportForm.contact_name.$error.required">请输入联系人名称</p>
+            <p style="color: red" ng-show="myreportForm.contact_name.$dirty  &&myreportForm.contact_name.$error.minlength">请输入您的名称</p>
+        </div>
+    </div>
+    <div class="form-group" style="margin-top: 15px;margin-bottom: 0px">
+        <label class="col-xs-4 control-label">联系电话</label>
+        <div class="col-xs-5">
+            <input
+                    name="contact_way"
+                    type="text"
+                    class="form-control"
+                    placeholder="请输入您的电话号码"
+                    required=""
+                    minlength="11"
+                    ng-model='contactWay'
+                    id="contactWay"
+                    >
+            <p style="color: red" ng-show="myreportForm.contact_way.$dirty  &&myreportForm.contact_way.$error.required">请输入正确联系电话</p>
+            <p style="color: red" ng-show="myreportForm.contact_way.$dirty  &&myreportForm.contact_way.$error.minlength">请输入11位电话号码</p>
+        </div>
+    </div>
+
+    <div class="form-group" style="margin-top: 15px;margin-bottom: 0px">
+        <label class="col-xs-4 control-label">备注</label>
+        <div class="col-xs-5">
+            <input
+                    name="comment"
+                    type="text"
+                    class="form-control"
+                    placeholder="如无，可不填"
+                    ng-model='comment'
+                    id="comment"
+                    >
+        </div>
+    </div>
+    <div class="form-group" ng-hide="true">
+        <label class="col-xs-4 control-label">已报备人数:</label>
+        <div class="col-xs-5">
+            <input
+                    name="report_num"
+                    type="number"
+                    class="form-control"
+                    placeholder="1~100"
+                    required=""
+                    min="0"
+                    max="100"
+                    ng-model='form.report_num'
+                    id="devicepeoplenum"
+                    value=""
+                    >
+            <!-- <p ng-show="accountEditForm.maxGroupNum.$dirty  &&accountEditForm.maxGroupNum.$error.required">请输入分组个数限制</p> -->
+            <p ng-show="myreportForm.report_num.$dirty  &&myreportForm.report_num.$error.min && myreportForm.report_num.$error.required">分组个数最小为0</p>
+            <p ng-show="myreportForm.report_num.$dirty  &&myreportForm.report_num.$error.max">分组个数最大为100</p>
+
+        </div>
+    </div>
+
+</form>
+<div class="myreportedbtn">
+    <div class="btn-group">
+        <button
+                id="submit"
+                class="btn-g btn-mt"
+                ng-class="{'disabled-btn':accountAddForm.$invalid,'btn-g-green':accountAddForm.$valid}"
+                ng-click="myreportedMessgeCtrl.add(record)"
+                ng-disabled="accountAddForm.$invalid"
+                style="background: #4BCC5F"
+                >提交</button>
+        <button class="btn-g btn-g-default btn-mt" ng-click="myreportedMessgeCtrl.close()">取消</button>
+    </div>
+</div>

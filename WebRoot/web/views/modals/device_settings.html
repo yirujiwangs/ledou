@@ -1,0 +1,96 @@
+<div class=" panel-default">
+    <div class="panel-heading" style="height: 40px;line-height: 40px;">
+        <h3 class="panel-title pull-left" style="font-size: 18px;font-family: PingFangSC-Medium;font-size: 18px;color: #717171;letter-spacing: -0.48px">设置激活返利</h3>
+        <div class="glyphicon glyphicon-remove pull-right" ng-click="deviceSettingsCtrl.close()" style="color: #717171;">
+        </div>
+    </div>
+    <form class="form-horizontal" name="myreportForm" novalidate  id="deviceSetting" style="margin-top: 15px;">
+        <div class="form-group">
+            <label class="col-xs-3 col-xs-offset-2 control-label" >设备序列号</label>
+            <div class="col-xs-5" style="margin-top: 7px;margin-bottom: 0px;" >
+                {{deviceId}}
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 15px;margin-bottom: 0px;" ng-show="policy==1">
+            <label class="col-xs-3 col-xs-offset-2" >激活补贴</label>
+            <div class="col-xs-5">
+                <div >
+                    服务商平台
+                    <input
+                            style="border: 1px solid #979797;border-radius: 4px;height: 23px;text-align: center;margin-bottom: 6px"
+                            name="comment"
+                            type="number"
+                            class=" "
+                            placeholder=""
+                            min="0" max="100"
+                            ng-model='price'
+                            id="activePercent">
+
+                    元
+                </div>
+                <div style="font-size: 14px;color: #666666;">激活码拥有者 <span ng-bind="form.ownPrice"></span> 元</div>
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 15px;margin-bottom: 0px">
+            <label class="col-xs-3 col-xs-offset-2 control-label" >红包分成</label>
+            <div class="col-xs-5" ng-show="policy==1">
+                <div  style="margin-bottom: 6px">
+                    服务商平台
+                    <input
+                            style="border: 1px solid #979797;border-radius: 4px;height: 23px;text-align: center;"
+                            name="comment"
+                            type="number"
+                            class=" "
+                            placeholder=""
+                            min="0" max="20"
+                            ng-model='redPercent'
+                            > %
+                </div>
+                <div style="font-size: 14px;color: #666666;margin-bottom: 6px">激活码拥有者 <span ng-bind="form.ownPercent"></span></div>
+                <div style="font-size: 14px;color: #666666;">设备拥有者 20 % </div>
+            </div>
+            <div class="col-xs-5" ng-show="policy==2">
+                <div  style="margin-bottom: 6px">
+                    服务商平台
+                    <input
+                            style="border: 1px solid #979797;border-radius: 4px;height: 23px;text-align: center;"
+                            name="comment"
+                            type="number"
+                            class=" "
+                            placeholder=""
+                            min="0" max="15"
+                            ng-model='redPercent'
+                            > %
+                </div>
+                <div style="font-size: 14px;color: #666666;margin-bottom: 6px">激活码拥有者 <span ng-bind="form.ownPercent"></span></div>
+                <div style="font-size: 14px;color: #666666;">设备拥有者 20 % </div>
+            </div>
+        </div>
+        <div class="form-group" style="margin-top: 15px;margin-bottom: 0px" >
+            <label class="col-xs-3 col-xs-offset-2 " > 备注: </label>
+            <div class="col-xs-4">
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder=""
+                        ng-model='form.comment'
+                        id="comment"
+                        >
+            </div>
+        </div>
+        <div style="color: #ae0b06;margin-left: 20px;margin-top: 15px;"> 注意：设备激活返利设置只能针对未激活设备进行设置，且只能设置一次，设置成功无法修改，请谨慎操作！ </div>
+    </form>
+    <div class="myreportedbtn">
+        <div class="btn-group">
+            <button
+                    id="submit"
+                    ng-class= "{'btn-g': true, 'btn-mt': true,'t-btn-green':clickable}"
+                    ng-disabled="!clickable"
+                    ng-click="deviceSettingsCtrl.submit()"
+                    >提交</button>
+            <button class="btn-g btn-g-default btn-mt" ng-click="deviceSettingsCtrl.close()">取消</button>
+        </div>
+    </div>
+</div>

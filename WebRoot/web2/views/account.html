@@ -1,0 +1,97 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">数据指标</h3>
+		</div>
+		<div class="panel-body">
+			<div ng-repeat="item in accountCtrl.generalNum" class='panel-items col-xs-3'>
+				<p>{{item.name}}</p>
+				<p class="panel-items-num">{{item.number}}</p>
+			</div>
+		</div>
+	</div>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+				<button class="t-btn t-btn-green pull-left" ng-click="accountCtrl.add()">创建运营商账号</button>
+				<div class="pull-right col-xs-9">
+					<form class="form-inline clearfix">
+						<div class="pull-right">
+							<input type="text" placeholder="运营商账号/运营商名称" ng-model="form.keyword" class="m-r-lg">
+							<button class="t-btn t-btn-green pull-right" ng-click="accountCtrl.search()">查询</button>
+						</div>
+						<div
+							class="col-xs-6 pull-right"
+							province="province"
+							area-code="areaCode"
+							align="align"
+							city-selector>
+						</div>
+					</form>
+				</div>
+		</div>
+		<thead>
+			<th>运营商账号</th>
+			<th>运营商名称</th>
+			<th>账号类型</th>
+			<td class="w-md">
+				<div class="dropdown">
+					<a class="dropdown-toggle mousepointer" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="color:#717171;" >
+						账号状态
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu mydropdown" aria-labelledby="dropdownMenu1" >
+						<li><a 	class = "mousepointer" ng-click="accountCtrl.stateList(true)">正常</a></li>
+						<li><a  class = "mousepointer" ng-click="accountCtrl.stateList(false)">禁用</a></li>
+					</ul>
+				</div></td>
+				<!-- <th>可用/总商户数</th> -->
+				<!--<th>可用/总普通商户数</th>-->
+				<!-- <th>可用/总平台商户数</th> -->
+				<th>代理区域</th>
+				<th>管理员open id</th>
+				<!--<th>备注</th>-->
+				<th>创建时间</th>
+				<th>操作</th>
+		</thead>
+		<tbody>
+				<tr ng-repeat="record in accountCtrl.allRecord">
+					<!-- <td>{{record.date_time| date:'yyyy-MM-dd HH:mm:ss'}}</td> -->
+					<td>{{record.account}}</td>
+					<td>{{record.accountName}}</td>
+					<td>{{record.proxyType | ShowProxyType }}</td>
+					<td ng-show ="record.status=='true'">正常</td>
+					<td ng-show ="record.status=='false'">禁用</td>
+					<!--<td>{{record.avblUser}}/{{record.totalUser}}</td>-->
+					<td style="text-align: center;">
+						<span ng-if="record.cityName">{{record.cityName}}</span>
+						<span ng-if="!(record.cityName)">全国</span>
+						/{{record.cityCode}}</td>
+					<td>
+						<div ng-if="record.openId">{{record.openId}}</div>
+						<div ng-if="!(record.openId)">未绑定</div>
+					</td>
+					<!--<td>-->
+						<!--<div ng-if="record.openId">{{record.remark}}</div>-->
+						<!--<div ng-if="!(record.openId)">未绑定</div>-->
+					<!--</td>-->
+					<td>{{record.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+					<td style="color: #008FFF;">
+
+						<button class="t-btn t-btn-green" ng-click="accountCtrl.update($index)">修改
+						</button>
+						<button class="t-btn t-btn-yellow" ng-click="accountCtrl.status($index)" ng-show="record.status=='true'">禁用</button>
+						<button class="t-btn t-btn-blue" ng-click="accountCtrl.status($index)"  ng-show="record.status=='false'">解封</button>
+						<button class="t-btn t-btn-blue" ng-click="accountCtrl.detail($index)">详情</button>
+					</td>
+				</tr>
+			</tbody>
+	</table>
+	<div class="page-btn">
+			<button ng-click="accountCtrl.pre()" style="background: #fff;"><img src="images/pre.png" alt=""/></button>
+			<span>{{accountCtrl.currentPage}}/{{accountCtrl.totalPage}}</span>
+			<button ng-click="accountCtrl.next()"style="background: #fff;" ><img src="images/next.png" alt=""/></button>
+			<input type='text' class="preinputwid jumppage"   ng-model="jumppage">
+			<button class="t-btn t-btn-green m-r-md " ng-click="accountCtrl.jump()">跳转</button>
+	</div>
+</div>

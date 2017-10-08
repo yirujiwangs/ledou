@@ -1,0 +1,78 @@
+.disabled-btn{
+	float: left;
+	background: rgba($green,.5);
+}
+.t-btn{
+	padding: 5px 7px;
+	border: 0;
+	border-radius: 3px;
+	color: #fff;
+	outline: none;
+}
+.t-btn-default{
+	color: #000;
+	background: #fff;
+}
+.t-btn-green{
+	background: $btn-green;
+}
+.t-btn-blue{
+	background: $btn-blue;
+}
+.t-btn-yellow{
+	background: #fdc747;
+}
+.m-btn{
+	width: 150px;
+	height: 50px;
+	border: 0;
+	border-radius: 3px;
+	color: #fff;
+	outline: none;
+}
+.m-btn-green{
+	background: $btn-green;
+}
+.btn-center{
+	display: block;
+	margin: 20px auto;
+}
+.btn-group{
+	display: block;
+	margin: 20px auto;
+	width: 200px;
+	.btn-g{
+		padding: 5px 7px;
+		width: 80px;
+		border: 0;
+		border-radius: 3px;
+		color: #fff;
+		outline: none;
+	}
+	.btn-g-green{
+		float: left;
+		background: $green;
+	}
+	.btn-g-default{
+		float: right;
+		background: #ddd;
+	}
+}
+.btn-primary{
+	border: 0;
+	background: $btn-green;
+	&:hover{
+		background: $btn-green;
+	}
+}
+.page-btn{
+	float: right;
+	button{
+		padding: 5px 7px;
+		border: 0;
+		color: #fff;
+		border-radius: 3px;
+		background: $green;
+		outline: none;
+	}
+}

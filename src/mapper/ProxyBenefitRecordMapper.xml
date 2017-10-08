@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ProxyBenefitRecordMapper">
+  <resultMap id="BaseResultMap" type="model.ProxyBenefitRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="proxy_token" jdbcType="VARCHAR" property="proxy_token" />
+    <result column="year_service_benefit" jdbcType="DOUBLE" property="year_service_benefit" />
+    <result column="ledouke_benefit" jdbcType="DOUBLE" property="ledouke_benefit" />
+    <result column="live_circle_benefit" jdbcType="DOUBLE" property="live_circle_benefit" />
+    <result column="lescene_benefit" jdbcType="DOUBLE" property="lescene_benefit" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, proxy_token, year_service_benefit, ledouke_benefit, live_circle_benefit, lescene_benefit, 
+    createtime
+  </sql>
+  <select id="selectByExample" parameterType="model.ProxyBenefitRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from proxy_benefit_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from proxy_benefit_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="proxyBenefitTotal" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT SUM(year_service_benefit+ledouke_benefit+live_circle_benefit+lescene_benefit) AS 'proxyBenefitTotal'
+    from proxy_benefit_record
+    where proxy_token = #{proxy_token,jdbcType=VARCHAR}
+    <if test="stime != null">
+      and createtime &gt; #{stime}
+    </if>
+    <if test="etime != null">
+      and createtime &lt; #{etime}
+    </if>
+  </select>
+  <select id="proxyBenefitMonthList" resultType="model.dto.ProxyBenefitRecord">
+    SELECT DATE_FORMAT(createtime,'%Y-%m') AS createDate,SUM(year_service_benefit) AS yearServiceBenefit,
+    SUM(ledouke_benefit) AS lodoukeBenefit,SUM(live_circle_benefit) AS liveCircleBenefit,
+    SUM(lescene_benefit) AS lesceneBenefit,SUM(year_service_benefit+ledouke_benefit+live_circle_benefit+lescene_benefit) AS totalBenefit
+    FROM proxy_benefit_record
+    where proxy_token = #{proxy_token,jdbcType=VARCHAR}
+    GROUP BY createDate desc
+    limit #{startSize,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="proxyBenefitDayList" resultType="model.dto.ProxyBenefitRecord">
+    SELECT DATE_FORMAT(createtime,'%Y-%m-%d') AS createDate,SUM(year_service_benefit) AS yearServiceBenefit,
+    SUM(ledouke_benefit) AS lodoukeBenefit,SUM(live_circle_benefit) AS liveCircleBenefit,
+    SUM(lescene_benefit) AS lesceneBenefit,SUM(year_service_benefit+ledouke_benefit+live_circle_benefit+lescene_benefit) AS totalBenefit
+    FROM proxy_benefit_record
+    where proxy_token = #{proxy_token,jdbcType=VARCHAR} AND createtime LIKE CONCAT(#{createtime,jdbcType=VARCHAR},'%')
+    GROUP BY createDate desc
+    limit #{startSize,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="distProxyBenefitMonth" resultType="model.dto.ProxyBenefitRecord">
+    SELECT DATE_FORMAT(createtime,'%Y-%m') AS createDate,SUM(year_service_benefit) AS yearServiceBenefit,
+    SUM(ledouke_benefit) AS lodoukeBenefit,SUM(live_circle_benefit) AS liveCircleBenefit,
+    SUM(lescene_benefit) AS lesceneBenefit,SUM(year_service_benefit+ledouke_benefit+live_circle_benefit+lescene_benefit) AS totalBenefit
+    FROM proxy_benefit_record
+    where proxy_token = #{proxy_token,jdbcType=VARCHAR} AND createtime LIKE CONCAT(#{createtime,jdbcType=VARCHAR},'%')
+    GROUP BY createDate
+  </select>
+
+  <select id="proxyBenefitRecordCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+    SELECT COUNT(1) FROM
+    (
+      SELECT COUNT(id) num
+      FROM proxy_benefit_record
+      WHERE proxy_token = #{proxy_token,jdbcType=VARCHAR}
+      GROUP BY  DATE_FORMAT(createtime,'%Y-%m')
+    ) AS groups
+  </select>
+  <select id="countByExample" parameterType="model.ProxyBenefitRecordExample" resultType="java.lang.Integer">
+    select count(*) from proxy_benefit_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause"/>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from proxy_benefit_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="model.ProxyBenefitRecordExample">
+    delete from proxy_benefit_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="model.ProxyBenefitRecord">
+    insert into proxy_benefit_record (id, proxy_token, year_service_benefit, 
+      ledouke_benefit, live_circle_benefit, lescene_benefit, 
+      createtime)
+    values (#{id,jdbcType=INTEGER}, #{proxy_token,jdbcType=VARCHAR}, #{year_service_benefit,jdbcType=DOUBLE}, 
+      #{ledouke_benefit,jdbcType=DOUBLE}, #{live_circle_benefit,jdbcType=DOUBLE}, #{lescene_benefit,jdbcType=DOUBLE}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="model.ProxyBenefitRecord">
+    insert into proxy_benefit_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="proxy_token != null">
+        proxy_token,
+      </if>
+      <if test="year_service_benefit != null">
+        year_service_benefit,
+      </if>
+      <if test="ledouke_benefit != null">
+        ledouke_benefit,
+      </if>
+      <if test="live_circle_benefit != null">
+        live_circle_benefit,
+      </if>
+      <if test="lescene_benefit != null">
+        lescene_benefit,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="proxy_token != null">
+        #{proxy_token,jdbcType=VARCHAR},
+      </if>
+      <if test="year_service_benefit != null">
+        #{year_service_benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="ledouke_benefit != null">
+        #{ledouke_benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="live_circle_benefit != null">
+        #{live_circle_benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="lescene_benefit != null">
+        #{lescene_benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map">
+    update proxy_benefit_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.proxy_token != null">
+        proxy_token = #{record.proxy_token,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year_service_benefit != null">
+        year_service_benefit = #{record.year_service_benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ledouke_benefit != null">
+        ledouke_benefit = #{record.ledouke_benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.live_circle_benefit != null">
+        live_circle_benefit = #{record.live_circle_benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.lescene_benefit != null">
+        lescene_benefit = #{record.lescene_benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update proxy_benefit_record
+    set id = #{record.id,jdbcType=INTEGER},
+      proxy_token = #{record.proxy_token,jdbcType=VARCHAR},
+      year_service_benefit = #{record.year_service_benefit,jdbcType=DOUBLE},
+      ledouke_benefit = #{record.ledouke_benefit,jdbcType=DOUBLE},
+      live_circle_benefit = #{record.live_circle_benefit,jdbcType=DOUBLE},
+      lescene_benefit = #{record.lescene_benefit,jdbcType=DOUBLE},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="model.ProxyBenefitRecord">
+    update proxy_benefit_record
+    <set>
+      <if test="proxy_token != null">
+        proxy_token = #{proxy_token,jdbcType=VARCHAR},
+      </if>
+      <if test="year_service_benefit != null">
+        year_service_benefit = #{year_service_benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="ledouke_benefit != null">
+        ledouke_benefit = #{ledouke_benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="live_circle_benefit != null">
+        live_circle_benefit = #{live_circle_benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="lescene_benefit != null">
+        lescene_benefit = #{lescene_benefit,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.ProxyBenefitRecord">
+    update proxy_benefit_record
+    set proxy_token = #{proxy_token,jdbcType=VARCHAR},
+      year_service_benefit = #{year_service_benefit,jdbcType=DOUBLE},
+      ledouke_benefit = #{ledouke_benefit,jdbcType=DOUBLE},
+      live_circle_benefit = #{live_circle_benefit,jdbcType=DOUBLE},
+      lescene_benefit = #{lescene_benefit,jdbcType=DOUBLE},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

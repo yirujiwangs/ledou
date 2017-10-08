@@ -1,0 +1,84 @@
+<div ng-include="'views/nav.html'"></div>
+<div class="main">
+	<div class="screen clearfix">
+		<img src="images/logo.png" alt="">
+		<div class="screen-info">
+			<h4>乐豆呀-商户管理平台</h4>
+			<dl>
+				<dt>运营商采购:</dt>
+				<dd>普通账号，服务费100元/年，10个起购</dd>
+				<dd>平台账号，服务费300元/年，10个起购</dd>
+			</dl>
+		</div>
+	</div>
+	<div class="panel-purchase">
+		<div class="panel-purchase-header">
+			<h4>采购账号</h4>
+		</div>
+		<div class="panel-purchase-body">
+			<form method="post" action="/admin/proxyAccount/buyAccount.do" name="accountPurchaseForm" target="_blank" class="m-t-lg">
+				<div class="form-group clearfix">
+					<span class="col-xs-2">账号类型</span>
+					<div class="col-xs-6 del-l-p">			
+						<input 
+							name="accountType" 
+							type="radio" 
+							id="normal"
+							ng-model="form.accountType"
+							value="normal"
+						>
+						<span>{{form.normal}}</span>
+						<label for="normal">普通账号</label>
+						<input 
+							name="accountType" 
+							type="radio" 
+							id="platform" 
+							ng-model="form.accountType"
+							value="platform"
+							disabled="disabled"
+						>
+						<label for="platform">平台账号</label>
+					</div>
+				</div>
+				<div class="form-group clearfix">
+					<span class="col-xs-2">采购数量</span>
+					<div class="col-xs-6 del-l-p">			
+					    <span class="col-xs-3 del-l-p">普通账号</span>
+					    <div class="col-xs-6 counter">
+					    	<span class="counter-minus" ng-click="accountPurchaseCtrl.minus()">-</span><!--
+					    	--><input 
+					    			name="num" 
+					    			type="text" 
+					    			class="counter-result"
+					    		    ng-model="form.result"
+					    		><!--
+					    	--><span class="counter-add" ng-click="accountPurchaseCtrl.add()">+</span>
+					    </div>
+					</div>
+				</div>
+				<div class="form-group clearfix">
+					<span class="col-xs-2">备注</span>
+					<div class="col-xs-3 del-l-p">			
+						<input name="remark" type="text" class="form-control" ng-model="form.remark">
+					</div>
+				</div>
+				<div class="form-group clearfix">
+					<span class="col-xs-2">所需金额</span>
+					<div class="col-xs-6 del-l-p">			
+						<span id="normal" ng-model="needmony" ng-if="form.accountType==='normal' && form.result !== undifined">{{parseInt(form.result)*100}}元</span>
+						<span ng-model="needmony" ng-if="form.accountType==='platform' && form.result !== undifined">{{parseInt(form.result)*300}}元</span>
+						<span ng-if="form.result === undifined">0元</span>
+
+					</div>
+				</div>
+				<button 
+					type="submit"
+					class="t-btn col-xs-offset-2 pull-left"
+					id="confirm"
+					ng-class="{'t-btn-green':accountPurchaseForm.$valid,'disabled-btn':accountPurchaseForm.$invalid}"
+					ng-click="accountPurchaseCtrl.confirm()"
+				>确定下单</button>
+			</form>
+		</div>
+	</div>
+</div>

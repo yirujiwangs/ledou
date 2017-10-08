@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--处理responseBody乱码问题-->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="utils.common.UTF8StringHttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <!-- 扫描controller（controller层注入） -->
+    <context:component-scan base-package="controller"/>
+    <context:component-scan base-package="api"/>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <bean class="interceptor.CommonInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/admin/superLogin.do"/>
+            <mvc:exclude-mapping path="/admin/login.do"/>
+            <mvc:exclude-mapping path="/account/toLogin.do"/>
+            <mvc:exclude-mapping path="/proxyAccount/alipaynotify_buyusers.do"/>
+            <mvc:exclude-mapping path="/advertise/leAdvPayNotify.do"/>
+            <mvc:exclude-mapping path="/advertise/leAdvPost.do"/>
+            <mvc:exclude-mapping path="/red/editPowderRed.do"/>
+            <mvc:exclude-mapping path="/wx/wxLogin.do"/>
+            <mvc:exclude-mapping path="/wx/**"/>
+            <mvc:exclude-mapping path="/api/**"/>
+            <mvc:exclude-mapping path="/payback/**"/>
+            <bean class="interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.RuntimeException">/common/error</prop>
+                <prop key="java.lang.Exception">/common/error</prop>
+                <prop key="java.lang.NullPointerException">/common/error</prop>
+                <prop key="java.sql.SQLException">/common/error</prop>
+                <prop key="javax.servlet.ServletException">/common/error</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 避免IE在ajax请求时，返回json出现下载 -->
+    <bean id="jacksonMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 对模型视图添加前后缀 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:order="1">
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!-- 使用freemarker作为html解析器的。 网上很多人都是org.springframework.web.servlet.view.InternalResourceViewResolver这个类，
+        它只能解析jsp，并且它的配置非常简单。需要注意的是我优先在applicationContext里配置了FreeMarkerConfigurer
+        这个类，很多文章都是没有配置它的，这个类不配置也会报错，而且这个类必须优先在FreeMarkerViewResolver 之前置 -->
+
+    <bean id="freemarkerConfig"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/" />
+        <!-- <property name="freemarkerSettings"> <props> <prop key="template_update_delay">0</prop>
+            <prop key="default_encoding">UTF-8</prop> <prop key="number_format">0.##########</prop>
+            <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop> <prop key="classic_compatible">true</prop>
+            <prop key="template_exception_handler">ignore</prop> </props> </property> -->
+    </bean>
+
+    <bean id="freeMarkerViewResolver"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+
+        <!-- <property name="exposeRequestAttributes" value="true" /> <property
+            name="exposeSessionAttributes" value="true" /> -->
+        <!-- <property name="viewNames" value=".html" /> -->
+        <property name="contentType" value="text/html; charset=utf-8" />
+        <!-- <property name="cache" value="true" /> -->
+        <!-- <property name="prefix" value="/WEB-INF/html/"></property> -->
+        <property name="suffix" value=".html"></property>
+        <property name="order" value="0"></property>
+    </bean>
+
+
+
+
+    <tx:annotation-driven/>
+</beans>

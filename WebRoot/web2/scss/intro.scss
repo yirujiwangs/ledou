@@ -1,0 +1,27 @@
+.intro{
+	width: 100%;
+	.intro-header{
+		padding: 10px 20px;
+		border-bottom: 3px solid $green;
+	}
+	.intro-body{
+		position: relative;
+		dl{
+			padding: 20px;
+			background: #e7e8eb;
+			margin-top: 10px;
+			background: #e7e8eb;
+		}
+		.intro-btn{
+			position: absolute;
+			top: 24px;
+			right: 30px;
+			padding: 5px 10px;
+			border: 0;
+			border-radius: 5px;
+			outline: none;
+			color: #fff;
+			background: $btn-green;
+		}
+	}
+}

@@ -1,0 +1,24 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<table class='table table-hover table-reponsive'>
+		<thead>
+			<tr>
+				<td ng-repeat="title in financeStoreDetailCtrl.titles">{{title.name}}</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="data in financeStoreDetailCtrl.allData">
+				<td>{{data.date_time|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+				<td>{{data.out_trade_no}}</td>
+				<td>{{data.fee}}</td>
+				<td>{{data.proxy_taxes_money}}</td>
+				<td>{{data.remark}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="financeStoreDetailCtrl.pre()">上一页</button>
+		<span>第{{financeStoreDetailCtrl.currentPage}}页,共{{financeStoreDetailCtrl.totalPage}}页</span>
+		<button ng-click="financeStoreDetailCtrl.next()">下一页</button>
+	</div>
+</div>

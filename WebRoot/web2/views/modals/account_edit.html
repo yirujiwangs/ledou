@@ -1,0 +1,73 @@
+<div class='account-edit-header'><i class="glyphicon glyphicon-remove" ng-click="accountEditCtrl.close()"></i></div>
+<form class="form-horizontal modal-form" name="accountEditForm">
+	<div class="form-group">
+		<label class="col-xs-4 control-label">运营商账号:</label>
+		<div class="col-xs-5">
+			<span class="modal-span">{{form.account}}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">运营商名称:</label>
+		<div class="col-xs-5">
+			<span class="modal-span">{{form.accountName}}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">登陆密码:</label>
+		<div class="col-xs-5">
+			<span class="modal-span">{{ form.password }}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">政策:</label>
+		<input type="radio" id="newPolicy"  name="policy" ng-model="form.policy"  value=2>
+		<label for="newPolicy">新政策</label>
+		<input type="radio" id="oldPolicy"  name="policy" ng-model="form.policy" value=1>
+		<label for="oldPolicy">老政策</label>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">已选区域:</label>
+		<div class="col-xs-5">
+			<span class="modal-span">{{ form.cityName }}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">代理区域:</label>
+		<div 
+			class="col-xs-6 pull-left"
+			require="{{ require }}"
+			area-code="areaCode"
+			align="align" 
+			city-selector>
+		</div>
+		<input 
+			name="areaCode"
+			type="hidden" 
+			ng-model="areaCode"
+		>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">备注:</label>
+		<div class="col-xs-5">
+			<input
+				name="remark" 
+				type="text"
+				class="form-control"  
+				ng-model='form.remark'
+				maxlength="15"
+			>
+		</div>
+		<!-- <div class="col-xs-2 del-l-p">
+			<span class="form-num">0 / 15</span>
+		</div> -->
+	</div>
+	<div class="btn-group">
+		<button 
+				class="btn-g" 
+				ng-class="{'disabled-btn':accountEditForm.$invalid,'btn-g-green':accountEditForm.$valid}" 
+				ng-click="accountEditCtrl.update()" 
+				ng-disabled="accountEditForm.$invalid"
+		>提交</button>
+		<button class="btn-g btn-g-default" ng-click="accountEditCtrl.close()">取消</button>
+	</div>
+</form>

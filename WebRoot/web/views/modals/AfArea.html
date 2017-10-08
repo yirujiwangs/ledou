@@ -1,0 +1,58 @@
+<div class="setArea clearfix">
+    <h1>配置投放区域分组</h1>
+    <div class="setArea-warp">
+        <div class="setArea-choose pull-left">
+            <h2 class="setArea-choose-header" style="margin-bottom:0px">
+                选择投放区域分组
+            </h2>
+            <div class="setArea-table" id="area">
+                <div ng-repeat="province in afAreaCtrl.allCity.province">
+                    <span style="display:inline-block;margin-left:10px;margin-top:15px;cursor:pointer" data="province" ng-click="afAreaCtrl.isShow($event,'city')" >{{province.name}}</span>
+                    <input style="float:right;margin-right:40px;margin-top:15px;"  type="checkbox" data="province"  ng-click="afAreaCtrl.chooseProvince($index)"/>
+                    <i data="province" style="display:none;">{{province.id}}</i>
+                    <div ng-repeat="city in afAreaCtrl.allCity.city[province.id]" data="city" style="margin-left:20px;display:none">
+                        <span  style="display:inline-block;margin-left:10px;margin-top:15px;cursor:pointer" data="city" ng-click="afAreaCtrl.isShow($event,'district')" >{{city.name}}</span>
+                        <input style="float:right;margin-right:40px;margin-top:15px;" type="checkbox"  data="city" ng-click="afAreaCtrl.chooseCity($event)"/>
+                        <i data="city" style="display:none;">{{city.id}}</i>
+                        <div  ng-repeat="district in afAreaCtrl.allCity.district[city.id]" data="district" style="margin-left:20px;display:none">
+                            <span  style="display:inline-block;margin-left:10px;margin-top:15px;cursor:pointer" data="district" >{{district.name}}</span>
+                            <input style="float:right;margin-right:40px;margin-top:15px;" type="checkbox" data="district" ng-click="afAreaCtrl.chooseDistrict($event)"/>
+                            <i data="district" style="display:none;">{{district.id}}</i>
+                        </div >
+                    </div >
+                </div>
+            </div>
+        </div>
+        <div class="setArea-choose pull-right">
+            <h2 class="setArea-choose-header">已选择</h2>
+            <div class="setArea-table">
+                <table>
+                    <thead >
+                    <th>地区名</th>
+                    <th>&nbsp;</th>
+                    <th>操作</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="area in afAreaCtrl.addressChoosed">
+                        <td>{{area.name}}</td>
+                        <td style="width: 120px;">
+                <span
+                        class="glyphicon glyphicon-remove"
+                        ng-click="afAreaCtrl.remove($index)"
+                        ></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <button
+                class="t-btn t-btn-green setArea-addBtn"
+                ng-click="afAreaCtrl.addAddress()"
+                >添加</button>
+    </div>
+    <div class="btn-group setArea-btn-group">
+        <button class="btn-g btn-g-green" ng-click="afAreaCtrl.ok()">确定</button>
+        <button class="btn-g btn-g-default" ng-click="afAreaCtrl.close()">取消</button>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<div ng-include="'views/nav.html'"></div>
+
+
+
+<div class="main clearfix">
+
+        <div class="panel-ad col-xs-11 form-horizontal">
+
+            <div class="panel-ad-header">提交审核资料</div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-2">上传身份证</span>
+
+                <div class="col-xs-5" >
+                    <img style="border: 1px solid #ccc;" class="panel-ad-pic" ng-src="{{cardFrontUrl}}" alt="">
+
+                    <section class="panel-ad-notice" style="position:absolute;right:40%;">上传身份证正面,请确保画质清晰</section>
+
+                    <button id="cardFront" style="margin-right: 50px;" class="t-btn t-btn-green pull-right">上传</button>
+                </div>
+
+                <div class="col-xs-5">
+                    <img style="border: 1px solid #ccc;" class="panel-ad-pic" ng-src="{{cardBackUrl}}" alt="">
+
+                    <section class="panel-ad-notice" style="position:absolute;right:40%;">上传身份证反面,请确保画质清晰</section>
+
+                    <button id="cardBack" style="margin-right: 50px;" class="t-btn t-btn-green pull-right">上传</button>
+                </div>
+
+            </div>
+            <div class="panel-ad-form clearfix" style="margin-top: 50px;">
+
+                <span class="col-xs-2">收银台照片</span>
+
+                <div class="col-xs-3" >
+                    <img style="border: 1px solid #ccc;" class="panel-ad-pic" ng-src="{{counterUrl}}" alt="">
+                </div>
+
+                <div class="col-xs-4" >
+                    <button id="counter" style="margin-right: 50px;" class="t-btn t-btn-green">上传</button>
+                </div>
+
+            </div>
+            <div class="panel-ad-form clearfix" style="margin-top: 50px;">
+
+                <span class="col-xs-2">经营许可证照片</span>
+
+                <div class="col-xs-3" >
+                    <img style="border: 1px solid #ccc;" class="panel-ad-pic" ng-src="{{permitUrl}}" alt="">
+                </div>
+
+                <div class="col-xs-4" >
+                    <button id="permit" style="margin-right: 50px;" class="t-btn t-btn-green" >上传</button>
+                </div>
+            </div>
+            <div class="panel-ad-form clearfix" style="margin-top:50px;">
+
+                <span class="col-xs-2">合照(可选)</span>
+
+                <div class="col-xs-3" >
+                    <img style="border: 1px solid #ccc;" class="panel-ad-pic" ng-src="{{groupUrl}}" alt="">
+                </div>
+                <div class="col-xs-4" >
+                    <button id="group" style="margin-right: 50px;" class="t-btn t-btn-green">上传</button>
+                </div>
+            </div>
+
+
+            <input type="hidden" name="cardFront" value="{{cardFrontUrl}}"/>
+
+            <input type="hidden" name="cardBack" value="{{cardBackUrl}}"/>
+
+            <input type="hidden" name="counter" value="{{counterUrl}}"/>
+
+            <input type="hidden" name="permit" value="{{permitUrl}}"/>
+
+            <input type="hidden" name="group" value="{{groupUrl}}"/>
+
+            <button
+
+                    type="submit"
+
+                    ng-click="checkStoreCtrl.submit()"
+
+                    ng-class="{true:'t-btn-green',false:'disabled-btn'}[true]"
+
+                    class="t-btn panel-ad-submit">确定并提交
+            </button>
+
+        </div>
+
+</div>

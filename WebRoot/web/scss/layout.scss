@@ -1,0 +1,105 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+ul{
+	margin-bottom: 0;
+}
+body{
+	padding-top:1px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, 'Hiragino Sans GB', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;
+	color: #717171;
+	background-color: #f2f2f2;
+	overflow: hidden;
+}
+.clearfix{
+	&:after{
+		content: "";
+		display: block;
+		visibility: hidden;
+		height: 0;
+		clear: both;
+	}
+}
+.header {
+    position: fixed;
+    z-index: 999;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: $green;
+    color: #fff;
+}
+.sidebar-warp{
+	position: fixed;
+	z-index: 998;
+	top: 70px;
+	left: -20px;
+	width: 240px;
+	height: 100%;
+	background: #fff;
+	overflow: hidden;
+}
+.sidebar{
+	position: absolute;
+	top: 0;
+	right: -20px;
+	width: 100%;
+	height: 100%;
+	overflow-y: scroll;
+}
+.title{
+	position: fixed;
+	z-index: 999;
+	left: 220px;
+	top: 69px;
+	width: 100%;
+	height: 45px;
+}
+.main{
+	margin: 100px -20px 0 220px;
+	padding: 40px 20px 180px;
+	height: 100%;
+	overflow-y: scroll;
+	box-sizing: border-box;
+}
+.m-r-xs{
+	margin-right: 5px;
+}
+.m-r-md{
+	margin-right: 10px;
+}
+.m-r-lg{
+	margin-right: 15px;
+}
+.m-l-xs{
+	margin-left: 5px;
+}
+.m-l-md{
+	margin-left: 10px;
+}
+.m-l-lg{
+	margin-left: 15px;
+}
+.m-t-xs{
+	margin-top: 5px;
+}
+.m-t-md{
+	margin-top: 10px;
+}
+.m-t-lg{
+	margin-top: 15px;
+}
+.m-b-xs{
+	margin-bottom: 5px;
+}
+.m-b-md{
+	margin-bottom: 10px;
+}
+.m-b-lg{
+	margin-bottom: 15px;
+}
+.del-l-p{
+	margin-left: -15px;
+}

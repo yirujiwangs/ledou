@@ -1,0 +1,32 @@
+<!-- datatime -->
+<div class='datatimePickerWapper'>
+    <div class="dropdown">
+        <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target="#" href="#">
+            <div class="input-group" style='width:145px'>
+                <input type="text" class="form-control timepicker" ng-model='beginTime'>
+                <!-- <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> -->
+            </div>
+        </a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <datetimepicker data-ng-model="data.inputOnTimeSet"       data-on-set-time="inputOnTimeSet(newDate)"
+                            data-datetimepicker-config="configFunction()"
+                    ></datetimepicker>
+        </ul>
+    </div>
+</div>
+<span>-</span>
+<div class='datatimePickerWapper'>
+    <div class="dropdown">
+        <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+            <div class="input-group" style='width:145px'>
+                <input type="text" class="form-control timepicker" ng-model='endTime'>
+                <!-- <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> -->
+            </div>
+        </a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <datetimepicker data-ng-model="data.inputOnTimeSet" data-on-set-time="inputOnEndTimeSet(newDate)"
+                            data-datetimepicker-config="configFunction()"
+                    ></datetimepicker>
+        </ul>
+    </div>
+</div>

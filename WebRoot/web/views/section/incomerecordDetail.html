@@ -1,0 +1,41 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">数据指标</h3>
+        </div>
+        <div class="panel-body">
+            <div class='panel-items col-xs-6'>
+                <p>当月激活数</p>
+                <p class="panel-items-num">{{num}}</p>
+            </div>
+            <div class='panel-items col-xs-6'>
+                <p>服务商平台激活补贴收益</p>
+                <p class="panel-items-num">{{(benefit/100).toFixed(2)}}</p>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-reponsive">
+        <thead>
+        <th>设备序列号</th>
+        <th>激活码拥有者收益</th>
+        <th>服务商平台激活补贴收益</th>
+
+        </thead>
+        <tbody>
+        <tr ng-repeat="record in incomerecordDetailCtrl.allUser">
+            <td>LD{{ record.alive_code}}</td>
+            <td ng-if="policy==2">0</td>
+            <td ng-if="policy!=2">{{(100 - record.benefit/100).toFixed(2) }}</td>
+            <td>{{ record.benefit  /100 }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn " id="pageHide">
+        <button ng-click="incomerecordDetailCtrl.pre()" style="background: #fff;"><img src="images/pre.png" alt=""/></button>
+        <span>{{incomerecordDetailCtrl.currentPage}}/{{incomerecordDetailCtrl.totalPage}}</span>
+        <button ng-click="incomerecordDetailCtrl.next()" style="background: #fff;"><img src="images/next.png" alt=""/></button>
+        <input type='text' class="preinputwid jumppage" style="text-align: center;" placeholder=""  ng-model="jumppage">
+        <button class="t-btn t-btn-green m-r-md " ng-click="incomerecordDetailCtrl.jump()">跳转</button>
+    </div>
+</div>

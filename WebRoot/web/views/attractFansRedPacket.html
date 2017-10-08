@@ -1,0 +1,92 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class='panel-items col-xs-3' style="height: 90px">
+                <p class="panel-items-left" style="margin-top:15px">1</p>
+                <div class="panel-items-right" style="margin-top:20px">
+                    <p>创建吸粉红包计划</p>
+                    <p>编辑吸粉红包</p>
+                </div>
+            </div>
+            <div class='panel-items col-xs-3' style="height: 90px">
+                <p class="panel-items-left" style="margin-top:15px">2</p>
+                <div class="panel-items-right" style="margin-top:20px">
+                    <p>编辑完成并支付</p>
+                    <p>提交总部进行审核</p>
+                </div>
+            </div>
+            <div class='panel-items col-xs-3' style="height: 90px">
+                <p class="panel-items-left" style="margin-top:15px">3</p>
+                <div class="panel-items-right" style="margin-top:20px">
+                    <p>审核通过后</p>
+                    <p>设备摇出吸粉红包</p>
+                </div>
+            </div>
+            <div class='panel-items col-xs-3' style="height: 90px">
+                <button
+                        class="t-btn btn-sm t-btn-green panel-items-btn"
+                        style="display:block;margin-left:auto;margin-right:auto;width:65% "
+                        ng-click="attractFansRedPacketCtrl.goAuthorization()">
+                    授权列表
+                </button>
+                <button
+                        class="t-btn btn-sm t-btn-green panel-items-btn"
+                        style="display:block;margin-left:auto;margin-right:auto;width:65% "
+                        ng-click="attractFansRedPacketCtrl.goCreateRedPacket()">
+                    创建吸粉红包
+                </button>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-reponsive">
+        <thead>
+        <th ng-repeat="title in attractFansRedPacketCtrl.titles">
+            {{title.name}}
+        </th>
+        </thead>
+        <tbody>
+       <tr ng-repeat="info in attractFansRedPacketCtrl.allInfo">
+                <td>
+                    <img style="width: 50px;height: 50px;" ng-src="{{ info.head_img }}" alt="">
+                </td>
+                <td>{{ info.name }}</td>
+                <td>{{ info.red_name }}</td>
+                <td class="colorblue reportclk" style="color: #4bcc5f;" ng-click="attractFansRedPacketCtrl.redPacketDetail($index)">详情</td>
+                <td>{{ info.remain_num }}</td>
+                <td>{{ info.numb }}</td>
+                <td>{{ info.left_num }}</td>
+                <td>{{ (info.budget /100).toFixed(2)}}</td>
+                <td>{{ info.showStatus}}</td>
+                <td>{{ info.time.slice(0,10) }}</td>
+                <td>
+                    <form name="adv" action="/ledou/advertise/leAdvRePay.do" method="post" target="_blank">
+                        <input type="hidden" name="advUUID" value="{{attractFansRedPacketCtrl.advUUID}}"/>
+                        <input type="hidden" name="type" value="fans"/>
+                        <div class="btn-group dropdown-select" style="display: inline-block;margin: 0;width: auto;">
+                            <button type="button" class="dropdown-toggle t-btn t-btn-green" ng-click="attractFansRedPacketCtrl.handle($index)" data-toggle="dropdown" >
+                                操作&nbsp;<b class="caret"></b>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" style="left:initial;right:0;">
+                                <li style="text-align: center;margin-bottom: 4px;color:#4bcc5f;"  ng-click="attractFansRedPacketCtrl.getRedPacketInfo($index)">
+                                    数据详情
+                                </li>
+                                <li style="text-align: center;margin-bottom: 4px;" ng-show="{{info.upShow}}" ng-click="attractFansRedPacketCtrl.changeStatus($index,attractFansRedPacketCtrl.status)">
+                                    {{attractFansRedPacketCtrl.status}}
+                                </li>
+                                <li style="text-align: center;margin-bottom: 4px;"  ng-show="{{info.isEdit}}" ng-click="attractFansRedPacketCtrl.edit($index)">编辑</li>
+                                <li style="text-align: center;margin-bottom: 4px;" ng-show="{{info.isDelete}}" ng-click="attractFansRedPacketCtrl.delete($index)">删除</li>
+                                <button  class="t-btn t-btn-green" type="submit" ng-show="{{info.isPay}}"  ng-click="attractFansRedPacketCtrl.submit()" style="width: 100%;">支付</button>
+                            </ul>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="page-btn">
+        <button ng-click="attractFansRedPacketCtrl.pre()">上一页</button>
+        <span>第{{attractFansRedPacketCtrl.currentPage}}页,共{{attractFansRedPacketCtrl.totalPage}}页</span>
+        <button ng-click="attractFansRedPacketCtrl.next()">下一页</button>
+    </div>
+</div>

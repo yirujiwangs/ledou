@@ -1,0 +1,32 @@
+{
+  "name": "ledouya-control",
+  "version": "1.0.0",
+  "description": "乐豆呀控制中心",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.coding.net/lutianfei/ledouyaControl.git"
+  },
+  "keywords": [
+    "乐豆呀控制中心"
+  ],
+  "author": "ledouya",
+  "license": "ISC",
+  "devDependencies": {
+    "del": "^2.2.1",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean-css": "^2.0.10",
+    "gulp-concat": "^2.6.0",
+    "gulp-html-replace": "^1.6.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rev": "^7.1.0",
+    "gulp-rev-collector": "^1.0.5",
+    "gulp-ruby-sass": "^2.0.6",
+    "gulp-run-sequence": "^0.3.2",
+    "gulp-uglify": "^1.5.3"
+  }
+}

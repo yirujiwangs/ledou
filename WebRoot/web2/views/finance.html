@@ -1,0 +1,68 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">数据指标</h3>
+		</div>
+		<div class="panel-body">
+<!--
+			<div class='panel-items col-xs-3'>
+				<p>累计组合采购奖励</p>
+				<p class="panel-items-num">{{financeCtrl.generalNum.combinationDeviceBenefit}}</p>
+			</div>
+			<div class='panel-items col-xs-3'>
+				<p>累计间接采购奖励</p>
+				<p class="panel-items-num">{{financeCtrl.generalNum.indirectDeviceBenefit}}</p>
+			</div>
+-->
+			<div class='panel-items col-xs-6'>
+				<p>累计组合采购广告收益</p>
+				<p class="panel-items-num">{{financeCtrl.generalNum.combinationAdBenefit}}</p>
+			</div>
+			<div class='panel-items col-xs-6'>
+				<p>累计充值收益</p>
+				<p class="panel-items-num">{{financeCtrl.generalNum.storeAdDepositBenefit}}</p>
+			</div>
+		</div>
+	</div>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<!--<button class="t-btn t-btn-green pull-left" ng-click="financeCtrl.clearIncome()">清算代理商上月收入</button>-->
+			<div ng-include="'views/dateTime.html'" class="pull-left"></div>
+			<button class="t-btn t-btn-green pull-left" style="margin-left:15px;" ng-click="financeCtrl.submit()">清算代理商收入</button>
+			<div class="pull-right">
+				<form class="form-inline clearfix">
+					<div class="pull-right">
+						<input type="text" placeholder="运营商账号/运营商名称" ng-model="form.keyword" class="m-r-lg">
+						<button class="t-btn t-btn-green pull-right" ng-click="financeCtrl.search()">搜索</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<thead>
+			<th ng-repeat="title in financeCtrl.titles">
+				{{title.name}}
+			</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="store in financeCtrl.allStore">
+				<td>{{store.account}}</td>
+				<td>{{store.accountName}}</td>
+				<td>{{store.accountArea}}</td>
+				<td>{{(store.combinationAdBenefit/100).toFixed(2)}}</td>
+				<td>{{(store.storeAdDepositBenefit/100).toFixed(2)}}</td>
+				<td>{{(store.proxyBenefitTotal/100).toFixed(2)}}</td>
+				<td>
+					<button class="t-btn t-btn-green" ng-click="financeCtrl.getDetail($index)">详情</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="financeCtrl.pre()" style="background: #fff;"><img src="images/pre.png" alt=""/></button>
+		<span>{{financeCtrl.currentPage}}/{{financeCtrl.totalPage}}</span>
+		<button ng-click="financeCtrl.next()" style="background: #fff;"><img src="images/next.png" alt=""/></button>
+		<input type='text' class="preinputwid jumppage"  placeholder=""  ng-model="jumppage">
+		<button class="t-btn t-btn-green m-r-md " ng-click="financeCtrl.jump()">跳转</button>
+	</div>
+</div>

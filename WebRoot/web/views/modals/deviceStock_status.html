@@ -1,0 +1,24 @@
+
+<div class=" panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">订单详情</h3>
+        <button type="button" class="close" style="margin-top: -3%;" ng-click="deviceStockStatusCtrl.close()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+</div>
+<div style="font-size: 16px;text-align: center;margin: 80px;color: #1372E2;" ng-show="isShow()">正在发货中，请耐心等待</div>
+<form ng-show="!isShow()" class="form-horizontal" style="padding-top: 3%" name="accountAddForm" novalidate>
+    <div >
+        <label class="col-xs-4 control-label">快递公司</label>
+        <span class="cityarea">{{logistics.logistic_company==null?"无":logistics.logistic_company}}</span>
+
+    </div>
+    <div >
+        <label class="col-xs-4 control-label">快递单号</label>
+        <span class="cityarea">{{logistics.logistic_no==null?"无":logistics.logistic_no}}</span>
+    </div>
+</form>
+<div class="myreportedbtn">
+    <div class="btn-group">
+        <button class="btn-g t-btn-green  btn-mt" ng-click="deviceStockStatusCtrl.close()">我知道了</button>
+    </div>
+</div>

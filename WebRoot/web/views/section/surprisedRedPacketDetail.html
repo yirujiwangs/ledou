@@ -1,0 +1,24 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <table class="table table-hover table-reponsive">
+        <thead>
+        <th>领取用户(用户昵称)</th>
+        <th>红包金额</th>
+        <th>流出设备(设备序列码)</th>
+        <th>领取时间</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="info in surprisedRedPacketDetailCtrl.allInfo">
+            <td>{{info.nickname}}</td>
+            <td>{{(info.price/100).toFixed(2)}}</td>
+            <td>{{info.alive_code}}</td>
+            <td>{{info.time.slice(0,20)}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn ">
+        <button ng-click="surprisedRedPacketDetailCtrl.pre()">上一页</button>
+        <span>第{{surprisedRedPacketDetailCtrl.currentPage}}页,共{{surprisedRedPacketDetailCtrl.totalPage}}页</span>
+        <button ng-click="surprisedRedPacketDetailCtrl.next()">下一页</button>
+    </div>
+</div>

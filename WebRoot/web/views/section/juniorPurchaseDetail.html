@@ -1,0 +1,39 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">关键指标</h3>
+        </div>
+        <div class="panel-body">
+            <div class='panel-items col-xs-6'>
+                <p>本月采购总数</p>
+                <p class="panel-items-num">{{num}}</p>
+            </div>
+            <div class='panel-items col-xs-6'>
+                <p>采购奖励</p>
+                <p class="panel-items-num">{{benefit}}</p>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-reponsive">
+        <thead>
+        <th>区域名称</th>
+        <th>代理商名称</th>
+        <th>采购数量</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="record in juniorPurchaseDetailCtrl.allInfo">
+            <td>{{record.areaName}}</td>
+            <td>{{record.username}}</td>
+            <td>{{record.amount}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn " id="pageHide">
+        <button ng-click="juniorPurchaseDetailCtrl.pre()" style="background: #fff;"><img src="images/pre.png" alt=""/></button>
+        <span>{{juniorPurchaseDetailCtrl.currentPage}}/{{juniorPurchaseDetailCtrl.totalPage}}</span>
+        <button ng-click="juniorPurchaseDetailCtrl.next()" style="background: #fff;"><img src="images/next.png" alt=""/></button>
+        <input type='text' class="preinputwid jumppage" style="text-align: center;" placeholder=""  ng-model="jumppage">
+        <button class="t-btn t-btn-green m-r-md " ng-click="juniorPurchaseDetailCtrl.jump()">跳转</button>
+    </div>
+</div>

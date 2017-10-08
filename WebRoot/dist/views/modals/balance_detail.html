@@ -1,0 +1,62 @@
+<div class='account-edit-header'><i class="glyphicon glyphicon-remove" ng-click="balanceDetailCtrl.close()"></i></div>
+<form class="form-horizontal modal-form" name="balanceWithdrawForm">
+	<div class="form-group">
+		<label class="col-xs-3 control-label">申请金额:</label>
+		<div class="col-xs-7">
+			<span class="modal-span">{{balanceDetailCtrl.allData.fee}}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-3 control-label">申请人:</label>
+		<div class="col-xs-7">
+			<span class="modal-span">{{balanceDetailCtrl.allData.contract_name}}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-3 control-label">手机号:</label>
+		<div class="col-xs-7">
+			<span class="modal-span">{{balanceDetailCtrl.allData.contract_phone}}</span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-xs-3 control-label">结算方式:</label>
+		<div class="col-xs-7">
+			<span class="modal-span">{{balanceDetailCtrl.withdrawSelect}}</span>
+		</div>
+	</div>
+	<div ng-if="balanceDetailCtrl.withdrawSelect=='支付宝方式'">
+		<div class="form-group">
+			<label class="col-xs-3 control-label">支付宝姓名:</label>
+			<div class="col-xs-7">
+				<span class="modal-span">{{balanceDetailCtrl.allData.alipay_account_name}}</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 control-label">支付宝账号:</label>
+			<div class="col-xs-7">
+				<span class="modal-span">{{balanceDetailCtrl.allData.alipay_account_num}}</span>
+			</div>
+		</div>
+	</div>
+	<div ng-if="balanceDetailCtrl.withdrawSelect=='对公账户方式'">
+		<div class="form-group">
+			<label class="col-xs-3 control-label">银行账号名称:</label>
+			<div class="col-xs-7">
+				<span class="modal-span">{{balanceDetailCtrl.allData.bank_account_name}}</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 control-label">银行账号卡号:</label>
+			<div class="col-xs-7">
+				<span class="modal-span">{{balanceDetailCtrl.allData.bank_account_num}}</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 control-label">开户银行:</label>
+			<div class="col-xs-7">
+				<span class="modal-span">{{balanceDetailCtrl.allData.bank_name}}</span>
+			</div>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,58 @@
+
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h3 class="panel-title">数据指标</h3>
+	    </div>
+	    <div class="panel-body">
+	    	<div class='panel-items col-xs-4'>
+	    		<p>商户总资产/元</p>
+	    		<p class="panel-items-num">{{fortuneCtrl.generalNum.totalmoney}}</p>
+	    	</div>
+	    	<div class='panel-items col-xs-4'>
+	    		<p>累计支出总金额/元</p>
+	    		<p class="panel-items-num">{{fortuneCtrl.generalNum.totalexpense}}</p>
+	    	</div>
+	    	<div class='panel-items col-xs-4'>
+	    		<p>累计充值总金额/元</p>
+	    		<p class="panel-items-num">{{fortuneCtrl.generalNum.totaldeposit}}</p>
+	    	</div>
+	    </div>
+	</div>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<div class="pull-right">
+				<input type="text" placeholder="商户账号/商户名称" ng-model="form.keyword">
+				<button class="t-btn t-btn-green" ng-click="fortuneCtrl.search()">查询</button>
+			</div>
+		</div>
+		<thead>
+			<th ng-repeat="title in fortuneCtrl.titles">
+				{{title.name}}
+			</th>
+			<th>操作</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="store in fortuneCtrl.allStore">
+				<td>{{store.phonenum}}</td>
+				<td>{{store.storeName}}</td>
+				<td>{{store.sum}}</td>
+				<td>{{store.freeze}}</td>
+				<td>{{store.available}}</td>
+				<td>{{store.sumdeposit}}</td>
+				<td>{{store.sumrefund}}</td>
+				<td>{{store.sumexpense}}</td>
+				<td>{{store.profit}}</td>
+				<td>
+					<button class="t-btn t-btn-green" ng-click="fortuneCtrl.getDetail($index)">详情</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="fortuneCtrl.pre()">上一页</button>
+		<span>第{{fortuneCtrl.currentPage}}页,共{{fortuneCtrl.totalPage}}页</span>
+		<button ng-click="fortuneCtrl.next()">下一页</button>
+	</div>
+</div>

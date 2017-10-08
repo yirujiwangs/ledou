@@ -1,0 +1,32 @@
+<div class=" panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">清算单</h3>
+    </div>
+</div>
+
+<div class="form-group"  style="margin:0 auto;text-align: center">
+    <div class="col-xs-5">
+        <input
+                name="settleTime"
+                type="text"
+                class="form-control"
+                placeholder=""
+                required=""
+                maxlength="7"
+                minLength="7"
+                ng-model='settleTime'
+                >
+    </div>
+</div>
+<div style="text-align: center;margin: 55px auto;"><h3>输入结算时间（yyyy-MM/2017-07）</h3></div>
+<div class="">
+    <div class="btn-group">
+        <button
+                id="confirm"
+                class="btn-g btn-mt"
+                ng-click="financeIncomeCtrl.confirm()"
+                style="background: #4BCC5F"
+                >确认清算</button>
+        <button class="btn-g btn-g-default btn-mt" ng-click="financeIncomeCtrl.close()">取消</button>
+    </div>
+</div>

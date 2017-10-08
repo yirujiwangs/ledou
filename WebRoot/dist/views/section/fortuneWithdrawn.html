@@ -1,0 +1,54 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<span class="table-func-title">提现申请</span>
+		</div>
+		<thead>
+			<th ng-repeat="title in fortuneWithdrawnCtrl.titles">
+				{{title.name}}
+			</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="deposit in fortuneWithdrawnCtrl.allDeposit">
+				<td>{{fortuneWithdrawnCtrl.conversion(deposit.createTime)}}</td>
+				<td>{{deposit.outTradeNo}}</td>
+				<td>{{deposit.phoneNum}}</td>
+				<td>{{deposit.username}}</td>
+				<td>{{deposit.fee}}</td>
+				<td>{{deposit.applicant}}</td>
+				<td>{{deposit.account}}</td>
+				<td>{{deposit.remark}}</td>
+				<td>
+					<button class="t-btn t-btn-green" ng-click="fortuneWithdrawnCtrl.confirm($index)">同意
+					</button>
+					<button class="t-btn t-btn-blue" ng-click="fortuneWithdrawnCtrl.reject($index)">拒绝</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- <table class='fortuneDetail-content-main'>
+		<thead>
+			<tr>
+				<td ng-repeat="title in fortuneWithdrawnCtrl.titles">{{title.name}}</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr 
+			ng-repeat="deposit in fortuneWithdrawnCtrl.allDeposit">
+				<td>{{fortuneWithdrawnCtrl.conversion(deposit.createTime)}}</td>
+				<td>{{deposit.outTradeNo}}</td>
+				<td>{{deposit.phoneNum}}</td>
+				<td>{{deposit.username}}</td>
+				<td>{{deposit.fee}}</td>
+				<td>{{deposit.applicant}}</td>
+				<td>{{deposit.account}}</td>
+				<td>{{deposit.remark}}</td>
+				<td>
+					<button ng-click="fortuneWithdrawnCtrl.confirm($index)">同意</button>
+					<button ng-click="fortuneWithdrawnCtrl.reject($index)" >拒绝</button>
+				</td>
+			</tr>
+		</tbody>
+	</table> -->
+</div>

@@ -1,0 +1,71 @@
+<div class="setArea clearfix">
+    <h1>配置投放设备分组</h1>
+    <div class="setArea-warp">
+        <div class="setArea-choose pull-left">
+            <h2 class="setArea-choose-header" style="margin-bottom: 0;">
+                选择投放设备分组
+            </h2>
+            <input type="text" ng-model="deviceSearch" style="width:100%;height:30px;border: none" placeholder="请输入投放设备分组名称" ng-change="afDeviceCtrl.search()">
+            <div class="setArea-table">
+                <table style="margin-top:30px;">
+                    <thead style="top:144px;">
+                    <th>分组名</th>
+                    <th>所属运营商</th>
+                    <th>
+                        <input
+                                type="checkbox"
+                                ng-change="afDeviceCtrl.allToggle()"
+                                ng-model="isAll"
+                                >
+                    </th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="group in deviceGroup">
+                        <td>{{ group.name}}</td>
+                        <td>{{ group.proxy_name }}</td>
+                        <td style="width: 120px;">
+                            <input
+                                    type="checkbox"
+                                    ng-model="group.selected"
+                                    ng-change="afDeviceCtrl.checkToggle($index)"
+                                    >
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="setArea-choose pull-right">
+            <h2 class="setArea-choose-header">已选择</h2>
+            <div class="setArea-table">
+                <table>
+                    <thead >
+                    <th>分组名</th>
+                    <th>所属运营商</th>
+                    <th>操作</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in afDeviceCtrl.items">
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.proxy_name }}</td>
+                        <td style="width: 120px;">
+                <span
+                        class="glyphicon glyphicon-remove"
+                        ng-click="afDeviceCtrl.remove($index)"
+                        ></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <button
+                class="t-btn t-btn-green setArea-addBtn"
+                ng-click="afDeviceCtrl.add()"
+                >添加</button>
+    </div>
+    <div class="btn-group setArea-btn-group">
+        <button class="btn-g btn-g-green" ng-click="afDeviceCtrl.ok()">确定</button>
+        <button class="btn-g btn-g-default" ng-click="afDeviceCtrl.close()">取消</button>
+    </div>
+</div>

@@ -1,0 +1,302 @@
+<div ng-include="'views/nav.html'"></div>
+
+<div class="main clearfix" style="height: 80%;">
+
+    <form id="fromId" class="col-xs-7 form-horizontal "
+
+          name="appendPageListAd" action="/ledou/advertise/leAdvPost.do" method="post" target="_blank" style="width: 71%"
+          onsubmit="return false"   novalidate>
+
+        <input type="hidden" name="type" value="screen"  required>
+
+        <div class="panel-ad">
+
+            <div class="panel-ad-header">广告信息</div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">广告类型</span>
+
+                <div class="col-xs-9 del-pad">
+                    <input type="radio" id="mediaTypeP"  name="media_type" ng-model="mediaType"  value="P" ng-checked="true">
+                    <label for="mediaTypeP">图片广告</label>
+                    <input type="radio" id="mediaTypeM"  name="media_type" ng-model="mediaType" value="M" >
+                    <label for="mediaTypeM">图片音频广告</label>
+                    <input type="radio" disabled id="mediaTypeV"  name="media_type" ng-model="mediaType" value="V" >
+                    <label for="mediaTypeV">视频流广告</label>
+                </div>
+
+            </div>
+
+            <div class="panel-ad-form clearfix"  style="height:150px">
+
+                <span class="col-xs-3">广告图片</span>
+
+                <img style="border: 1px solid #ccc;height:150px;width: 120px;" class="panel-ad-pic"
+                     src="images/logo2.png" ng-src="{{ picUrl }}" alt="">
+
+                <section class="panel-ad-notice" style="position:absolute;right:37%;margin-top: 40px;width: 105px;">
+                    上传启动页广告图片,建议大小：1000*750px
+                </section>
+
+                <button id="uploadPic" style="margin-right: 50px;" class="t-btn t-btn-green pull-right">上传</button>
+
+            </div>
+
+            <div class="panel-ad-form clearfix" ng-show="mediaType=='M'" style="height:150px">
+
+                <span class="col-xs-3">音频</span>
+
+                <audio ng-src="{{audioUrl}}" controls="controls" style="margin-top:100px">
+                    您的浏览器不支持 audio 标签。
+                </audio>
+
+                <section class="panel-ad-notice" style="position:absolute;right:20%;margin-top: -100px;width: 105px;">
+                    上传启动页音频,大小不得超过1M，时长不得超过8s
+                </section>
+
+                <button id="uploadAudio" style="margin-right: 50px;" class="t-btn t-btn-green pull-right">上传</button>
+
+            </div>
+
+            <div class="panel-ad-form clearfix" ng-show="mediaType=='M'">
+
+                <span class="col-xs-3">音频链接</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <input class="form-control" type="text" name="m_url" ng-model="m_url" ng-pattern="/.*mp3$/" placeholder="你也可以选择上传音频链接地址(只支持mp3格式的音频文件)">
+
+                    <p ng-show="appendPageListAd.m_url.$dirty  &amp;&amp;appendPageListAd.m_url.$error.pattern"
+                      style="margin-top: 5px;color: red" class="ng-hide">只支持mp3格式的音频文件</p>
+
+                    <p ng-show="appendPageListAd.m_url.$dirty  &amp;&amp;appendPageListAd.m_url.$error.required"
+                       style="margin-top: 5px;color: red" class="ng-hide">请输入音频连接地址</p>
+
+                </div>
+
+            </div>
+
+            <div class="panel-ad-form clearfix" ng-show="mediaType=='V'" style="height:150px">
+
+                <span class="col-xs-3">视频流广告</span>
+
+                <img ng-show="loading" style="border: 1px solid #ccc;height:150px;width: 120px;" src="images/loading.png">
+
+                <video ng-show="!loading" ng-src="{{videoUrl}}" controls="controls" style="border: 1px solid #ccc;height:150px;width: 120px;">
+                    您的浏览器不支持 video 标签。
+                </video>
+
+                <section class="panel-ad-notice" style="position:absolute;right:37%;margin-top: -100px;width: 105px;">
+                    上传启动页视频资源大小不得超过5M，时长不得超过8s
+                </section>
+
+                <button id="uploadVideo" style="margin-right: 50px;" class="t-btn t-btn-green pull-right">上传</button>
+
+            </div>
+
+            <div class="panel-ad-form clearfix" ng-show="mediaType=='V'">
+
+                <span class="col-xs-3">视频链接</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <input class="form-control" type="text" name="v_url" ng-pattern="/.*mp4$/" ng-model="v_url" placeholder="你也可以选择上传视频链接地址(只支持mp4格式的视频文件)">
+
+                    <p ng-show="appendPageListAd.v_url.$dirty  &amp;&amp;appendPageListAd.v_url.$error.pattern"
+                       style="margin-top: 5px;color: red" class="ng-hide">只支持mp4格式的视频文件</p>
+
+                    <p ng-show="appendPageListAd.v_url.$dirty  &amp;&amp;appendPageListAd.v_url.$error.required"
+                       style="margin-top: 5px;color: red" class="ng-hide">请输入视频连接地址</p>
+
+                </div>
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">广告链接</span>
+
+                <div class="col-xs-9 del-pad modal-form" style="padding-bottom:0!important;">
+
+                    <input class="form-control"  name="advUrl" type="text" ng-model="advUrl" >
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <input type="hidden" name="pic" id="picInp" value="{{ picUrl }}" required>
+        <input ng-if="mediaType=='M'" type="hidden" name="m_url" id="audioInp" value="{{ m_url }}" required>
+        <input ng-if="mediaType=='V'" type="hidden" name="v_url" id="videoInp" value="{{ v_url }}" required>
+
+        <div class="panel-ad">
+
+            <div class="panel-ad-header">投放设置</div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">投放时间段</span>
+
+                <div ng-include="'views/dateTime.html'"></div>
+
+            </div>
+
+            <input type="hidden" name="beginTime" value="{{ begin }}" required>
+
+            <input type="hidden" name="endTime" value="{{ end }}" required>
+
+            <div class="panel-ad-form clearfix" style="position: relative">
+
+                <span class="col-xs-12" style="color:red">注意：投放方式只能选择一种</span>
+
+            </div>
+
+            <div class="panel-ad-form clearfix" style="position: relative">
+
+                <span class="col-xs-3">投放方式</span>
+
+                <div class="col-xs-4 del-pad panel-ad-form-radio">
+
+                    <input type="radio" name="method" id="adDevice" ng-checked="true" value="device" ng-model="method" ng-checked="true">
+
+                    <label for="adDevice">选择投放设备分组</label>
+
+                    <section>可以选择多个分组的设备，进行投放</section>
+
+                </div>
+
+                <div class="col-xs-4 del-pad panel-ad-form-radio">
+
+                    <input type="radio" name="method" id="adArea" value="area" ng-model="method"  >
+
+                    <label for="adArea">选择投放区域分组</label>
+
+                    <section ng-if="proxyType=='M'">市级代理商可以投放在下属所有区县</section>
+
+                    <section ng-if="proxyType=='P'">区级代理商目前只能投放在自身区域</section>
+
+                </div>
+
+                <a style="text-decoration: none;cursor: pointer;color:white;position:absolute;right:10px;top:5px;"
+
+                   ng-show="method=='device'"
+
+                   class="t-btn t-btn-green"
+
+                   ng-click="appendPageListAdCtrl.setDevice()">配置设备分组</a>
+
+                <a style="text-decoration: none;cursor: pointer;color:white;position:absolute;right:10px;top:5px;"
+
+                   ng-show="method=='area'"
+
+                   class="t-btn t-btn-green"
+
+                   ng-click="appendPageListAdCtrl.setArea()">配置区域分组</a>
+
+            </div>
+
+            <input id="hiddenDevice" type="hidden" name="advStrategyList" value="{{putDevice}}">
+
+            <input  id="hiddenArea" type="hidden" name="area_code" value="{{putArea}}">
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">计费模版</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <select ng-model="withdrawal" ng-change="preFeeChange()" ng-init="withdrawal='0'">
+
+                        <option value="0" hidden>--请选择计费方式--</option>
+
+                        <!--<option value="{{Withdrawl.withdrawal}}" ng-repeat="Withdrawl in Withdrawlsdata" id="{{Withdrawl.withdrawal.id}}" selected="{{select}}" > {{Withdrawl.withdrawal.name}} </option>-->
+
+                        <option value='{{Withdrawl.withdrawal}}' withdrawal='{{Withdrawl.withdrawal}}'
+                                ng-repeat="Withdrawl in Withdrawlsdata" id="{{Withdrawl.withdrawal.id}}">
+                            {{Withdrawl.withdrawal.name}}
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <input type="hidden" name="withdrawalId" value="{{ withdrawalData.id }}" required>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">投放次数</span>
+
+                <div class="col-xs-9 del-pad modal-form" style="padding-bottom:0!important;">
+
+                    <input id="Num" class="form-control" ng-keyup="preFeeChange()" name="touNum" type="number" min="100"
+                           placeholder="投放次数需在100次以上" ng-model="touNum" ng-pattern="pattern" required>
+
+                    <p ng-show="appendPageListAd.touNum.$dirty  &amp;&amp;appendPageListAd.touNum.$error.pattern"
+                       class="ng-hide">请输入正确的投放次数(不少于{{minNum}}次)</p>
+
+                    <p ng-show="appendPageListAd.touNum.$dirty  &amp;&amp;appendPageListAd.touNum.$error.required"
+                       class="ng-hide">请输入投放次数</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">投放预算</span>
+
+                <div class="col-xs-9 del-pad">
+
+
+                    <input id="form-control" name="preFee" style="border-style: none;height: 34px;font-size: 14px;"
+                           value="{{(preFee * touNum).toFixed(2)>=1?(preFee * touNum).toFixed(2):'0.00'}}"
+                           readonly type="text">
+
+                    元
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <input type="hidden" name="formData" value="{{ formData }}">
+
+        <button
+                type="submit"
+                id="payConfirm"
+                ng-click="appendPageListAdCtrl.submit()"
+                ng-class="{'t-btn':appendPageListAd.$invalid,'t-btn t-btn-green':appendPageListAd.$valid}"
+                ng-disabled="appendPageListAd.$invalid"
+                style="margin:0 auto!important;position:absolute;bottom:-13%;left:45%;"
+                class="t-btn panel-ad-submit">提交并支付
+        </button>
+
+    </form>
+    <div class="panel-ad panel-ad-right col-xs-3 adPreview" style="margin-right: 0%; width: 22%;">
+        <div class="panel-ad-header">手机端预览</div>
+        <div class="panel-preview"
+             style="width:90%;height:60vh;position:relative;margin:10px auto;border: 2px solid #555;">
+            <div style="width: 100%;height: 80%;position: absolute;top: 0;" ng-show="checkPM()">
+                <img style="width: 100%;height: 100%;" src="images/startPage.png" ng-src="{{ picUrl }}" alt="">
+            </div>
+            <div  style="width: 100%;height: 80%;position: absolute;top: 0;" ng-show="mediaType=='V'">
+                <video style="width: 100%;height: 100%;"  loop="loop" autoplay="autoplay" ng-src="{{ videoUrl }}">
+                    您的浏览器不支持 video 标签。
+                </video>
+            </div>
+            <div style="width: 100%;height: 20%;position: absolute;bottom: 20px;">
+                <img style="height: 100%;width: 100%" src="images/adPage.png" alt=""/>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.PayOrdersMapper">
+  <resultMap id="BaseResultMap" type="model.PayOrders">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="appid" jdbcType="VARCHAR" property="appid" />
+    <result column="mch_id" jdbcType="VARCHAR" property="mch_id" />
+    <result column="nonce_str" jdbcType="VARCHAR" property="nonce_str" />
+    <result column="body" jdbcType="VARCHAR" property="body" />
+    <result column="out_trade_no" jdbcType="VARCHAR" property="out_trade_no" />
+    <result column="total_fee" jdbcType="INTEGER" property="total_fee" />
+    <result column="spbill_create_ip" jdbcType="VARCHAR" property="spbill_create_ip" />
+    <result column="notify_url" jdbcType="VARCHAR" property="notify_url" />
+    <result column="trade_type" jdbcType="VARCHAR" property="trade_type" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="prepay_id" jdbcType="VARCHAR" property="prepay_id" />
+    <result column="utoken" jdbcType="VARCHAR" property="utoken" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="sign" jdbcType="VARCHAR" property="sign" />
+    <result column="err_code" jdbcType="VARCHAR" property="err_code" />
+    <result column="err_msg" jdbcType="VARCHAR" property="err_msg" />
+    <result column="attach" jdbcType="VARCHAR" property="attach" />
+    <result column="transaction_id" jdbcType="VARCHAR" property="transaction_id" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, appid, mch_id, nonce_str, body, out_trade_no, total_fee, spbill_create_ip, notify_url, 
+    trade_type, openid, prepay_id, utoken, status,sign,err_code,err_msg,attach,transaction_id, time
+  </sql>
+  <select id="selectByExample" parameterType="model.PayOrdersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pay_orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pay_orders
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pay_orders
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="model.PayOrdersExample">
+    delete from pay_orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="model.PayOrders">
+    insert into pay_orders (id, appid, mch_id, 
+      nonce_str, body, out_trade_no, 
+      total_fee, spbill_create_ip, notify_url, 
+      trade_type, openid, prepay_id, 
+      utoken, status,sign,err_code,err_msg,attach,transaction_id, time
+      )
+    values (#{id,jdbcType=INTEGER}, #{appid,jdbcType=VARCHAR}, #{mch_id,jdbcType=VARCHAR},
+      #{nonce_str,jdbcType=VARCHAR}, #{body,jdbcType=VARCHAR}, #{out_trade_no,jdbcType=VARCHAR}, 
+      #{total_fee,jdbcType=INTEGER}, #{spbill_create_ip,jdbcType=VARCHAR}, #{notify_url,jdbcType=VARCHAR}, 
+      #{trade_type,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{prepay_id,jdbcType=VARCHAR}, 
+      #{utoken,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},#{sign,jdbcType=VARCHAR}
+      ,#{err_code,jdbcType=VARCHAR},#{err_msg,jdbcType=VARCHAR},#{attach,jdbcType=VARCHAR},#{transaction_id,jdbcType=VARCHAR},
+       #{time,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="model.PayOrders">
+    insert into pay_orders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="appid != null">
+        appid,
+      </if>
+      <if test="mch_id != null">
+        mch_id,
+      </if>
+      <if test="nonce_str != null">
+        nonce_str,
+      </if>
+      <if test="body != null">
+        body,
+      </if>
+      <if test="out_trade_no != null">
+        out_trade_no,
+      </if>
+      <if test="total_fee != null">
+        total_fee,
+      </if>
+      <if test="spbill_create_ip != null">
+        spbill_create_ip,
+      </if>
+      <if test="notify_url != null">
+        notify_url,
+      </if>
+      <if test="trade_type != null">
+        trade_type,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="prepay_id != null">
+        prepay_id,
+      </if>
+      <if test="utoken != null">
+        utoken,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="sign != null">
+        sign,
+      </if>
+      <if test="err_code != null">
+        err_code,
+      </if>
+      <if test="err_msg != null">
+        err_msg,
+      </if>
+      <if test="attach != null">
+        attach,
+      </if>
+      <if test="transaction_id != null">
+        transaction_id,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appid != null">
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="mch_id != null">
+        #{mch_id,jdbcType=VARCHAR},
+      </if>
+      <if test="nonce_str != null">
+        #{nonce_str,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null">
+        #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="out_trade_no != null">
+        #{out_trade_no,jdbcType=VARCHAR},
+      </if>
+      <if test="total_fee != null">
+        #{total_fee,jdbcType=INTEGER},
+      </if>
+      <if test="spbill_create_ip != null">
+        #{spbill_create_ip,jdbcType=VARCHAR},
+      </if>
+      <if test="notify_url != null">
+        #{notify_url,jdbcType=VARCHAR},
+      </if>
+      <if test="trade_type != null">
+        #{trade_type,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="prepay_id != null">
+        #{prepay_id,jdbcType=VARCHAR},
+      </if>
+      <if test="utoken != null">
+        #{utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null">
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="err_code != null">
+        #{err_code,jdbcType=VARCHAR},
+      </if>
+      <if test="err_msg != null">
+        #{err_msg,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null">
+        #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="transaction_id != null">
+      #{transaction_id,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="model.PayOrdersExample" resultType="java.lang.Integer">
+    select count(*) from pay_orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pay_orders
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.appid != null">
+        appid = #{record.appid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mch_id != null">
+        mch_id = #{record.mch_id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nonce_str != null">
+        nonce_str = #{record.nonce_str,jdbcType=VARCHAR},
+      </if>
+      <if test="record.body != null">
+        body = #{record.body,jdbcType=VARCHAR},
+      </if>
+      <if test="record.out_trade_no != null">
+        out_trade_no = #{record.out_trade_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.total_fee != null">
+        total_fee = #{record.total_fee,jdbcType=INTEGER},
+      </if>
+      <if test="record.spbill_create_ip != null">
+        spbill_create_ip = #{record.spbill_create_ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notify_url != null">
+        notify_url = #{record.notify_url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trade_type != null">
+        trade_type = #{record.trade_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openid != null">
+        openid = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prepay_id != null">
+        prepay_id = #{record.prepay_id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.utoken != null">
+        utoken = #{record.utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sign != null">
+        sign = #{record.sign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.err_code != null">
+        err_code = #{record.err_code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.err_msg != null">
+        err_msg = #{record.err_msg,jdbcType=VARCHAR},
+      </if>
+
+      <if test="record.attach != null">
+        attach = #{record.attach,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transaction_id != null">
+        transaction_id = #{record.transaction_id,jdbcType=VARCHAR},
+      </if>
+
+      <if test="record.time != null">
+        time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pay_orders
+    set id = #{record.id,jdbcType=INTEGER},
+      appid = #{record.appid,jdbcType=VARCHAR},
+      mch_id = #{record.mch_id,jdbcType=VARCHAR},
+      nonce_str = #{record.nonce_str,jdbcType=VARCHAR},
+      body = #{record.body,jdbcType=VARCHAR},
+      out_trade_no = #{record.out_trade_no,jdbcType=VARCHAR},
+      total_fee = #{record.total_fee,jdbcType=INTEGER},
+      spbill_create_ip = #{record.spbill_create_ip,jdbcType=VARCHAR},
+      notify_url = #{record.notify_url,jdbcType=VARCHAR},
+      trade_type = #{record.trade_type,jdbcType=VARCHAR},
+      openid = #{record.openid,jdbcType=VARCHAR},
+      prepay_id = #{record.prepay_id,jdbcType=VARCHAR},
+      utoken = #{record.utoken,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+    sign = #{record.sign,jdbcType=VARCHAR},
+    err_code = #{record.err_code,jdbcType=VARCHAR},
+    err_msg = #{record.err_msg,jdbcType=VARCHAR},
+    attach = #{record.attach,jdbcType=VARCHAR},
+    transaction_id = #{record.transaction_id,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="model.PayOrders">
+    update pay_orders
+    <set>
+      <if test="appid != null">
+        appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="mch_id != null">
+        mch_id = #{mch_id,jdbcType=VARCHAR},
+      </if>
+      <if test="nonce_str != null">
+        nonce_str = #{nonce_str,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null">
+        body = #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="out_trade_no != null">
+        out_trade_no = #{out_trade_no,jdbcType=VARCHAR},
+      </if>
+      <if test="total_fee != null">
+        total_fee = #{total_fee,jdbcType=INTEGER},
+      </if>
+      <if test="spbill_create_ip != null">
+        spbill_create_ip = #{spbill_create_ip,jdbcType=VARCHAR},
+      </if>
+      <if test="notify_url != null">
+        notify_url = #{notify_url,jdbcType=VARCHAR},
+      </if>
+      <if test="trade_type != null">
+        trade_type = #{trade_type,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="prepay_id != null">
+        prepay_id = #{prepay_id,jdbcType=VARCHAR},
+      </if>
+      <if test="utoken != null">
+        utoken = #{utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null">
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="err_code != null">
+        err_code = #{err_code,jdbcType=VARCHAR},
+      </if>
+      <if test="err_msg != null">
+        err_msg = #{err_msg,jdbcType=VARCHAR},
+      </if>
+
+
+      <if test="attach != null">
+        attach = #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="transaction_id != null">
+        transaction_id = #{transaction_id,jdbcType=VARCHAR},
+      </if>
+
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.PayOrders">
+    update pay_orders
+    set appid = #{appid,jdbcType=VARCHAR},
+      mch_id = #{mch_id,jdbcType=VARCHAR},
+      nonce_str = #{nonce_str,jdbcType=VARCHAR},
+      body = #{body,jdbcType=VARCHAR},
+      out_trade_no = #{out_trade_no,jdbcType=VARCHAR},
+      total_fee = #{total_fee,jdbcType=INTEGER},
+      spbill_create_ip = #{spbill_create_ip,jdbcType=VARCHAR},
+      notify_url = #{notify_url,jdbcType=VARCHAR},
+      trade_type = #{trade_type,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      prepay_id = #{prepay_id,jdbcType=VARCHAR},
+      utoken = #{utoken,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+       sign = #{sign,jdbcType=VARCHAR},
+        err_code = #{err_code,jdbcType=VARCHAR},
+         err_msg = #{err_msg,jdbcType=VARCHAR},
+          attach = #{attach,jdbcType=VARCHAR},
+           transaction_id = #{transaction_id,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

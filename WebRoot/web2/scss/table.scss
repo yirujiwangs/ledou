@@ -1,0 +1,51 @@
+.table{
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	thead{
+		background: #f5f6fa;
+	}
+	th,td{
+		font-weight: 400;
+		text-align: center;
+	}
+	thead>tr>th{
+		border-bottom: none;
+	}
+	tbody{
+		background: #fff;
+	}
+	tbody>tr>td{
+		vertical-align: middle;
+	}
+}
+.table-func{
+	position: relative;
+	padding: 10px 20px;
+	border: 1px solid #ddd;
+	border-bottom: 0;
+	background: #f5f6fa;
+	label{
+		line-height: 30px;
+	}
+	input{
+		padding: 5px 10px;
+		min-width: 240px;
+		max-width: 100%;
+		outline: none;
+		border: 1px solid $border-grey;
+		// border-radius: 3px;
+	}
+	select{
+		height: 30px;
+		outline: none;
+		border: 1px solid $border-grey;
+	}
+	.timepicker{
+		min-width: 125px;
+		height: 30px;
+	}
+}
+.table-func-title{
+	display: inline-block;
+	margin-top: 5px;
+}

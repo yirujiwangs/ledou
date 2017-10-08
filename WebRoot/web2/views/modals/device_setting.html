@@ -1,0 +1,75 @@
+<div class=" panel-default" >
+    <div class="panel-heading title-middle" style="    height: 46px;">
+        <h3 class="panel-title ">设备政策设置</h3>
+    </div>
+</div>
+<form class="form-horizontal" name="deviceSettingForm" novalidate>
+    <div class="form-group" style="margin-top: 15px;">
+        <label class="col-xs-4 control-label">代理商账号</label>
+        <div class="col-xs-5">
+            <input
+                    name="account"
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    required
+                    ng-model='form.account'
+                    >
+            <p style="color:red;margin-top: 10px;" ng-show="deviceSettingForm.account.$dirty && deviceSettingForm.account.$error.required">请输入账号</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label">起始单号</label>
+        <div class="col-xs-5">
+            <input
+                    name="start"
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    required
+                    ng-model='start'
+                    ng-pattern="pattern"
+                    >
+            <p style="color:red;margin-top: 10px;" ng-show="deviceSettingForm.start.$dirty && deviceSettingForm.start.$error.required">请输入单号</p>
+            <p style="color:red;margin-top: 10px;" ng-show="deviceSettingForm.start.$dirty && deviceSettingForm.start.$error.pattern">请输入12位起始序列号</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label">结束单号</label>
+        <div class="col-xs-5">
+            <input
+                    name="end"
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    required
+                    ng-model='end'
+                    ng-pattern="pattern"
+                    >
+            <p style="color:red;margin-top: 10px;" ng-show="deviceSettingForm.end.$dirty && deviceSettingForm.end.$error.required">请输入单号</p>
+            <p style="color:red;margin-top: 10px;" ng-show="deviceSettingForm.end.$dirty && deviceSettingForm.end.$error.pattern">请输入12位结束序列号</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label">政策:</label>
+        <div class="col-xs-5" style="margin-top:5px;">
+            <input type="radio" id="newPolicy"  name="policy" ng-model="form.policy"  value=2 ng-checked="true">
+            <label for="newPolicy">新政策</label>
+            <input type="radio" id="oldPolicy"  name="policy" ng-model="form.policy" value=1 >
+            <label for="oldPolicy">老政策</label>
+        </div>
+    </div>
+</form>
+
+<div class="myreportedbtn">
+    <div class="btn-group" style="padding-top: 1.5%;">
+        <button
+                style="background: #4bcc5f;"
+                class="btn-g btn-mt"
+                ng-class="{'disabled-btn':deviceSettingForm.$invalid,'btn-g-green':deviceSettingForm.$valid}"
+                ng-click="deviceSettingCtrl.add()"
+                ng-disabled="deviceSettingForm.$invalid"
+                >提交</button>
+        <button class="btn-g btn-g-default btn-mt" ng-click="deviceSettingCtrl.close()">取消</button>
+    </div>
+</div>

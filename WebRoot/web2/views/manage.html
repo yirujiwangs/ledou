@@ -1,0 +1,36 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">设备数据</h3>
+		</div>
+		<div class="panel-body">
+			<div ng-repeat="item in manageCtrl.deviceDate" class='panel-items col-xs-4'>
+				<p>{{item.name}}</p>
+				<p class="panel-items-num">{{item.number}}</p>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">用户数据</h3>
+		</div>
+		<div class="panel-body">
+			<div ng-repeat="item in manageCtrl.userDate" class='panel-items col-xs-4'>
+				<p>{{item.name}}</p>
+				<p class="panel-items-num">{{item.number}}</p>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">代理商数据</h3>
+		</div>
+		<div class="panel-body">
+			<div ng-repeat="item in manageCtrl.providerDate" class='panel-items col-xs-4'>
+				<p>{{item.name}}</p>
+				<p class="panel-items-num">{{item.number}}</p>
+			</div>
+		</div>
+	</div>
+</div>

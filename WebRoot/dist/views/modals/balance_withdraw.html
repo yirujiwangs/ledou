@@ -1,0 +1,74 @@
+<div class='account-edit-header'><i class="glyphicon glyphicon-remove" ng-click="balanceWithdrawCtrl.close()"></i></div>
+<form class="form-horizontal modal-form" name="balanceWithdrawForm">
+	<div class="form-group">
+		<label class="col-xs-3 control-label">申请金额:</label>
+		<div class="col-xs-7">
+			<input class="form-control" type='text' ng-model='form.refund' required="" placeholder="100~5000">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-3 control-label">申请人:</label>
+		<div class="col-xs-7">
+			<input class="form-control" type='text' ng-model='form.name' required="" placeholder="字数不超过4个">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-3 control-label">手机号:</label>
+		<div class="col-xs-7">
+			<input class="form-control" type='text' ng-model='form.contract_phone' required="" placeholder="请输入手机号">
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-xs-3 control-label">提现方式:</label>
+		<div class="col-xs-7">
+			<select name="withdrawWay" id="withdrawWay" ng-model="withdrawSelect" ng-init="withdrawSelect='支付宝方式'" class="form-control">
+				<option value="支付宝方式">支付宝方式</option>
+				<option value="对公账户方式">对公账户方式</option>
+			</select>
+		</div>
+	</div>
+	<div ng-if="withdrawSelect=='支付宝方式'">
+		<div class="form-group">
+			<label class="col-xs-3 control-label">支付宝姓名:</label>
+			<div class="col-xs-7">
+				<input class="form-control" type='text' ng-model='form.alipay_account_name' required="" placeholder="请输入支付宝姓名">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 control-label">支付宝账号:</label>
+			<div class="col-xs-7">
+				<input class="form-control" type='text' ng-model='form.alipay_account_num' required="" placeholder="请输入支付宝账号">
+			</div>
+		</div>
+	</div>
+	<div ng-if="withdrawSelect=='对公账户方式'">
+		<div class="form-group">
+			<label class="col-xs-3 control-label">公司对公账号:</label>
+			<div class="col-xs-7">
+				<input class="form-control" type='text' ng-model='form.bank_account_num' required="" placeholder="请输入公司对公账号">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 control-label">对公账户名称:</label>
+			<div class="col-xs-7">
+				<input class="form-control" type='text' ng-model='form.bank_account_name' required="" placeholder="请输入对公账户名称">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 control-label">开户行地址:</label>
+			<div class="col-xs-7">
+				<input class="form-control" type='text' ng-model='form.bank_name' required="" placeholder="请输入开户行地址">
+			</div>
+		</div>
+	</div>
+	<div class="btn-group">
+		<button 
+				class="btn-g" 
+				ng-class="{'disabled-btn':balanceWithdrawForm.$invalid,'btn-g-green':balanceWithdrawForm.$valid}" 
+				ng-click="balanceWithdrawCtrl.ok()" 
+				ng-disabled="balanceWithdrawForm.$invalid"
+		>确定</button>
+		<button class="btn-g btn-g-default" ng-click="balanceWithdrawCtrl.close()">取消</button>
+	</div>
+</form>

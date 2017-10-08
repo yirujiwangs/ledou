@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.FinanceMapper">
+    <resultMap id="BaseResultMap" type="model.Finance">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="phoneNum" property="phonenum" jdbcType="VARCHAR"/>
+        <result column="sum" property="sum" jdbcType="DOUBLE"/>
+        <result column="available" property="available" jdbcType="DOUBLE"/>
+        <result column="freeze" property="freeze" jdbcType="DOUBLE"/>
+        <result column="sumExpense" property="sumexpense" jdbcType="DOUBLE"/>
+        <result column="sumDeposit" property="sumdeposit" jdbcType="DOUBLE"/>
+        <result column="sumRefund" property="sumrefund" jdbcType="DOUBLE"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                                <when test="criterion.likeValue">
+                                    and ${criterion.condition} #{criterion.value} ${criterion.condition2}
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, phoneNum, round(sum,2) as sum, round(available,2) AS available
+    , round(freeze,2) as freeze, round(sumExpense,2) as sumExpense, round(sumDeposit,2) as sumDeposit
+    ,round(sumRefund,2) as sumRefund
+  </sql>
+
+    <sql id="limit">
+        limit #{startSize},#{pageSize}
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="model.FinanceExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from finance
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectShopFinance" resultType="model.ShopFinance">
+        select u.storeName,u.phoneNum,round(f.available,2) as available,
+        round(f.freeze,2) as freeze,round(f.sum,2) as sum,round(f.sumDeposit,2) as sumDeposit
+        ,round(f.sumExpense,2) as sumExpense,round(f.sumRefund,2) as sumRefund,coalesce(pfd.fee,0) as profit
+        from user u
+        left join finance f
+        on (f.phoneNum = u.phoneNum)
+        left join
+        (select SUM(fee) as fee,deposit_userphone as du from proxy_finance_record group by deposit_userphone)
+        as pfd
+        on (pfd.du = u.phoneNum)
+
+        <where>
+            1=1 and u.phoneNum IN
+            <foreach collection="users" item="user" open="(" close=")" separator=",">
+                #{user.phonenum}
+            </foreach>
+        </where>
+        order by u.id
+        <if test="shopFinance.limitValue">
+             limit ${shopFinance.startSize},${shopFinance.pageSize}
+        </if>
+    </select>
+
+    <select id="countShopFinance" resultType="java.lang.Integer">
+        select count(f.id)
+        from finance f INNER join user u
+        on (f.phoneNum = u.phoneNum)
+        <where>
+            1=1 and u.phoneNum IN
+            <foreach collection="users" item="user" open="(" close=")" separator=",">
+                #{user.phonenum}
+            </foreach>
+        </where>
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from finance
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+
+    <select id="storeFinanceStatistics" resultType="model.StoreFinanceStatistics">
+        select round(sum(f.sum)/100,2) as totalmoney,round(sum(f.sumExpense)/100,2) as totalexpense
+        ,round(sum(f.sumDeposit)/100,2) as totaldeposit
+        from finance f
+        where 1=1
+        <if test="phones!=null">
+        and  f.phoneNum IN
+            <foreach collection="phones" item="phone" open="(" close=")" separator=",">
+                #{phone}
+            </foreach>
+        </if>
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from finance
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="model.FinanceExample">
+        delete from finance
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="model.Finance">
+    insert into finance (id, phoneNum, sum, 
+      available, freeze, sumExpense, 
+      sumDeposit, sumRefund)
+    values (#{id,jdbcType=INTEGER}, #{phonenum,jdbcType=VARCHAR}, #{sum,jdbcType=DOUBLE}, 
+      #{available,jdbcType=DOUBLE}, #{freeze,jdbcType=DOUBLE}, #{sumexpense,jdbcType=DOUBLE}, 
+      #{sumdeposit,jdbcType=DOUBLE}, #{sumrefund,jdbcType=DOUBLE})
+  </insert>
+
+    <insert id="insertSelective" parameterType="model.Finance">
+        insert into finance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="phonenum != null">
+                phoneNum,
+            </if>
+            <if test="sum != null">
+                sum,
+            </if>
+            <if test="available != null">
+                available,
+            </if>
+            <if test="freeze != null">
+                freeze,
+            </if>
+            <if test="sumexpense != null">
+                sumExpense,
+            </if>
+            <if test="sumdeposit != null">
+                sumDeposit,
+            </if>
+            <if test="sumrefund != null">
+                sumRefund,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="phonenum != null">
+                #{phonenum,jdbcType=VARCHAR},
+            </if>
+            <if test="sum != null">
+                #{sum,jdbcType=DOUBLE},
+            </if>
+            <if test="available != null">
+                #{available,jdbcType=DOUBLE},
+            </if>
+            <if test="freeze != null">
+                #{freeze,jdbcType=DOUBLE},
+            </if>
+            <if test="sumexpense != null">
+                #{sumexpense,jdbcType=DOUBLE},
+            </if>
+            <if test="sumdeposit != null">
+                #{sumdeposit,jdbcType=DOUBLE},
+            </if>
+            <if test="sumrefund != null">
+                #{sumrefund,jdbcType=DOUBLE},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="model.FinanceExample" resultType="java.lang.Integer">
+        select count(*) from finance
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update finance
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.phonenum != null">
+                phoneNum = #{record.phonenum,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sum != null">
+                sum = #{record.sum,jdbcType=DOUBLE},
+            </if>
+            <if test="record.available != null">
+                available = #{record.available,jdbcType=DOUBLE},
+            </if>
+            <if test="record.freeze != null">
+                freeze = #{record.freeze,jdbcType=DOUBLE},
+            </if>
+            <if test="record.sumexpense != null">
+                sumExpense = #{record.sumexpense,jdbcType=DOUBLE},
+            </if>
+            <if test="record.sumdeposit != null">
+                sumDeposit = #{record.sumdeposit,jdbcType=DOUBLE},
+            </if>
+            <if test="record.sumrefund != null">
+                sumRefund = #{record.sumrefund,jdbcType=DOUBLE},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update finance
+        set id = #{record.id,jdbcType=INTEGER},
+        phoneNum = #{record.phonenum,jdbcType=VARCHAR},
+        sum = #{record.sum,jdbcType=DOUBLE},
+        available = #{record.available,jdbcType=DOUBLE},
+        freeze = #{record.freeze,jdbcType=DOUBLE},
+        sumExpense = #{record.sumexpense,jdbcType=DOUBLE},
+        sumDeposit = #{record.sumdeposit,jdbcType=DOUBLE},
+        sumRefund = #{record.sumrefund,jdbcType=DOUBLE}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="model.Finance">
+        update finance
+        <set>
+            <if test="phonenum != null">
+                phoneNum = #{phonenum,jdbcType=VARCHAR},
+            </if>
+            <if test="sum != null">
+                sum = #{sum,jdbcType=DOUBLE},
+            </if>
+            <if test="available != null">
+                available = #{available,jdbcType=DOUBLE},
+            </if>
+            <if test="freeze != null">
+                freeze = #{freeze,jdbcType=DOUBLE},
+            </if>
+            <if test="sumexpense != null">
+                sumExpense = #{sumexpense,jdbcType=DOUBLE},
+            </if>
+            <if test="sumdeposit != null">
+                sumDeposit = #{sumdeposit,jdbcType=DOUBLE},
+            </if>
+            <if test="sumrefund != null">
+                sumRefund = #{sumrefund,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="model.Finance">
+    update finance
+    set phoneNum = #{phonenum,jdbcType=VARCHAR},
+      sum = #{sum,jdbcType=DOUBLE},
+      available = #{available,jdbcType=DOUBLE},
+      freeze = #{freeze,jdbcType=DOUBLE},
+      sumExpense = #{sumexpense,jdbcType=DOUBLE},
+      sumDeposit = #{sumdeposit,jdbcType=DOUBLE},
+      sumRefund = #{sumrefund,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

@@ -1,0 +1,32 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <table class="table table-hover table-reponsive">
+        <thead>
+        <th>头像</th>
+        <th>昵称</th>
+        <th>性别</th>
+        <th>所属地区</th>
+        <th>领取状态 </th>
+        <th>是否关注</th>
+        <th>投放时间</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="info in attractFansRedPacketDetailCtrl.allInfo">
+            <td>
+                <img style="width: 50px;height: 50px;" ng-src="{{ info.headimgurl }}" alt="">
+            </td>
+            <td>{{info.nickname}}</td>
+            <td>{{info.sex | sex }}</td>
+            <td>{{info.address}}</td>
+            <td>{{info.log_status | logStatus}}</td>
+            <td>{{info.user_status | userStatus}}</td>
+            <td>{{ info.time*1000  | date:'yyyy-MM-dd HH:mm' }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn ">
+        <button ng-click="attractFansRedPacketDetailCtrl.pre()">上一页</button>
+        <span>第{{attractFansRedPacketDetailCtrl.currentPage}}页,共{{attractFansRedPacketDetailCtrl.totalPage}}页</span>
+        <button ng-click="attractFansRedPacketDetailCtrl.next()">下一页</button>
+    </div>
+</div>

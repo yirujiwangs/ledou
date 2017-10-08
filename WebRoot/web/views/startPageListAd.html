@@ -1,0 +1,97 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class='panel-items col-xs-3'>
+                <p class="panel-items-left">1</p>
+                <div class="panel-items-right">
+                    <p>创建启动页广告计划</p>
+                    <p>编辑启动页广告</p>
+                </div>
+            </div>
+            <div class='panel-items col-xs-3'>
+                <p class="panel-items-left">2</p>
+                <div class="panel-items-right">
+                    <p>编辑完成并支付</p>
+                    <p>提交总部进行审核</p>
+                </div>
+            </div>
+            <div class='panel-items col-xs-3'>
+                <p class="panel-items-left">3</p>
+                <div class="panel-items-right">
+                    <p>审核通过后</p>
+                    <p>设备摇出图片广告</p>
+                </div>
+            </div>
+            <div class='panel-items col-xs-3'>
+                <button
+                        class="t-btn t-btn-green panel-items-btn"
+                        ng-click="startPageListCtrl.appendAd()">
+                    创建启动页广告计划
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-hover table-reponsive">
+        <thead>
+        <th ng-repeat="title in startPageListCtrl.titles">
+            {{ title.name }}
+        </th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="record in startPageListCtrl.allAdRecord">
+            <!-- <td>{{ record.advUUID }}</td> -->
+            <td>
+                <img  ng-if="record.v_url==null" style="width: 80px;height: 120px;"ng-src="{{ record.pic }}" alt="" >
+                <video ng-if="record.v_url!=null" style="width: 80px;height: 120px;" muted loop="loop" autoplay="autoplay" ng-src="{{ record.v_url | ToSce }}">
+                    您的浏览器不支持 video 标签。
+                </video>
+            </td>
+            <td class="colorblue reportclk" style="color: #4bcc5f;" ng-click="startPageListCtrl.showStrategy($index)">详情</td>
+            <td >
+                <div style="overflow:hidden;margin:0 auto;display: inline-block">
+                    <section style="float:left">{{ 1000*record.beginTime | date:'yyyy-MM-dd' }}<br>至&nbsp;<br/>{{ 1000*record.endTime | date:'yyyy-MM-dd' }}</section>
+                </div>
+            </td>
+            <td>{{ record.touNum - record.leftNum }}/{{ record.touNum }}</td>
+            <td>{{ record.withdrawal.name }}</td>
+            <td ng-if="!record.withdrawal.type"></td>
+            <td ng-if="record.withdrawal.type==='O'">{{ (record.withdrawal.once_money*record.touNum/100).toFixed(2) }}</td>
+            <td ng-if="record.withdrawal.type==='Q'">{{ ((record.withdrawal.once_money/1000)*record.touNum/100).toFixed(2) }}</td>
+            <td>
+                <span ng-if="record.operate_descr == null" popover-placement="bottom" popover-trigger="mouseenter" popover="{{ record.showStatus }}">{{ record.showStatus }}</span>
+                <span ng-if="record.operate_descr !== null" popover-placement="bottom" popover-trigger="mouseenter" popover="{{ record.operate_descr }}">{{ record.showStatus }}</span>
+            </td>
+            <td>{{ 1000*record.time | date:'yyyy-MM-dd HH:mm' }}</td>
+            <td>
+                <form name="adv" action="/ledou/advertise/leAdvRePay.do" method="post" target="_blank">
+                    <input type="hidden" name="advUUID" value="{{startPageListCtrl.advUUID}}"/>
+                    <input type="hidden" name="type" value="screen"/>
+                    <div class="btn-group dropdown-select" style="display: inline-block;margin: 0;width: auto;">
+                        <button type="button" class="t-btn t-btn-green dropdown-toggle" style="width:64px;"  data-toggle="dropdown" ng-click="startPageListCtrl.handle($index)">
+                            操作&nbsp;<b class="caret"></b>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" style="left:initial;right:0;">
+                            <li style="text-align: center;margin-bottom: 4px;" ng-show="{{record.upShow}}" ng-click="startPageListCtrl.updateAdvStatus($index)">
+                                {{startPageListCtrl.status}}
+                            </li>
+                            <li style="text-align: center;margin-bottom: 4px;" ng-click="startPageListCtrl.editAd($index)" ng-show="{{record.isEdit}}"> 编辑 </li>
+                            <!--<li ng-click="startPageListCtrl.pay($index)">-->
+                            <li style="text-align: center;margin-bottom: 4px;" ng-show="{{record.isDelete}}" ng-click="startPageListCtrl.delete($index)">删除</li>
+
+                            <button  class="t-btn t-btn-green" type="submit" ng-show="{{record.isPay}}"  ng-click="startPageListCtrl.submit()" style="width: 100%;">支付</button>
+
+                        </ul>
+                    </div>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn">
+        <button ng-click="startPageListCtrl.pre()">上一页</button>
+        <span>第{{ startPageListCtrl.currentPage }}页,共{{ startPageListCtrl.totalPage }}页</span>
+        <button ng-click="startPageListCtrl.next()">下一页</button>
+    </div>
+</div>

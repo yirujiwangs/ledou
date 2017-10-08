@@ -1,0 +1,15 @@
+<div class="modal-content">
+    <div class="modal-header" style="border-bottom: 1px solid #ddd;background: #f5f6fa;">
+        <button type="button" class="close" ng-click="authorizationRefreshCtrl.close()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 style="margin:0;">您已提交授权</h4>
+     </div>
+    <div class="modal-body m-t-md" style="padding:10%;">
+        <h3 style="text-align: center">是否刷新页面显示最新授权列表？</h3>
+    </div>
+    <div class="modal-footer modal-footer-bg">
+        <div class="btn-group">
+            <button type="button" class="btn-g btn-g-green" ng-click="authorizationRefreshCtrl.refresh()">刷新</button>
+            <button type="button" class="btn-g btn-g-default" ng-click="authorizationRefreshCtrl.close()">取消</button>
+        </div>
+    </div>
+</div>

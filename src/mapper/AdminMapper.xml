@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.AdminMapper">
+    <resultMap id="BaseResultMap" type="model.Admin">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="account" jdbcType="VARCHAR" property="account"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="phoneNum" jdbcType="VARCHAR" property="phoneNum"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="descr" jdbcType="VARCHAR" property="descr"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="proxy_token" jdbcType="VARCHAR" property="proxy_token"/>
+        <result column="recommend_phone" jdbcType="VARCHAR" property="recommend_phone"/>
+        <result column="recommend_token" jdbcType="VARCHAR" property="recommend_token"/>
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
+        <result column="ptoken" jdbcType="VARCHAR" property="ptoken"/>
+        <result column="secretkey" jdbcType="VARCHAR" property="secretkey"/>
+        <result column="createTime" jdbcType="DATE" property="createTime"/>
+        <result column="signway" jdbcType="INTEGER" property="signway"/>
+        <result column="franchise_fee" jdbcType="INTEGER" property="franchise_fee"/>
+        <result column="policy" jdbcType="INTEGER" property="policy"/>
+        <result column="shield" jdbcType="INTEGER" property="shield"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, account, password, username, phoneNum, level, descr, status, proxy_token,recommend_phone,
+    recommend_token,openid,ptoken,secretkey,createTime,signway,franchise_fee,policy,shield
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="model.AdminExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from admin
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        order by id desc
+        <if test="limitValue">
+            limit #{startSize},#{pageSize}
+        </if>
+    </select>
+
+    <select id="selectByAdmin" resultType="model.Admin" parameterType="model.Admin">
+        select
+        *
+        from admin
+        where 1=1 AND
+        <if test="id != null">
+            id =#{id},
+        </if>
+        <if test="account != null">
+            account = #{account},
+        </if>
+        <if test="password != null">
+            password = #{password},
+        </if>
+        <if test="username != null">
+            username = #{username},
+        </if>
+        <if test="phoneNum != null">
+            phoneNum = #{phoneNum},
+        </if>
+        <if test="level != null">
+            level=#{level}
+        </if>
+        <if test="secretkey != null">
+            secretkey=#{secretkey}
+        </if>
+        <if test="signway != null">
+            signway=#{signway}
+        </if>
+        <if test="franchise_fee != null">
+            franchise_fee=#{franchise_fee}
+        </if>
+        <if test="policy != null">
+            policy=#{policy}
+        </if>
+        <if test="shield != null">
+            shield=#{shield}
+        </if>
+        order by id desc
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from admin
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="exitAdmin" parameterType="java.lang.String" resultType="model.Admin">
+    select * from admin where phoneNum=#{phone} limit 1
+    </select>
+
+
+    <select id="selectAdminCity" parameterType="model.Admin" resultType="model.dto.AdminCity">
+    select ad.id as id, ad.account as account,ad.username as username,ad.phoneNum as phoneNum
+    ,ad.password as password, ad.secretkey as secretkey,ad.policy as policy
+    ,ad.descr as descr,ad.status as status,ad.proxy_token as proxy_token,ad.level as level,
+    ad.recommend_phone as recommend_phone,
+    ad.recommend_token as recommend_token,
+    ad.openid as openid,ad.createTime as createTime,ca.rid as cityCode,ca.fullname as cityName,
+    pa.supertoken as proxyType
+    from
+    admin ad
+    LEFT JOIN proxy_area pa on (pa.utoken = ad.proxy_token)
+    LEFT JOIN common_area ca on (ca.rid = pa.area_rid)
+    order by ad.id desc
+    limit #{record.startSize},#{record.pageSize}
+  </select>
+
+    <select id="franchiseFeeList"  resultType="model.dto.FranchiseFee">
+        select ad.account as account,ad.phoneNum as phoneNum, ad.signway as signway,ad.username,
+        pa.area_name as areaName,pa.start_date as startDate from
+        admin ad
+        LEFT JOIN proxy_area pa on (pa.utoken = ad.proxy_token)
+        where pa.supertoken = #{utoken,jdbcType=VARCHAR}
+        order by ad.id DESC
+        limit #{startSize,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </select>
+
+
+    <select id="selectDealerUtoken" parameterType="java.lang.String" resultType="java.lang.String">
+        select proxy_token from admin where recommend_token = #{recommend_token,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from admin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="model.AdminExample">
+        delete from admin
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="model.Admin">
+    insert into admin (id, account, password,
+    username, phoneNum, level,
+    descr, status, proxy_token,recommend_token,recommend_phone,
+    openid, ptoken,secretkey, createTime,signway,franchise_fee
+    )
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+    #{username,jdbcType=VARCHAR}, #{phoneNum,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER},
+    #{descr,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{proxy_token,jdbcType=VARCHAR},
+    #{recommend_token,jdbcType=VARCHAR}, #{recommend_phone,jdbcType=VARCHAR},
+    #{openid,jdbcType=VARCHAR}, #{ptoken,jdbcType=VARCHAR},#{secretkey,jdbcType=VARCHAR},
+    #{createTime,jdbcType=DATE},#{signway,jdbcType=INTEGER},#{franchise_fee,jdbcType=INTEGER},
+    #{policy,jdbcType=INTEGER},#{shield,jdbcType=INTEGER}
+    )
+  </insert>
+    <insert id="insertSelective" parameterType="model.Admin" useGeneratedKeys="true" keyProperty="id">
+        insert into admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="phoneNum != null">
+                phoneNum,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="descr != null">
+                descr,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="proxy_token != null">
+                proxy_token,
+            </if>
+            <if test="recommend_token != null">
+                recommend_token,
+            </if>
+            <if test="recommend_phone != null">
+                recommend_phone,
+            </if>
+            <if test="openid != null">
+                openid,
+            </if>
+            <if test="ptoken != null">
+                ptoken,
+            </if>
+            <if test="secretkey != null">
+                secretkey,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            <if test="signway != null">
+                signway,
+            </if>
+            <if test="franchise_fee != null">
+                franchise_fee,
+            </if>
+            <if test="policy != null">
+                policy,
+            </if>
+            <if test="shield != null">
+                shield,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="account != null">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneNum != null">
+                #{phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="descr != null">
+                #{descr,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="proxy_token != null">
+                #{proxy_token,jdbcType=VARCHAR},
+            </if>
+            <if test="recommend_token != null">
+                #{recommend_token,jdbcType=VARCHAR},
+            </if>
+            <if test="recommend_phone != null">
+                #{recommend_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="openid != null">
+                #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="ptoken != null">
+                #{ptoken,jdbcType=VARCHAR},
+            </if>
+            <if test="secretkey != null">
+                #{secretkey,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=DATE},
+            </if>
+            <if test="signway != null">
+                #{signway,jdbcType=INTEGER},
+            </if>
+            <if test="franchise_fee != null">
+                #{franchise_fee,jdbcType=INTEGER},
+            </if>
+            <if test="policy != null">
+                #{policy,jdbcType=INTEGER},
+            </if>
+            <if test="shield != null">
+                #{shield,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="model.AdminExample" resultType="java.lang.Integer">
+        select count(1) from admin
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update admin
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.account != null">
+                account = #{record.account,jdbcType=VARCHAR},
+            </if>
+            <if test="record.password != null">
+                password = #{record.password,jdbcType=VARCHAR},
+            </if>
+            <if test="record.username != null">
+                username = #{record.username,jdbcType=VARCHAR},
+            </if>
+            <if test="record.phoneNum != null">
+                phoneNum = #{record.phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="record.level != null">
+                level = #{record.level,jdbcType=INTEGER},
+            </if>
+            <if test="record.descr != null">
+                descr = #{record.descr,jdbcType=VARCHAR},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=VARCHAR},
+            </if>
+            <if test="record.proxy_token != null">
+                proxy_token = #{record.proxy_token,jdbcType=VARCHAR},
+            </if>
+            <if test="record.recommend_token != null">
+                recommend_token = #{record.recommend_token,jdbcType=VARCHAR},
+            </if>
+            <if test="record.recommend_phone != null">
+                recommend_phone = #{record.recommend_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.openid != null">
+                openid = #{record.openid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ptoken != null">
+                ptoken = #{record.ptoken,jdbcType=VARCHAR},
+            </if>
+            <if test="record.secretkey != null">
+                secretkey = #{record.secretkey,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                createTime = #{record.createTime,jdbcType=DATE},
+            </if>
+            <if test="record.signway != null">
+                signway = #{record.signway,jdbcType=INTEGER},
+            </if>
+            <if test="record.franchise_fee != null">
+                franchise_fee = #{record.franchise_fee,jdbcType=INTEGER},
+            </if>
+            <if test="record.policy != null">
+                policy = #{record.policy,jdbcType=INTEGER},
+            </if>
+            <if test="record.shield != null">
+                shield = #{record.shield,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update admin
+        set id = #{record.id,jdbcType=INTEGER},
+        account = #{record.account,jdbcType=VARCHAR},
+        password = #{record.password,jdbcType=VARCHAR},
+        username = #{record.username,jdbcType=VARCHAR},
+        phoneNum = #{record.phoneNum,jdbcType=VARCHAR},
+        level = #{record.level,jdbcType=INTEGER},
+        descr = #{record.descr,jdbcType=VARCHAR},
+        status = #{record.status,jdbcType=VARCHAR},
+        proxy_token = #{record.proxy_token,jdbcType=VARCHAR},
+        recommend_token = #{record.recommend_token,jdbcType=VARCHAR},
+        recommend_phone = #{record.recommend_phone,jdbcType=VARCHAR},
+        openid = #{record.openid,jdbcType=VARCHAR},
+        ptoken = #{record.ptoken,jdbcType=VARCHAR},
+        secretkey= #{record.secretkey,jdbcType=VARCHAR},
+        createTime = #{record.createTime,jdbcType=DATE},
+        signway = #{record.signway,jdbcType=INTEGER},
+        franchise_fee = #{record.franchise_fee,jdbcType=INTEGER},
+        policy = #{record.policy,jdbcType=INTEGER},
+        shield = #{record.shield,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="model.Admin">
+        update admin
+        <set>
+            <if test="account != null">
+                account = #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneNum != null">
+                phoneNum = #{phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=INTEGER},
+            </if>
+            <if test="descr != null">
+                descr = #{descr,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="proxy_token != null">
+                proxy_token = #{proxy_token,jdbcType=VARCHAR},
+            </if>
+            <if test="recommend_token != null">
+                recommend_token = #{recommend_token,jdbcType=VARCHAR},
+            </if>
+            <if test="recommend_phone != null">
+                recommend_phone = #{recommend_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="openid != null">
+                openid = #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="ptoken != null">
+                ptoken = #{ptoken,jdbcType=VARCHAR},
+            </if>
+            <if test="secretkey != null">
+                secretkey = #{secretkey,jdbcType=VARCHAR},
+            </if>
+
+            <if test="createTime != null">
+                createTime = #{createTime,jdbcType=DATE},
+            </if>
+            <if test="signway != null">
+                signway = #{signway,jdbcType=INTEGER},
+            </if>
+            <if test="franchise_fee != null">
+                franchise_fee = #{franchise_fee,jdbcType=INTEGER},
+            </if>
+            <if test="policy != null">
+                policy = #{policy,jdbcType=INTEGER},
+            </if>
+            <if test="shield != null">
+                shield = #{shield,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="model.Admin">
+    update admin
+    set account = #{account,jdbcType=VARCHAR},
+    password = #{password,jdbcType=VARCHAR},
+    username = #{username,jdbcType=VARCHAR},
+    phoneNum = #{phoneNum,jdbcType=VARCHAR},
+    level = #{level,jdbcType=INTEGER},
+    descr = #{descr,jdbcType=VARCHAR},
+    status = #{status,jdbcType=VARCHAR},
+    proxy_token = #{proxy_token,jdbcType=VARCHAR},
+    recommend_phone = #{recommend_phone,jdbcType=VARCHAR},
+    recommend_token = #{recommend_token,jdbcType=VARCHAR},
+    openid = #{openid,jdbcType=VARCHAR},
+    ptoken = #{ptoken,jdbcType=VARCHAR},
+    secretkey= #{secretkey,jdbcType=VARCHAR},
+    createTime = #{createTime,jdbcType=DATE},
+    signway = #{signway,jdbcType=INTEGER},
+    franchise_fee = #{franchise_fee,jdbcType=INTEGER},
+    policy = #{policy,jdbcType=INTEGER},
+    shield = #{shield,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

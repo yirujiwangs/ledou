@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ProxyAreaReportMapper">
+  <resultMap id="BaseResultMap" type="model.ProxyAreaReport">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="rid" jdbcType="INTEGER" property="rid" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="fullname" jdbcType="VARCHAR" property="fullname" />
+    <result column="province_rid" jdbcType="INTEGER" property="province_rid" />
+    <result column="city_rid" jdbcType="INTEGER" property="city_rid" />
+    <result column="area_level" jdbcType="TINYINT" property="area_level" />
+    <result column="lat" jdbcType="DOUBLE" property="lat" />
+    <result column="lng" jdbcType="DOUBLE" property="lng" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="report_num" jdbcType="INTEGER" property="report_num" />
+    <result column="last_time" jdbcType="INTEGER" property="last_time" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.likeValue">
+                  and ${criterion.condition} #{criterion.value} ${criterion.condition2}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, rid, pid, province, city, fullname, province_rid, city_rid, area_level, 
+    lat, lng, state, report_num, last_time, createtime
+  </sql>
+  <select id="selectByExample" parameterType="model.ProxyAreaReportExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from proxy_area_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause} desc
+    </if>
+    <if test="limitValue">
+      limit #{startSize},#{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from proxy_area_report
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectByRid" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
+    select * from proxy_area_report where rid = #{cid,jdbcType=INTEGER} limit 1
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from proxy_area_report
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="model.ProxyAreaReportExample">
+    delete from proxy_area_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="model.ProxyAreaReport">
+    insert into proxy_area_report (id, name, rid, 
+      pid, province, city, 
+      fullname, province_rid, city_rid, 
+      area_level, lat, lng, 
+      state, report_num, last_time, 
+      createtime)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{rid,jdbcType=INTEGER}, 
+      #{pid,jdbcType=INTEGER}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{fullname,jdbcType=VARCHAR}, #{province_rid,jdbcType=INTEGER}, #{city_rid,jdbcType=INTEGER}, 
+      #{area_level,jdbcType=TINYINT}, #{lat,jdbcType=DOUBLE}, #{lng,jdbcType=DOUBLE}, 
+      #{state,jdbcType=VARCHAR}, #{report_num,jdbcType=INTEGER}, #{last_time,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="model.ProxyAreaReport">
+    insert into proxy_area_report
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="rid != null">
+        rid,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="fullname != null">
+        fullname,
+      </if>
+      <if test="province_rid != null">
+        province_rid,
+      </if>
+      <if test="city_rid != null">
+        city_rid,
+      </if>
+      <if test="area_level != null">
+        area_level,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+      <if test="lng != null">
+        lng,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="report_num != null">
+        report_num,
+      </if>
+      <if test="last_time != null">
+        last_time,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rid != null">
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="fullname != null">
+        #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="province_rid != null">
+        #{province_rid,jdbcType=INTEGER},
+      </if>
+      <if test="city_rid != null">
+        #{city_rid,jdbcType=INTEGER},
+      </if>
+      <if test="area_level != null">
+        #{area_level,jdbcType=TINYINT},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=DOUBLE},
+      </if>
+      <if test="lng != null">
+        #{lng,jdbcType=DOUBLE},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="report_num != null">
+        #{report_num,jdbcType=INTEGER},
+      </if>
+      <if test="last_time != null">
+        #{last_time,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="model.ProxyAreaReportExample" resultType="java.lang.Integer">
+    select count(*) from proxy_area_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update proxy_area_report
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rid != null">
+        rid = #{record.rid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pid != null">
+        pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fullname != null">
+        fullname = #{record.fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province_rid != null">
+        province_rid = #{record.province_rid,jdbcType=INTEGER},
+      </if>
+      <if test="record.city_rid != null">
+        city_rid = #{record.city_rid,jdbcType=INTEGER},
+      </if>
+      <if test="record.area_level != null">
+        area_level = #{record.area_level,jdbcType=TINYINT},
+      </if>
+      <if test="record.lat != null">
+        lat = #{record.lat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.lng != null">
+        lng = #{record.lng,jdbcType=DOUBLE},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.report_num != null">
+        report_num = #{record.report_num,jdbcType=INTEGER},
+      </if>
+      <if test="record.last_time != null">
+        last_time = #{record.last_time,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update proxy_area_report
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      rid = #{record.rid,jdbcType=INTEGER},
+      pid = #{record.pid,jdbcType=INTEGER},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      fullname = #{record.fullname,jdbcType=VARCHAR},
+      province_rid = #{record.province_rid,jdbcType=INTEGER},
+      city_rid = #{record.city_rid,jdbcType=INTEGER},
+      area_level = #{record.area_level,jdbcType=TINYINT},
+      lat = #{record.lat,jdbcType=DOUBLE},
+      lng = #{record.lng,jdbcType=DOUBLE},
+      state = #{record.state,jdbcType=VARCHAR},
+      report_num = #{record.report_num,jdbcType=INTEGER},
+      last_time = #{record.last_time,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="model.ProxyAreaReport">
+    update proxy_area_report
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rid != null">
+        rid = #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="fullname != null">
+        fullname = #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="province_rid != null">
+        province_rid = #{province_rid,jdbcType=INTEGER},
+      </if>
+      <if test="city_rid != null">
+        city_rid = #{city_rid,jdbcType=INTEGER},
+      </if>
+      <if test="area_level != null">
+        area_level = #{area_level,jdbcType=TINYINT},
+      </if>
+      <if test="lat != null">
+        lat = #{lat,jdbcType=DOUBLE},
+      </if>
+      <if test="lng != null">
+        lng = #{lng,jdbcType=DOUBLE},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="report_num != null">
+        report_num = #{report_num,jdbcType=INTEGER},
+      </if>
+      <if test="last_time != null">
+        last_time = #{last_time,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.ProxyAreaReport">
+    update proxy_area_report
+    set name = #{name,jdbcType=VARCHAR},
+      rid = #{rid,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=INTEGER},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      fullname = #{fullname,jdbcType=VARCHAR},
+      province_rid = #{province_rid,jdbcType=INTEGER},
+      city_rid = #{city_rid,jdbcType=INTEGER},
+      area_level = #{area_level,jdbcType=TINYINT},
+      lat = #{lat,jdbcType=DOUBLE},
+      lng = #{lng,jdbcType=DOUBLE},
+      state = #{state,jdbcType=VARCHAR},
+      report_num = #{report_num,jdbcType=INTEGER},
+      last_time = #{last_time,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateReportNum" parameterType="java.lang.Integer">
+    UPDATE proxy_area_report
+    set report_num = report_num+1
+    WHERE rid = #{rid,jdbcType=INTEGER}
+  </update>
+</mapper>

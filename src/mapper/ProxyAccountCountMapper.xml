@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ProxyAccountCountMapper">
+    <resultMap id="BaseResultMap" type="model.ProxyAccountCount">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="normal_num_total" jdbcType="INTEGER" property="normal_num_total"/>
+        <result column="platform_num_total" jdbcType="INTEGER" property="platform_num_total"/>
+        <result column="normal_num_used" jdbcType="INTEGER" property="normal_num_used"/>
+        <result column="platform_num_used" jdbcType="INTEGER" property="platform_num_used"/>
+        <result column="normal_num_active" jdbcType="INTEGER" property="normal_num_active"/>
+        <result column="platform_num_active" jdbcType="INTEGER" property="platform_num_active"/>
+        <result column="normal_num_freezeing" jdbcType="INTEGER" property="normal_num_freezeing"/>
+        <result column="platform_num_freezeing" jdbcType="INTEGER" property="platform_num_freezeing"/>
+        <result column="proxy_phone" jdbcType="VARCHAR" property="proxy_phone"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, normal_num_total, platform_num_total, normal_num_used, platform_num_used, normal_num_active, 
+    platform_num_active, normal_num_freezeing, platform_num_freezeing,proxy_phone, createtime
+  </sql>
+    <select id="selectByExample" parameterType="model.ProxyAccountCountExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from proxy_account_count
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByProxyPhone" parameterType="java.lang.String" resultType="model.ProxyAccountCount">
+        select
+        <include refid="Base_Column_List"/>
+        from proxy_account_count
+        where proxy_phone = #{phone,jdbcType=VARCHAR} limit 1
+    </select>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from proxy_account_count
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from proxy_account_count
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="model.ProxyAccountCountExample">
+        delete from proxy_account_count
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="model.ProxyAccountCount">
+    insert into proxy_account_count (id, normal_num_total, platform_num_total, 
+      normal_num_used, platform_num_used, normal_num_active, 
+      platform_num_active, normal_num_freezeing, 
+      platform_num_freezeing,proxy_phone, createtime)
+    values (#{id,jdbcType=INTEGER}, #{normal_num_total,jdbcType=INTEGER}, #{platform_num_total,jdbcType=INTEGER}, 
+      #{normal_num_used,jdbcType=INTEGER}, #{platform_num_used,jdbcType=INTEGER}, #{normal_num_active,jdbcType=INTEGER}, 
+      #{platform_num_active,jdbcType=INTEGER}, #{normal_num_freezeing,jdbcType=INTEGER}, 
+      #{platform_num_freezeing,jdbcType=INTEGER},#{proxy_phone,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="model.ProxyAccountCount">
+        insert into proxy_account_count
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="normal_num_total != null">
+                normal_num_total,
+            </if>
+            <if test="platform_num_total != null">
+                platform_num_total,
+            </if>
+            <if test="normal_num_used != null">
+                normal_num_used,
+            </if>
+            <if test="platform_num_used != null">
+                platform_num_used,
+            </if>
+            <if test="normal_num_active != null">
+                normal_num_active,
+            </if>
+            <if test="platform_num_active != null">
+                platform_num_active,
+            </if>
+            <if test="normal_num_freezeing != null">
+                normal_num_freezeing,
+            </if>
+            <if test="platform_num_freezeing != null">
+                platform_num_freezeing,
+            </if>
+            <if test="proxy_phone != null">
+                proxy_phone,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="normal_num_total != null">
+                #{normal_num_total,jdbcType=INTEGER},
+            </if>
+            <if test="platform_num_total != null">
+                #{platform_num_total,jdbcType=INTEGER},
+            </if>
+            <if test="normal_num_used != null">
+                #{normal_num_used,jdbcType=INTEGER},
+            </if>
+            <if test="platform_num_used != null">
+                #{platform_num_used,jdbcType=INTEGER},
+            </if>
+            <if test="normal_num_active != null">
+                #{normal_num_active,jdbcType=INTEGER},
+            </if>
+            <if test="platform_num_active != null">
+                #{platform_num_active,jdbcType=INTEGER},
+            </if>
+            <if test="normal_num_freezeing != null">
+                #{normal_num_freezeing,jdbcType=INTEGER},
+            </if>
+            <if test="platform_num_freezeing != null">
+                #{platform_num_freezeing,jdbcType=INTEGER},
+            </if>
+
+            <if test="proxy_phone != null">
+                #{proxy_phone,jdbcType=VARCHAR},
+            </if>
+
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="model.ProxyAccountCountExample" resultType="java.lang.Integer">
+        select count(*) from proxy_account_count
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update proxy_account_count
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.normal_num_total != null">
+                normal_num_total = #{record.normal_num_total,jdbcType=INTEGER},
+            </if>
+            <if test="record.platform_num_total != null">
+                platform_num_total = #{record.platform_num_total,jdbcType=INTEGER},
+            </if>
+            <if test="record.normal_num_used != null">
+                normal_num_used = #{record.normal_num_used,jdbcType=INTEGER},
+            </if>
+            <if test="record.platform_num_used != null">
+                platform_num_used = #{record.platform_num_used,jdbcType=INTEGER},
+            </if>
+            <if test="record.normal_num_active != null">
+                normal_num_active = #{record.normal_num_active,jdbcType=INTEGER},
+            </if>
+            <if test="record.platform_num_active != null">
+                platform_num_active = #{record.platform_num_active,jdbcType=INTEGER},
+            </if>
+            <if test="record.normal_num_freezeing != null">
+                normal_num_freezeing = #{record.normal_num_freezeing,jdbcType=INTEGER},
+            </if>
+            <if test="record.platform_num_freezeing != null">
+                platform_num_freezeing = #{record.platform_num_freezeing,jdbcType=INTEGER},
+            </if>
+
+            <if test="record.proxy_phone != null">
+                proxy_phone = #{record.proxy_phone,jdbcType=INTEGER},
+            </if>
+            <if test="record.createtime != null">
+                createtime = #{record.createtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update proxy_account_count
+        set id = #{record.id,jdbcType=INTEGER},
+        normal_num_total = #{record.normal_num_total,jdbcType=INTEGER},
+        platform_num_total = #{record.platform_num_total,jdbcType=INTEGER},
+        normal_num_used = #{record.normal_num_used,jdbcType=INTEGER},
+        platform_num_used = #{record.platform_num_used,jdbcType=INTEGER},
+        normal_num_active = #{record.normal_num_active,jdbcType=INTEGER},
+        platform_num_active = #{record.platform_num_active,jdbcType=INTEGER},
+        normal_num_freezeing = #{record.normal_num_freezeing,jdbcType=INTEGER},
+        platform_num_freezeing = #{record.platform_num_freezeing,jdbcType=INTEGER},
+        proxy_phone = #{record.proxy_phone,jdbcType=INTEGER},
+        createtime = #{record.createtime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="model.ProxyAccountCount">
+        update proxy_account_count
+        <set>
+            <if test="normal_num_total != null">
+                normal_num_total = #{normal_num_total,jdbcType=INTEGER},
+            </if>
+            <if test="platform_num_total != null">
+                platform_num_total = #{platform_num_total,jdbcType=INTEGER},
+            </if>
+            <if test="normal_num_used != null">
+                normal_num_used = #{normal_num_used,jdbcType=INTEGER},
+            </if>
+            <if test="platform_num_used != null">
+                platform_num_used = #{platform_num_used,jdbcType=INTEGER},
+            </if>
+            <if test="normal_num_active != null">
+                normal_num_active = #{normal_num_active,jdbcType=INTEGER},
+            </if>
+            <if test="platform_num_active != null">
+                platform_num_active = #{platform_num_active,jdbcType=INTEGER},
+            </if>
+            <if test="normal_num_freezeing != null">
+                normal_num_freezeing = #{normal_num_freezeing,jdbcType=INTEGER},
+            </if>
+            <if test="platform_num_freezeing != null">
+                platform_num_freezeing = #{platform_num_freezeing,jdbcType=INTEGER},
+            </if>
+
+            <if test="proxy_phone != null">
+                proxy_phone = #{proxy_phone,jdbcType=INTEGER},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="model.ProxyAccountCount">
+    update proxy_account_count
+    set normal_num_total = #{normal_num_total,jdbcType=INTEGER},
+      platform_num_total = #{platform_num_total,jdbcType=INTEGER},
+      normal_num_used = #{normal_num_used,jdbcType=INTEGER},
+      platform_num_used = #{platform_num_used,jdbcType=INTEGER},
+      normal_num_active = #{normal_num_active,jdbcType=INTEGER},
+      platform_num_active = #{platform_num_active,jdbcType=INTEGER},
+      normal_num_freezeing = #{normal_num_freezeing,jdbcType=INTEGER},
+      platform_num_freezeing = #{platform_num_freezeing,jdbcType=INTEGER},
+       proxy_phone = #{proxy_phone,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,68 @@
+<div class=" panel-default" >
+	<div class="panel-heading title-middle" style="    height: 46px;">
+		<h3 class="panel-title ">信息</h3>
+	</div>
+</div>
+<!--<div class='account-edit-header'><i class="glyphicon glyphicon-remove" ng-click="refundDetailCtrl.close()"></i></div>-->
+<form class="form-horizontal " name="balanceWithdrawForm">
+	<div class="form-group">
+		<label class="col-xs-4 control-label">运营商账号:</label>
+		<div class="col-xs-5">
+			<span class="modal-span">{{refundDetailCtrl.allData.account}}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">运营商名称:</label>
+		<div class="col-xs-5">
+			<span class="modal-span">{{refundDetailCtrl.allData.accountName}}</span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-xs-4 control-label">结算方式:</label>
+		<div class="col-xs-5">
+			<span class="modal-span">{{refundDetailCtrl.withdrawSelect}}</span>
+		</div>
+	</div>
+	<div ng-if="refundDetailCtrl.withdrawSelect=='支付宝方式'">
+		<div class="form-group">
+			<label class="col-xs-4 control-label">支付宝姓名:</label>
+			<div class="col-xs-5">
+				<span class="modal-span">{{refundDetailCtrl.allData.alipayAccountName}}</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4 control-label">支付宝账号:</label>
+			<div class="col-xs-5">
+				<span class="modal-span">{{refundDetailCtrl.allData.alipayAccount}}</span>
+			</div>
+		</div>
+	</div>
+	<div ng-if="refundDetailCtrl.withdrawSelect=='对公账户方式'">
+		<div class="form-group">
+			<label class="col-xs-4 control-label">银行账号名称:</label>
+			<div class="col-xs-5">
+				<span class="modal-span">{{refundDetailCtrl.allData.bankAccountName}}</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4 control-label">银行账号卡号:</label>
+			<div class="col-xs-5">
+				<span class="modal-span">{{refundDetailCtrl.allData.bankAccount}}</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4 control-label">开户银行:</label>
+			<div class="col-xs-5">
+				<span class="modal-span">{{refundDetailCtrl.allData.bankName}}</span>
+			</div>
+		</div>
+
+	</div>
+
+</form>
+<div class="myreportedbtn">
+	<div class="btn-group" style="padding-top: 1.5%;">
+		<button class="btn-g btn-g-default btn-mt" ng-click="refundDetailCtrl.close()">取消</button>
+	</div>
+</div>

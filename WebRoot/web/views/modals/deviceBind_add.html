@@ -1,0 +1,22 @@
+<div class='account-edit-header'><i class="glyphicon glyphicon-remove" ng-click="deviceBindAddCtrl.close()"></i></div>
+<div class='account-edit-container'>
+	<form name='myForm' class="form-horizontal">
+		<div class="form-group">
+			<label class="control-label col-xs-4">设备序列号:</label>
+			<div class="col-xs-7">
+				<input class="form-control" type="number" ng-model='form.serialNum' required="required">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-4">设备型号:</label>
+			<div class="col-xs-7">
+				<select class="form-control" ng-model="form.type" ng-options="option.name as option.name for option in deviceBindAddCtrl.types">
+				</select>
+			</div>
+		</div>
+		<div class="btn-group">
+			<button class="btn-g btn-g-green" ng-click="deviceBindAddCtrl.ok()">确定</button>
+			<button class="btn-g btn-g-default" ng-click="deviceBindAddCtrl.close()">取消</button>
+		</div>
+	</form>
+</div>

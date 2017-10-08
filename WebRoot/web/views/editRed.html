@@ -1,0 +1,173 @@
+<div ng-include="'views/nav.html'"></div>
+
+<div class="main clearfix" style="height: 80%;padding-left:200px">
+
+    <form id="fromId" class="col-xs-9 form-horizontal"
+
+          name="editRed"  method="post" target="_blank" style="width: 75%"
+          onsubmit="return false"   novalidate>
+
+        <input type="hidden" name="type" value="screen"  required>
+
+        <div class="panel-ad">
+
+            <div class="panel-ad-header">红包信息</div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">红包名称</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <input class="form-control" name="publicName" type="text" ng-model="publicName"
+                           maxlength="9"
+                           placeholder="请输入红包名称，不超过9个字" required>
+
+                </div>
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">公众号选择</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <input class="form-control" ng-model="publicnum_type" required="" readonly disabled>
+
+                </div>
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">公众号appID</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <input class="form-control" ng-model="appid" required="" readonly disabled>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel-ad">
+
+            <div class="panel-ad-header">投放设置</div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">投放时间段</span>
+
+                <div ng-include="'views/editTime.html'"></div>
+
+            </div>
+
+            <input type="hidden" name="begin_time" value="{{ begin }}" required>
+
+            <input type="hidden" name="end_time" value="{{ end }}" required>
+
+            <div class="panel-ad-form clearfix" style="position: relative">
+
+                <span class="col-xs-12" style="color:red">注意：投放方式只能选择一种</span>
+
+            </div>
+
+            <div class="panel-ad-form clearfix" style="position: relative">
+
+                <span class="col-xs-3">投放方式</span>
+
+                <div class="col-xs-4 del-pad panel-ad-form-radio">
+
+                    <input type="radio" name="type" id="adDevice" ng-checked="true" value="D" ng-model="type" ng-checked="true">
+
+                    <label for="adDevice">选择投放设备分组</label>
+
+                    <section>可以选择多个分组的设备，进行投放</section>
+
+                </div>
+
+                <div class="col-xs-4 del-pad panel-ad-form-radio">
+
+                    <input type="radio" name="type" id="adArea" value="W" ng-model="type"  >
+
+                    <label for="adArea">选择投放区域分组</label>
+
+                    <section>可在全国范围内投放</section>
+
+                </div>
+
+                <a style="text-decoration: none;cursor: pointer;color:white;position:absolute;right:10px;top:5px;"
+
+                   ng-show="type=='D'"
+
+                   class="t-btn t-btn-green"
+
+                   ng-click="editRedCtrl.setDevice()">配置设备分组</a>
+
+                <a style="text-decoration: none;cursor: pointer;color:white;position:absolute;right:10px;top:5px;"
+
+                   ng-show="type=='W'"
+
+                   class="t-btn t-btn-green"
+
+                   ng-click="editRedCtrl.setArea()">配置区域分组</a>
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">计费模版</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <input class="form-control" ng-model="withdrawalData.name" required="" readonly disabled>
+
+                </div>
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">吸粉人数</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <input class="form-control" ng-model="touNum" required="" readonly disabled>
+
+                </div>
+
+            </div>
+
+            <div class="panel-ad-form clearfix">
+
+                <span class="col-xs-3">投放预算</span>
+
+                <div class="col-xs-9 del-pad">
+
+                    <input class="form-control" ng-model="preFee" required="" readonly disabled>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <button
+                type="submit"
+                id="payConfirm"
+                ng-click="editRedCtrl.submit()"
+                ng-class="{'t-btn':editRed.$invalid,'t-btn t-btn-green':editRed.$valid}"
+                ng-disabled="editRed.$invalid"
+                style="margin:0 auto!important;position:absolute;bottom:-13%;left:45%;"
+                class="t-btn panel-ad-submit">提交修改
+        </button>
+
+    </form>
+
+</div>

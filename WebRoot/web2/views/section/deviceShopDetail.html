@@ -1,0 +1,74 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">关键指标
+				<span>
+					{{deviceShopDetailCtrl.deviceShopDetailAccount.account}}
+					({{deviceShopDetailCtrl.deviceShopDetailAccount.phoneNum}})
+				</span>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div class='panel-items col-xs-3'>
+				<p>设备总数</p>
+				<p class="panel-items-num-xs">
+					{{ deviceShopDetailCtrl.item.totalNum }}
+				</p>
+			</div>
+			<div class='panel-items col-xs-3'>
+				<p>使用中设备数</p>
+				<p class="panel-items-num-xs">
+					{{ deviceShopDetailCtrl.item.usingNum }}
+				</p>
+			</div>
+			<div class='panel-items col-xs-3'>
+				<p>未使用设备数</p>
+				<p class="panel-items-num-xs">
+					{{ deviceShopDetailCtrl.item.unUsingNum }}
+				</p>
+			</div>
+			<div class='panel-items col-xs-3'>
+				<p>设备分组数</p>
+				<p class="panel-items-num-xs">
+					{{ deviceShopDetailCtrl.item.groupNum }}
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<form class="form-inline clearfix">
+				<div class="form-group col-xs-4 pull-right" style="margin-bottom: 0;">
+					<input type="text" ng-model="form.searchkey" placeholder="商户账号/商户名称/备注" style="min-width: 170px;">	
+					<button class="t-btn t-btn-green pull-right" ng-click="deviceShopDetailCtrl.search()">搜索</button>
+				</div>
+				<div class="col-xs-4 pull-right m-r-lg">
+					<div ng-include="'views/dateTime.html'"></div>
+				</div>
+			</form>
+		</div>
+		<thead>
+			<th ng-repeat="title in deviceShopDetailCtrl.titles">
+				{{ title.name }}
+			</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="device in deviceShopDetailCtrl.devices">
+				<td>{{ device.serialNum }}</td>
+				<td>{{ device.ibeaconId }}</td>
+				<td>{{ device.status }}</td>
+				<td>
+					{{ device.createTime | date:'yyyy-MM-dd HH:mm:ss' }}
+				</td>
+				<td>{{ device.remark }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="deviceShopDetailCtrl.pre()">上一页</button>
+		<span>第{{deviceShopDetailCtrl.currentPage}}页,共{{deviceShopDetailCtrl.totalPage}}页</span>
+		<button ng-click="deviceShopDetailCtrl.next()">下一页</button>
+	</div>
+</div>

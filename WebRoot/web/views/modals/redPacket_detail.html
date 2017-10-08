@@ -1,0 +1,49 @@
+
+<div class=" panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">投放策略详情</h3>
+        <button type="button" class="close" style="margin-top: -3%;" ng-click="redPacketDetailCtrl.close()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+</div>
+<form  class="form-horizontal" style="padding-top: 3%" name="listAdShowStrategyForm" novalidate>
+
+    <div class="form-group">
+
+        <label class="col-xs-4 control-label">分组方式:</label>
+        <label class="col-xs-3 control-label" ng-if="isShowGroup" style="text-align: left">投放设备分组</label>
+        <label class="col-xs-3 control-label" ng-if="isShowArea" style="text-align: left">投放区域分组</label>
+    </div>
+    <div class="form-group" ng-if="isShowGroup" style="max-height:300px;overflow-y:scroll">
+        <table class="table table-hover table-reponsive">
+            <thead>
+            <th>分组名称</th>
+            <th>所属运营商</th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="groupInfo in redPacketDetailCtrl.redPacketInfo.selectedStrategyList">
+                <td>{{ groupInfo.groupName }}</td>
+                <td >{{ groupInfo.proxyName }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-group" ng-if="isShowArea" style="max-height:300px;overflow-y:scroll">
+        <table class="table table-hover table-reponsive">
+            <thead>
+            <th>地区名称</th>
+            <th>所属运营商</th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="areaInfo in redPacketDetailCtrl.redPacketInfo.areasArr">
+                <td>{{ areaInfo | CodeToAllArea }}</td>
+                <td >{{ userName }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+<div class="myreportedbtn">
+    <div class="btn-group">
+        <button class="btn-g t-btn-green  btn-mt" ng-click="redPacketDetailCtrl.close()">我知道了</button>
+    </div>
+</div>

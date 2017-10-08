@@ -1,0 +1,40 @@
+<div ng-controller="MainCtrl">
+    <div class='header'>
+        <div class='header-logo'>
+            <img src="images/logo-sign.png" style="width: 145px;height: 37px;margin-top: 16px;">
+        </div>
+        <div class='header-title'>
+            控制中心
+        </div>
+        <div class='header-logoOut' ng-click="logOut()">
+            退出
+        </div>
+        <div class='header-user'>
+            <span>{{user}}</span>
+        </div>
+        <div class='header-user-logo'>
+        </div>
+    </div>
+    <div class="sidebar-warp">
+        <ul class='sidebar'>
+            <li ng-repeat='nav in navs' ng-click="changView($index)">
+                <i class="glyphicon {{nav.icon}}"></i>
+                <a>
+                    {{nav.name}}
+                    <!-- <i class="glyphicon glyphicon-menu-down nav-arrow"></i> -->
+                </a>
+                <ul class="subnav">
+                    <li ng-repeat='subnav in nav.subnav' ng-class="{'active':subnav.click}" ng-click="changSubView($index,$parent.$index,$event);$event.stopPropagation();">
+                        <!-- <i class="glyphicon glyphicon-menu-right"></i> -->
+                        <a>{{subnav.name}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="title">
+        <span class="title-first">{{title}}</span>
+        <span>></span>
+        <span>{{subTitle}}</span>
+    </div>
+</div>

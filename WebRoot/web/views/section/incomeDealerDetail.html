@@ -1,0 +1,23 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+<table class="table table-hover table-reponsive">
+		<thead>
+			<th>设备序列号</th>
+			<th>设备备注</th>
+			<th>经销商账号</th>
+			<th>激活设备返利</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="record in incomeAdDetailCtrl.allAdRecord">
+				<td>LD{{ record.deviceNo }}</td>
+				<td>{{ record.deviceRemark }}</td>
+				<td>{{ record.payment/100 }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="incomeAdDetailCtrl.pre()">上一页</button>
+		<span>第{{incomeAdDetailCtrl.currentPage}}页,共{{incomeAdDetailCtrl.totalPage}}页</span>
+		<button ng-click="incomeAdDetailCtrl.next()">下一页</button>
+	</div>
+</div>

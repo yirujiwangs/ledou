@@ -1,0 +1,40 @@
+.counter{
+	padding: 0;
+	width: 120px;
+	height: 25px;
+	.counter-minus,.counter-add{
+		width: 25%;
+		height: 100%;
+		font-size: 18px;
+		text-align: center;
+		color: #989898;
+		background: #ddd;
+		cursor: pointer;
+	}
+	.counter-minus{
+		float: left;
+	}
+	.counter-add{
+		float: right;
+	}
+	.counter-result{
+		padding: 0 10px;
+		width: 50%;
+		height: 100%;
+		border: 0;
+		text-align: center;
+		background: #efefef;
+		outline: none;
+	}
+	.counter-minus::selection,.counter-add::selection {
+	    color:#989898;
+	}
+
+	.counter-minus::-moz-selection,.counter-add::-moz-selection {
+	    color:#989898;
+	}
+
+	.counter-minus::-webkit-selection,.counter-add::-webkit-selection {
+	    color:#989898;
+	}
+}

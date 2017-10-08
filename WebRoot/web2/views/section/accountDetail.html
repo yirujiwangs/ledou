@@ -1,0 +1,75 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">关键指标</h3>
+		</div>
+		<div class="panel-body">
+			<div class='panel-items col-xs-4' ng-repeat="item in accountDetailCtrl.items">
+				<p>{{ item.name }}</p>
+				<p class="panel-items-num">{{ item.number }}</p>
+			</div>
+		</div>
+	</div>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<button class="t-btn t-btn-green pull-left" ng-click="accountDetailCtrl.add()">创建账号</button>
+			<div class="pull-right">
+				<form class="form-inline clearfix">
+					<div class=" pull-right ">
+						<input type="text" placeholder="商户账号/商户名称/备注" ng-model="form.keyword" class="m-r-lg">
+						<button class="t-btn t-btn-green pull-right" ng-click="accountDetailCtrl.search()">查询</button>
+					</div>
+					<div class="pull-right m-r-lg">
+						<div ng-include="'views/dateTime.html'"></div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<thead>
+			<th>商家账号</th>
+			<th>商户名称</th>
+			<th>商户类型</th>
+			<td class="w-md">
+				<div class="dropdown">
+					<a class="dropdown-toggle mousepointer" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="color:#717171;" >
+						账号状态
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu mydropdown" aria-labelledby="dropdownMenu1" >
+						<li><a class = "mousepointer" ng-click="accountDetailCtrl.stateList(true)">正常</a></li>
+						<li><a class = "mousepointer" ng-click="accountDetailCtrl.stateList(false)">禁用</a></li>
+					</ul>
+				</div></td>
+				<th>分组个数限制</th>
+				<th>子商户个数限制</th>
+				<th>备注</th>
+				<th>创建时间</th>
+				<th>操作</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="record in accountDetailCtrl.allRecord">
+					<td>{{ record.account }}</td>
+					<td>{{ record.storeName }}</td>
+					<td>{{ record.storeType }}</td>
+					<td ng-show ="record.status=='true'">正常</td>
+					<td ng-show ="record.status=='false'">禁用</td>
+					<td>{{ record.maxGroupNum }}</td>
+					<td>{{ record.maxStoreNum }}</td>
+					<td>{{ record.descr}}</td>
+					<td>{{ record.createTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+					<td>
+						<button class="t-btn t-btn-green" ng-click="accountDetailCtrl.update($index)">修改
+						</button>
+						<button class="t-btn t-btn-yellow" ng-click="accountDetailCtrl.status($index)" ng-show="record.status=='true'">禁用</button>
+						<button class="t-btn t-btn-blue" ng-click="accountDetailCtrl.status($index)"  ng-show="record.status=='false'">解封</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="page-btn">
+			<button ng-click="accountDetailCtrl.pre()">上一页</button>
+			<span>第{{accountDetailCtrl.currentPage}}页,共{{accountDetailCtrl.totalPage}}页</span>
+			<button ng-click="accountDetailCtrl.next()">下一页</button>
+		</div>
+	</div> 

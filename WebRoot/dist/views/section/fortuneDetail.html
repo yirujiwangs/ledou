@@ -1,0 +1,26 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<table class='table table-hover table-reponsive'>
+		<thead>
+			<tr>
+				<td ng-repeat="title in fortuneDetailCtrl.titles">{{title.name}}</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="data in fortuneDetailCtrl.allData">
+				<td>{{data.date_time|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+				<td>{{data.out_trade_no}}</td>
+				<td>{{data.phoneNum}}</td>
+				<td>{{data.shopName}}</td>
+				<td>{{data.fee}}</td>
+				<td>{{data.proxy_taxes_money}}</td>
+				<td>{{data.remark}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="fortuneDetailCtrl.pre()">上一页</button>
+		<span>第{{fortuneDetailCtrl.currentPage}}页,共{{fortuneDetailCtrl.totalPage}}页</span>
+		<button ng-click="fortuneDetailCtrl.next()">下一页</button>
+	</div>
+</div>

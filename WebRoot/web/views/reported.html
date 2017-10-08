@@ -1,0 +1,30 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <table class="table table-hover table-reponsive">
+        <thead>
+        <th ng-repeat="title in reportedCtrl.toptitle">
+            {{title.name}}
+        </th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in reportedCtrl.allUser">
+            <td>{{user.area_name}}</td>
+            <td>{{(user.company=='undefined')?'无':user.company}}</td>
+            <td>{{user.createtime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{user.contact_name}}</td>
+            <td>{{user.contact_way}}</td>
+            <td>{{user.signState}}</td>
+            <td ng-show="user.comment!='null'">{{user.comment}}</td>
+            <td ng-show="user.comment=='null'">无</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn" style="width: 27%;">
+        <button class="prepage" ng-click="reportedCtrl.pre()">上一页</button>
+        <span>{{reportedCtrl.currentPage}}/{{reportedCtrl.totalPage}}</span>
+        <button class="nextpage" ng-click="reportedCtrl.next()">下一页</button>
+
+        <input type='text' class="preinputwid jumppage" style="text-align: center;" placeholder=""  ng-model="jumppage">
+        <button class="t-btn t-btn-green m-r-md " ng-click="reportedCtrl.jump()">跳转</button>
+    </div>
+</div>

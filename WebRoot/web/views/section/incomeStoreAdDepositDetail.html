@@ -1,0 +1,26 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <table class="table table-hover table-reponsive">
+        <thead>
+        <th>日期</th>
+        <th>用户头像</th>
+        <th>用户昵称</th>
+        <th>充值金额</th>
+        <th>充值方式</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="info in incomeStoreAdDepositDetailCtrl.pageInfo">
+            <td>{{info.time| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td style="width: 16%;"><img style="    width: 20%;height: auto;border-radius: 50%;" class="" ng-src="{{info.headimgurl}}" ></td>
+            <td>{{info.nickname}}</td>
+            <td>{{(info.fee/100).toFixed(2)}}</td>
+            <td>{{info.comment}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn">
+        <button ng-click="incomeStoreAdDepositDetailCtrl.pre()">上一页</button>
+        <span>第{{incomeStoreAdDepositDetailCtrl.currentPage}}页,共{{incomeStoreAdDepositDetailCtrl.totalPage}}页</span>
+        <button ng-click="incomeStoreAdDepositDetailCtrl.next()">下一页</button>
+    </div>
+</div>

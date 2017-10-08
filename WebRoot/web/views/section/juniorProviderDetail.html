@@ -1,0 +1,43 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">关键指标</h3>
+        </div>
+        <div class="panel-body">
+            <div class='panel-items col-xs-4'>
+                <p>累计设备采购数</p>
+                <p class="panel-items-num">{{totalDeviceBuy}}</p>
+            </div>
+            <div class='panel-items col-xs-4'>
+                <p>累计设备激活数</p>
+                <p class="panel-items-num">{{totalDeviceNum}}</p>
+            </div>
+            <div class='panel-items col-xs-4'>
+                <p>累计门店推广数</p>
+                <p class="panel-items-num">{{totalProviderNum}}</p>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-reponsive">
+        <thead>
+        <th>时间</th>
+        <th>设备采购数</th>
+        <th>设备激活数</th>
+        <th>门店推广数</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="info in juniorProviderDetailCtrl.allInfo">
+            <td>{{info.time}}</td>
+            <td>{{info.monthDeviceBuy}}</td>
+            <td>{{info.deviceActivated}}</td>
+            <td>{{info.storeActivated}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn ">
+        <button ng-click="juniorProviderDetailCtrl.pre()">上一页</button>
+        <span>第{{juniorProviderDetailCtrl.currentPage}}页,共{{juniorProviderDetailCtrl.totalPage}}页</span>
+        <button ng-click="juniorProviderDetailCtrl.next()">下一页</button>
+    </div>
+</div>

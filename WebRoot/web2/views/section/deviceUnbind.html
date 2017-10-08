@@ -1,0 +1,30 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<span class="table-func-title">未绑定的设备</span>
+		</div>
+		<thead>
+			<th ng-repeat="title in deviceUnbindCtrl.titles">
+				{{title.name}}
+			</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="record in deviceUnbindCtrl.allRecord">
+				<td>{{record.serialNum}}</td>
+				<td>{{record.weixinId}}</td>
+				<td>{{record.createTime | date :"yyyy-mm-dd hh:mm:ss"}}</td>
+				<td>{{record.status}}</td>
+				<td>{{record.remark}}</td>
+				<td>
+					<button class="t-btn t-btn-green" ng-click="deviceUnbindCtrl.updateUnbindRemark($index)"">修改备注</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="deviceUnbindCtrl.pre()">上一页</button>
+		<span>第{{deviceUnbindCtrl.currentPage}}页,共{{deviceUnbindCtrl.totalPage}}页</span>
+		<button ng-click="deviceUnbindCtrl.next()">下一页</button>
+	</div>
+</div>

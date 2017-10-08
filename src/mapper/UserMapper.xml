@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="model.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="utoken" property="utoken" jdbcType="VARCHAR" />
+    <result column="phoneNum" property="phonenum" jdbcType="VARCHAR" />
+    <result column="storeName" property="storename" jdbcType="VARCHAR" />
+    <result column="passwd" property="passwd" jdbcType="VARCHAR" />
+    <result column="storeType" property="storetype" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="weiXinStatus" property="weixinstatus" jdbcType="VARCHAR" />
+    <result column="maxGroupNum" property="maxgroupnum" jdbcType="INTEGER" />
+    <result column="maxStoreNum" property="maxstorenum" jdbcType="INTEGER" />
+    <result column="platformId" property="platformid" jdbcType="INTEGER" />
+    <result column="userInfoId" property="userinfoid" jdbcType="INTEGER" />
+    <result column="wx_appid" property="wxAppid" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="lastModifyTime" property="lastmodifytime" jdbcType="TIMESTAMP" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="corporationId" property="corporationid" jdbcType="INTEGER" />
+    <result column="descr" property="descr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.likeValue">
+                 and ${criterion.condition} #{criterion.value} ${criterion.condition2}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, utoken, phoneNum, storeName, passwd, storeType, status, weiXinStatus, maxGroupNum, 
+    maxStoreNum, platformId, userInfoId, wx_appid, createTime, lastModifyTime, level, 
+    corporationId, descr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="model.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    order by id desc
+    <if test="limitValue">
+      limit #{startSize} ,#{pageSize}
+    </if>
+  </select>
+
+  <select id="selectPhoneByExample" resultType="java.lang.String" parameterType="model.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    phoneNum
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause} DESC
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+    ORDER by id DESC
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="model.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="model.User" >
+    insert into user (id, utoken, phoneNum, 
+      storeName, passwd, storeType, 
+      status, weiXinStatus, maxGroupNum, 
+      maxStoreNum, platformId, userInfoId, 
+      wx_appid, createTime, lastModifyTime, 
+      level, corporationId, descr
+      )
+    values (#{id,jdbcType=INTEGER}, #{utoken,jdbcType=VARCHAR}, #{phonenum,jdbcType=VARCHAR}, 
+      #{storename,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{storetype,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{weixinstatus,jdbcType=VARCHAR}, #{maxgroupnum,jdbcType=INTEGER}, 
+      #{maxstorenum,jdbcType=INTEGER}, #{platformid,jdbcType=INTEGER}, #{userinfoid,jdbcType=INTEGER}, 
+      #{wxAppid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{lastmodifytime,jdbcType=TIMESTAMP}, 
+      #{level,jdbcType=INTEGER}, #{corporationid,jdbcType=INTEGER}, #{descr,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="utoken != null" >
+        utoken,
+      </if>
+      <if test="phonenum != null" >
+        phoneNum,
+      </if>
+      <if test="storename != null" >
+        storeName,
+      </if>
+      <if test="passwd != null" >
+        passwd,
+      </if>
+      <if test="storetype != null" >
+        storeType,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="weixinstatus != null" >
+        weiXinStatus,
+      </if>
+      <if test="maxgroupnum != null" >
+        maxGroupNum,
+      </if>
+      <if test="maxstorenum != null" >
+        maxStoreNum,
+      </if>
+      <if test="platformid != null" >
+        platformId,
+      </if>
+      <if test="userinfoid != null" >
+        userInfoId,
+      </if>
+      <if test="wxAppid != null" >
+        wx_appid,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="lastmodifytime != null" >
+        lastModifyTime,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="corporationid != null" >
+        corporationId,
+      </if>
+      <if test="descr != null" >
+        descr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="utoken != null" >
+        #{utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenum != null" >
+        #{phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="storename != null" >
+        #{storename,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="storetype != null" >
+        #{storetype,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinstatus != null" >
+        #{weixinstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="maxgroupnum != null" >
+        #{maxgroupnum,jdbcType=INTEGER},
+      </if>
+      <if test="maxstorenum != null" >
+        #{maxstorenum,jdbcType=INTEGER},
+      </if>
+      <if test="platformid != null" >
+        #{platformid,jdbcType=INTEGER},
+      </if>
+      <if test="userinfoid != null" >
+        #{userinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="wxAppid != null" >
+        #{wxAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodifytime != null" >
+        #{lastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="corporationid != null" >
+        #{corporationid,jdbcType=INTEGER},
+      </if>
+      <if test="descr != null" >
+        #{descr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="model.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.utoken != null" >
+        utoken = #{record.utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phonenum != null" >
+        phoneNum = #{record.phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storename != null" >
+        storeName = #{record.storename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passwd != null" >
+        passwd = #{record.passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storetype != null" >
+        storeType = #{record.storetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinstatus != null" >
+        weiXinStatus = #{record.weixinstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxgroupnum != null" >
+        maxGroupNum = #{record.maxgroupnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxstorenum != null" >
+        maxStoreNum = #{record.maxstorenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.platformid != null" >
+        platformId = #{record.platformid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userinfoid != null" >
+        userInfoId = #{record.userinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="record.wxAppid != null" >
+        wx_appid = #{record.wxAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastmodifytime != null" >
+        lastModifyTime = #{record.lastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.corporationid != null" >
+        corporationId = #{record.corporationid,jdbcType=INTEGER},
+      </if>
+      <if test="record.descr != null" >
+        descr = #{record.descr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set id = #{record.id,jdbcType=INTEGER},
+      utoken = #{record.utoken,jdbcType=VARCHAR},
+      phoneNum = #{record.phonenum,jdbcType=VARCHAR},
+      storeName = #{record.storename,jdbcType=VARCHAR},
+      passwd = #{record.passwd,jdbcType=VARCHAR},
+      storeType = #{record.storetype,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      weiXinStatus = #{record.weixinstatus,jdbcType=VARCHAR},
+      maxGroupNum = #{record.maxgroupnum,jdbcType=INTEGER},
+      maxStoreNum = #{record.maxstorenum,jdbcType=INTEGER},
+      platformId = #{record.platformid,jdbcType=INTEGER},
+      userInfoId = #{record.userinfoid,jdbcType=INTEGER},
+      wx_appid = #{record.wxAppid,jdbcType=VARCHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      lastModifyTime = #{record.lastmodifytime,jdbcType=TIMESTAMP},
+      level = #{record.level,jdbcType=INTEGER},
+      corporationId = #{record.corporationid,jdbcType=INTEGER},
+      descr = #{record.descr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="model.User" >
+    update user
+    <set >
+      <if test="utoken != null" >
+        utoken = #{utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenum != null" >
+        phoneNum = #{phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="storename != null" >
+        storeName = #{storename,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="storetype != null" >
+        storeType = #{storetype,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinstatus != null" >
+        weiXinStatus = #{weixinstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="maxgroupnum != null" >
+        maxGroupNum = #{maxgroupnum,jdbcType=INTEGER},
+      </if>
+      <if test="maxstorenum != null" >
+        maxStoreNum = #{maxstorenum,jdbcType=INTEGER},
+      </if>
+      <if test="platformid != null" >
+        platformId = #{platformid,jdbcType=INTEGER},
+      </if>
+      <if test="userinfoid != null" >
+        userInfoId = #{userinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="wxAppid != null" >
+        wx_appid = #{wxAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodifytime != null" >
+        lastModifyTime = #{lastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="corporationid != null" >
+        corporationId = #{corporationid,jdbcType=INTEGER},
+      </if>
+      <if test="descr != null" >
+        descr = #{descr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.User" >
+    update user
+    set utoken = #{utoken,jdbcType=VARCHAR},
+      phoneNum = #{phonenum,jdbcType=VARCHAR},
+      storeName = #{storename,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      storeType = #{storetype,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      weiXinStatus = #{weixinstatus,jdbcType=VARCHAR},
+      maxGroupNum = #{maxgroupnum,jdbcType=INTEGER},
+      maxStoreNum = #{maxstorenum,jdbcType=INTEGER},
+      platformId = #{platformid,jdbcType=INTEGER},
+      userInfoId = #{userinfoid,jdbcType=INTEGER},
+      wx_appid = #{wxAppid,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      lastModifyTime = #{lastmodifytime,jdbcType=TIMESTAMP},
+      level = #{level,jdbcType=INTEGER},
+      corporationId = #{corporationid,jdbcType=INTEGER},
+      descr = #{descr,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

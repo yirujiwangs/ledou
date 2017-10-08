@@ -1,0 +1,90 @@
+<div ng-include="'views/nav.html'"></div>
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">关键指标</h3>
+        </div>
+        <div class="panel-body">
+            <div class='panel-items col-xs-3'>
+                <p>	区县总数</p>
+                <p class="panel-items-num">{{juniorProviderCtrl.generalNum.distCountNum?juniorProviderCtrl.generalNum.distCountNum:'0'}}</p>
+            </div>
+            <div class='panel-items col-xs-3'>
+                <p>累计设备采购数</p>
+                <p class="panel-items-num">{{juniorProviderCtrl.generalNum.totalDeviceBuy?juniorProviderCtrl.generalNum.totalDeviceBuy:'0'}}</p>
+            </div>
+            <div class='panel-items col-xs-3'>
+                <p>累计设备激活数</p>
+                <p class="panel-items-num">{{juniorProviderCtrl.generalNum.allMunicipalDevices?juniorProviderCtrl.generalNum.allDevices:'0'}}</p>
+            </div>
+            <div class='panel-items col-xs-3'>
+                <p>累计门店推广数</p>
+                <p class="panel-items-num">{{juniorProviderCtrl.generalNum.allDevices?juniorProviderCtrl.generalNum.allMunicipalDevices:'0'}}</p>
+            </div>
+            <div class='panel-items col-xs-3'>
+                <p>下级服务商总数</p>
+                <p class="panel-items-num">{{juniorProviderCtrl.generalNum.dealerNum?juniorProviderCtrl.generalNum.dealerNum:'0'}}</p>
+            </div>
+            <div class='panel-items col-xs-3'>
+                <p>本月设备采购数</p>
+                <p class="panel-items-num">{{juniorProviderCtrl.generalNum.monthDeviceBuy?juniorProviderCtrl.generalNum.monthDeviceBuy:'0'}}</p>
+            </div>
+            <div class='panel-items col-xs-3'>
+                <p>	本月设备激活数</p>
+                <p class="panel-items-num">{{juniorProviderCtrl.generalNum.monthDevices?juniorProviderCtrl.generalNum.monthDevices:'0'}}</p>
+            </div>
+            <div class='panel-items col-xs-3'>
+                <p>本月门店推广数</p>
+                <p class="panel-items-num">{{juniorProviderCtrl.generalNum.monthMunicipalDevices?juniorProviderCtrl.generalNum.monthMunicipalDevices:'0'}}</p>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-reponsive">
+        <thead>
+        <th ng-repeat="title in juniorProviderCtrl.titles">
+            {{title.name}}
+        </th>
+        </thead>
+        <tbody>
+            <tr id="noneMessage" style="height: 340px;" ng-show="!isShow">
+                <td colspan="9">
+                    <div class="spinner">
+                        <div class="spinner-container container1">
+                            <div class="circle1"></div>
+                            <div class="circle2"></div>
+                            <div class="circle3"></div>
+                            <div class="circle4"></div>
+                        </div>
+                        <div class="spinner-container container2">
+                            <div class="circle1"></div>
+                            <div class="circle2"></div>
+                            <div class="circle3"></div>
+                            <div class="circle4"></div>
+                        </div>
+                        <div class="spinner-container container3">
+                            <div class="circle1"></div>
+                            <div class="circle2"></div>
+                            <div class="circle3"></div>
+                            <div class="circle4"></div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-repeat="info in juniorProviderCtrl.allInfo" ng-show="isShow">
+                <td>{{info.area_name}}</td>
+                <td >{{info.start_date | date: 'yyyy-MM-dd '}}</td>
+                <td>{{info.username}}</td>
+                <td>{{info.phoneNum}}</td>
+                <td>{{info.monthDeviceBuy}}/{{info.totalDeviceBuy}}</td>
+                <td>{{info.monthProxyDevices}}/{{info.allProxyDevices}}</td>
+                <td>{{info.monthDevices}}/{{info.allDevices}}</td>
+                <td><button class="t-btn t-btn-green" ng-click="juniorProviderCtrl.detail($index)">详情</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="page-btn">
+        <button ng-click="juniorProviderCtrl.pre()">上一页</button>
+        <span>第{{juniorProviderCtrl.currentPage}}页,共{{juniorProviderCtrl.totalPage}}页</span>
+        <button ng-click="juniorProviderCtrl.next()">下一页</button>
+    </div>
+</div>

@@ -1,0 +1,347 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="intro">
+		<span class="intro-header">收益明细</span>
+		<div class="intro-body">
+			<dl class="imgsizequestion">
+				<dt>收益规则:</dt>
+				<dd>1.每月1日，系统会根据数据评定奖励级别，并统计服务商的各项奖励和收益。</dd>
+				<dd>2.服务商的组合采购奖励，取决于组合采购量（自已采购+直接推荐服务商），享受阶梯奖励政策。<a href="javascript:;" data-toggle="tooltip" data-placement="right" title="组合采购量额外设备奖励：
+L6级：每月组合采购 10000台及以上设备，每台奖励15元。
+L5级：每月组合采购 5000-9999台设备，每台奖励12元。
+L4级：每月组合采购 1000-4999台设备，每台奖励9元。
+L3级：每月组合采购 500-999台设备，每台奖励6元。
+L2级：每月组合采购 300-499台设备，每台奖励4元。
+L1级：每月组合采购 200-299台设备，每台奖励3元。
+L0级：每月组合采购 0-199台设备，每台奖励0元。">查看详情<img src="images/question_mark.png"></button></a></dd>
+				<dd>3.服务商的间接推荐采购奖励，取决于间接推荐采购量（间接推荐的服务商），享受阶梯奖励政策。<a href="javascript:;" data-toggle="tooltip" data-placement="right" title="间接推荐服务商采购量额外设备奖励：
+L5级：每月累计采购 10000台及以上设备，每台奖励6元。
+L4级：每月累计采购 5000-9999台设备，每台奖励5元。
+L3级：每月累计采购 2000-4999台设备，每台奖励4元。
+L2级：每月累计采购 1000-1999台设备，每台奖励3元。
+L1级：每月累计采购 500-999台设备，每台奖励2元。
+L0级：每月累计采购 0-499台设备，每台奖励1元。">查看详情<img src="images/question_mark.png"></button></a></dd>
+				<dd>4.服务商的组合设备广告收益（自己采购＋直接推荐），为额外奖励的广告红包发放金额的0.5%-2%。<a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="组合采购设备广告享有额外奖励：
+L3级：组合采购累计达100000台以上设备，奖励所有设备发放红包总额的2%。
+L2级：组合采购累计达30000-99999台设备，奖励所有设备发放红包总额的1.5%。
+L1级：组合采购累计达10000-29999台设备，奖励所有设备发放红包总额的1%。
+L0级：组合采购累计达0-9999台设备，按每台设备发放红包总额的0.5%奖励">查看详情<img src="images/question_mark.png"></button></a></dd>
+				<dd>5.服务商的商户广告金充值收益，为商户充值的4%。<a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="商户在使用商户红包等功能时，需先在公众号【乐豆呀-个人主页-商户财务中心】处进行广告金充值，充值时系统收取6%的服务费（其中1%用于支付微信支付通道费，1%用于乐豆呀平台技术运维，4%奖励给服务商）">查看详情<img src="images/question_mark.png"></button></a></dd>
+
+				<dd>6.商户服务费分成奖励收益是指代理商名下商户在购买产品的次年，进行续费时候，给代理商额外奖励的收益。收益比例为商户续费金额的50%。</dd>
+
+				<dd ng-if="proxyType=='M'">7.销量返点奖励，属于市级及以上级别代理的奖励。<a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="月销量500以下返58元/台、月销量500-1000返68元/台、月销量1000以上返78元/台。">查看详情<img src="images/question_mark.png"></button></a></dd>
+
+			</dl>
+		</div>
+	</div>
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h3 class="panel-title">数据指标（上月）</h3>
+	    </div>
+	    <div class="panel-body">
+			<div class='panel-items col-xs-2' style="border-bottom: 1px dashed #ececec;">
+				<p>组合采购数量</p>
+				<p class="panel-items-num">{{incomeCtrl.items.combinationDeviceNum}}</p>
+				<p>组合采购奖励收益</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.combinationDeviceBenefit/100)=="NaN"?"0":incomeCtrl.items.combinationDeviceBenefit/100}}</p>
+			</div>
+			<div class='panel-items col-xs-2' style="border-bottom: 1px dashed #ececec;">
+				<p>间接推荐采购数量</p>
+				<p class="panel-items-num">{{incomeCtrl.items.indirectDeviceNum}}</p>
+				<p>间接推荐采购奖励收益</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.indirectDeviceBenefit/100)=="NaN"?"0":incomeCtrl.items.indirectDeviceBenefit/100}}</p>
+			</div>
+			<div class='panel-items col-xs-2' style="border-bottom: 1px dashed #ececec;">
+				<p>商户广告金充值</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.storeAdDepositPrice/100)=="NaN"?"0":incomeCtrl.items.storeAdDepositPrice/100}}</p>
+				<p>商户广告金充值收益</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.storeAdDepositBenefit/100)=="NaN"?"0":incomeCtrl.items.storeAdDepositBenefit/100}}</p>
+			</div>
+			<div class='panel-items col-xs-2' style="border-bottom: 1px dashed #ececec;">
+				<p>组合设备品牌红包</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.combinationAdPrice/100)=="NaN"?"0":incomeCtrl.items.combinationAdPrice/100}}</p>
+				<p>组合设备红包奖励收益</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.combinationAdBenefit/100)=="NaN"?"0":incomeCtrl.items.combinationAdBenefit/100}}</p>
+			</div>
+			<div class='panel-items col-xs-2' style="border-bottom: 1px dashed #ececec;">
+				<p>自有设备品牌红包</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.selfAdPrice/100)=="NaN"?"0":incomeCtrl.items.selfAdPrice/100}}</p>
+				<p>自定义红包分成收益</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.rebateAdBenefit/100)=="NaN"?"0":incomeCtrl.items.rebateAdBenefit/100}}</p>
+			</div>
+			<div class='panel-items col-xs-2' style="border-bottom: 1px dashed #ececec;" >
+				<p>商户次年服务费总金额</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.storeMarketingPrice/100)=="NaN"?"0":incomeCtrl.items.storeMarketingPrice/100}}</p>
+				<p>商户次年服务费分成奖励</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.storeMarketingBenefit/100)=="NaN"?"0":incomeCtrl.items.storeMarketingBenefit/100}}</p>
+			</div>
+	    </div>
+	</div>
+	<div class="panel panel-default" ng-if="proxyType=='M'">
+		<div class="panel-heading">
+			<h3 class="panel-title">服务商收益</h3>
+		</div>
+		<div class="panel-body">
+			<div class='panel-items col-xs-3' style="border-bottom: 1px dashed #ececec;">
+				<p>加盟区域总数</p>
+				<p class="panel-items-num">{{incomeCtrl.items.totalFranchiseArea=="NaN"?"0":incomeCtrl.items.totalFranchiseArea}}</p>
+				<p>加盟费奖励收益</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.totalFranchiseBenefit/100)=="NaN"?"0":incomeCtrl.items.totalFranchiseBenefit/100}}</p>
+			</div>
+			<div class='panel-items col-xs-3' style="border-bottom: 1px dashed #ececec;">
+				<p>下级设备采购数量</p>
+				<p class="panel-items-num">{{incomeCtrl.items.distDeviceBuyNum=="NaN"?"0":incomeCtrl.items.distDeviceBuyNum}}</p>
+				<p>下级设备采购奖励收益</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.distDeviceBuyBenefit/100)=="NaN"?"0":incomeCtrl.items.distDeviceBuyBenefit/100}}</p>
+			</div>
+			<div class='panel-items col-xs-3' style="border-bottom: 1px dashed #ececec;">
+				<p>辖区设备品牌红包</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.dist_device_red/100)=="NaN"?"0":incomeCtrl.items.dist_device_red/100}}</p>
+				<p>辖区设备红包分成收益</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.benefit_dist_device_red/100)=="NaN"?"0":incomeCtrl.items.benefit_dist_device_red/100}}</p>
+			</div>
+			<div class='panel-items col-xs-3' style="border-bottom: 1px dashed #ececec;">
+				<p>辖区商户次年服务费总金额</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.dist_merchant_market/100)=="NaN"?"0":incomeCtrl.items.dist_merchant_market/100}}</p>
+				<p>辖区商户次年服务费分成收益</p>
+				<p class="panel-items-num">{{(incomeCtrl.items.benefit_dist_merchant_market/100)=="NaN"?"0":incomeCtrl.items.benefit_dist_merchant_market/100}}</p>
+			</div>
+		</div>
+	</div>
+	<table class="table table-hover table-reponsive">
+		<div class="incomeTabs pull-right incomelistname" style="height: 45px;width: 100%;" ng-if="proxyType=='M'">
+			<div
+					style="line-height: 45px;font-size: 10px;width:80px;float:right;"
+					ng-class="{'active': tabType=='initialFee'}"
+					class="incomeTab incomeAd"
+					ng-click="incomeCtrl.tabToggle('initialFee')">
+				加盟费记录</div>
+			<div
+					style="line-height: 45px;font-size: 10px;width:100px;float:right;"
+					ng-class="{'active': tabType=='juniorPurchase'}"
+					class="incomeTab incomeAd"
+					ng-click="incomeCtrl.tabToggle('juniorPurchase')">
+				下级采购记录</div>
+			<div
+					style="line-height: 45px;font-size: 10px;width:120px;float:right;"
+					ng-class="{'active': tabType=='districtRed'}"
+					class="incomeTab incomeAd"
+					ng-click="incomeCtrl.tabToggle('districtRed')">
+				辖区设备品牌红包</div>
+			<div
+					style="line-height: 45px;font-size: 10px;width:130px;float:right;"
+					ng-class="{'active': tabType=='districtBenefit'}"
+					class="incomeTab incomeAd"
+					ng-click="incomeCtrl.tabToggle('districtBenefit')">
+				辖区商户次年服务费</div>
+		</div>
+		<div class="incomeTabs pull-right incomelistname" style="height: 45px;width: 100%;clear:both;">
+			<div
+					style="line-height: 45px;font-size: 10px;width:120px;float:right;"
+					ng-class="{'active': tabType=='combinationDevice'}"
+					class="incomeTab incomeAd"
+					ng-click="incomeCtrl.tabToggle('combinationDevice')">
+				组合采购设备记录</div>
+			<div
+					style="line-height: 45px;font-size: 10px;width:130px;float:right;"
+					ng-class="{'active': tabType=='indirectDevice'}"
+					class="incomeTab incomeAd"
+					ng-click="incomeCtrl.tabToggle('indirectDevice')">
+				间接推荐设备采购记录</div>
+			<div
+					style="line-height: 45px;font-size: 10px;width:90px;float:right;"
+					ng-class="{'active': tabType=='activerecord'}"
+					class="incomeTab incomeAd"
+					ng-click="incomeCtrl.tabToggle('activerecord')">
+				设备激活记录</div>
+			<div
+					style="line-height: 45px;font-size: 10px;width:120px;float:right;"
+					ng-class="{'active': tabType=='deviceadred'}"
+					class="incomeTab incomeAd"
+					ng-click="incomeCtrl.tabToggle('deviceadred')">
+				自有设备品牌红包</div>
+			<div
+					ng-if="false"
+					style="line-height: 45px;font-size: 10px;width:120px;float:right;"
+					ng-class="{'active': tabType=='directadred'}"
+					class="incomeTab incomeAd"
+					ng-click="incomeCtrl.tabToggle('directadred')">
+				直接推荐设备品牌红包</div>
+			<div
+					style="line-height: 45px;font-size: 10px;width:100px;float:right;"
+				    ng-class="{'active': tabType=='storeSharingBenefit'}"
+					class="incomeTab incomeAd"
+				    ng-click="incomeCtrl.tabToggle('storeSharingBenefit')">
+				商户次年服务费</div>
+            <div
+					style="line-height: 45px;font-size: 10px;width:120px;float:right;"
+                    ng-class="{'active': tabType=='storeAdDeposit'}"
+                    class="incomeTab incomeAd"
+                    ng-click="incomeCtrl.tabToggle('storeAdDeposit')">
+                商户广告金充值</div>
+		</div>
+		<!--组合采购设备记录-->
+		<thead ng-show="tabType=='combinationDevice'">
+		<th ng-repeat="title in incomeCtrl.adthirdTitles">
+			{{title.name}}
+		</th>
+		</thead>
+		<tbody ng-show="tabType=='combinationDevice'">
+		<tr ng-repeat="record in incomeCtrl.combinationDevicelist">
+			<td>{{ record.time |date : 'yyyy-MM-dd hh:mm:ss' }}</td>
+			<td >{{record.account.replace((record.account).substr(3,4),"****")}}</td>
+			<td>{{ record.username }}</td>
+			<td>{{ record.amount }}</td>
+		</tr>
+		</tbody>
+		<!--间接推荐采购记录-->
+		<thead ng-show="tabType=='indirectDevice'">
+		<th ng-repeat="title in incomeCtrl.adTitles">
+			{{title.name}}
+		</th>
+		</thead>
+		<tbody ng-show="tabType=='indirectDevice'">
+		<tr ng-repeat="record in incomeCtrl.indirectDevicelist">
+			<td>{{ record.time |date : 'yyyy-MM-dd hh:mm:ss' }}</td>
+			<td >{{record.account.replace((record.account).substr(3,4),"****")}}</td>
+			<td>{{ record.username }}</td>
+			<td>{{ record.amount }}</td>
+		</tr>
+		</tbody>
+		<!--//设备激活记录选项卡-->
+		<thead ng-show="tabType=='activerecord'">
+		<th ng-repeat="title in incomeCtrl.activerecordTitles">
+			{{title.name}}
+		</th>
+		</thead>
+		<tbody ng-show="tabType=='activerecord'">
+		<tr ng-repeat="record in incomeCtrl.activerecordDevicelist">
+			<td>{{ record.day |date : 'yyyy-MM-dd' }}</td>
+			<td >{{record.num}}</td>
+			<td>{{ record.benefit/100 }}</td>
+			<td ><button class="t-btn t-btn-green" ng-click="incomeCtrl.recordDetail($index)">详情</button></td>
+		</tr>
+		</tbody>
+        <!--//加盟费记录选项卡-->
+        <thead ng-show="tabType=='initialFee'">
+        <th ng-repeat="title in incomeCtrl.initialFeeTitles">
+            {{title.name}}
+        </th>
+        </thead>
+        <tbody ng-show="tabType=='initialFee'">
+        <tr ng-repeat="record in incomeCtrl.initialFeelist">
+			<td>{{ record.startDate|date : 'yyyy-MM-dd' }}</td>
+            <td>{{ record.userName }}</td>
+            <td>{{ record.areaName }}</td>
+            <td>{{ record.phoneNum }}</td>
+            <td>{{ record.signway==1?'绿豆芽公司':record.signway==2?'市级代理':'数据错误'}}</td>
+        </tr>
+        </tbody>
+        <!--// 商户次年服务费-->
+        <thead ng-show="tabType=='storeSharingBenefit'">
+        <th ng-repeat="title in incomeCtrl.storeSharingTitles">
+            {{title.name}}
+        </th>
+        </thead>
+        <tbody ng-show="tabType=='storeSharingBenefit'">
+<!--        <tr ng-repeat="record in incomeCtrl.storeSharingBenefitlist">
+            <td>{{ record.createDate|date : 'yyyy-MM'}}</td>
+            <td>0</td>
+            <td>0</td>
+            <td><button class="t-btn t-btn-green" ng-click="incomeCtrl.sharingDetail($index)">详情</button></td>
+        </tr>-->
+        </tbody>
+		<!--//自有设备品牌红包选项卡-->
+		<thead ng-show="tabType=='deviceadred'">
+		<th ng-repeat="title in incomeCtrl.adfirstTitles">
+			{{title.name}}
+		</th>
+		</thead>
+		<tbody ng-show="tabType=='deviceadred'">
+		<tr ng-repeat="record in incomeCtrl.deviceadredlist">
+			<td>{{ record.date }}</td>
+			<td>{{ record.activityDevice }}</td>
+			<td>{{ record.totalSelledDevice }}</td>
+			<td>{{ (record.advPayment/100).toFixed(2) }}</td>
+			<td>{{ (record.advProxyPayment/100).toFixed(2)}}</td>
+			<td><button class="t-btn t-btn-green" ng-click="incomeCtrl.getAdDetail($index)">详情</button></td>
+		</tr>
+		</tbody>
+		<!--//直接推荐设备品牌红包选项卡-->
+		<thead ng-show="tabType=='directadred'">
+		<th ng-repeat="title in incomeCtrl.adscendTitles">
+			{{title.name}}
+		</th>
+		</thead>
+		<tbody ng-show="tabType=='directadred'">
+		<tr ng-repeat="record in incomeCtrl.directadredlist">
+			<td>{{ record.date }}</td>
+			<td>{{ record.activityDevice }}</td>
+			<td>{{ record.totalSelledDevice }}</td>
+			<td>{{ (record.advPayment/100).toFixed(2)}}</td>
+		</tr>
+		</tbody>
+		<!--//商户广告金充值选项卡-->
+		<thead ng-show="tabType=='storeAdDeposit'">
+			<th ng-repeat="title in incomeCtrl.titles">
+				{{title.name}}
+			</th>
+		</thead>
+		<tbody ng-show="tabType=='storeAdDeposit'">
+			<tr ng-repeat="record in incomeCtrl.storeAdDepositlist">
+				<!--yyyy-MM-dd HH:mm:ss-->
+				<td>{{record.month}}</td>
+				<td>{{(record.money/100).toFixed(2)}}</td>
+				<td>{{record.personnum}}</td>
+				<td><button class="t-btn t-btn-green" ng-click="incomeCtrl.getStoreAdDeposit($index)">详情</button></td>
+			</tr>
+		</tbody>
+		<!--下级采购记录-->
+		<thead ng-show="tabType=='juniorPurchase'">
+		<th ng-repeat="title in incomeCtrl.juniorPurchaseTitles">
+			{{title.name}}
+		</th>
+		</thead>
+		<tbody ng-show="tabType=='juniorPurchase'">
+		<tr ng-repeat="record in incomeCtrl.distBuyRecordList">
+			<td>{{record.times}}</td>
+			<td>{{record.distDeviceBuyNum}}</td>
+			<td>{{(record.distDeviceBuyBenefit/100).toFixed(2)}}</td>
+			<td><button class="t-btn t-btn-green" ng-click="incomeCtrl.getJuniorPurchase($index)">详情</button></td>
+		</tr>
+		</tbody>
+		<!--辖区设备品牌红包-->
+		<thead ng-show="tabType=='districtRed'">
+		<th ng-repeat="title in incomeCtrl.districtRedTitles">
+			{{title.name}}
+		</th>
+		</thead>
+		<tbody ng-show="tabType=='districtRed'">
+		<tr ng-repeat="record in incomeCtrl.advBenefitList">
+			<td>{{ record.date }}</td>
+			<td>{{ record.activityDevice }}</td>
+			<td>{{ record.totalSelledDevice }}</td>
+			<td>{{ (record.advPayment/100).toFixed(2) }}</td>
+			<td>{{ (record.advProxyPayment/100).toFixed(2)}}</td>
+			<td><button class="t-btn t-btn-green" ng-click="incomeCtrl.getDistrictRed($index)">详情</button></td>
+		</tr>
+		</tbody>
+
+		<!--辖区商户次年服务费-->
+		<thead ng-show="tabType=='districtBenefit'">
+		<th ng-repeat="title in incomeCtrl.districtBenefitTitles">
+			{{title.name}}
+		</th>
+		</thead>
+		<tbody ng-show="tabType=='districtBenefit'">
+		</tbody>
+
+	</table>
+
+	<div class="page-btn">
+		<button ng-click="incomeCtrl.pre()">上一页</button>
+		<span>第{{incomeCtrl.currentPage}}页,共{{incomeCtrl.totalPage}}页</span>
+		<button ng-click="incomeCtrl.next()">下一页</button>
+	</div>
+</div>

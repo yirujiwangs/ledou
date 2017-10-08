@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.IncomeDetailsProxyMapper">
+  <resultMap id="BaseResultMap" type="model.IncomeDetailsProxy">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="device_buy_amount_self" jdbcType="INTEGER" property="device_buy_amount_self" />
+    <result column="device_buy_amount_dealer_direct" jdbcType="INTEGER" property="device_buy_amount_dealer_direct" />
+    <result column="device_buy_amount_dealer_indirect" jdbcType="INTEGER" property="device_buy_amount_dealer_indirect" />
+    <result column="money_ad_normal_self" jdbcType="INTEGER" property="money_ad_normal_self" />
+    <result column="money_ad_normal_dealer_direct" jdbcType="INTEGER" property="money_ad_normal_dealer_direct" />
+    <result column="money_ad_normal_dealer_indirect" jdbcType="INTEGER" property="money_ad_normal_dealer_indirect" />
+    <result column="money_deposit_store" jdbcType="INTEGER" property="money_deposit_store" />
+    <result column="benefit_device_self" jdbcType="INTEGER" property="benefit_device_self" />
+    <result column="benefit_device_dealer_direct" jdbcType="INTEGER" property="benefit_device_dealer_direct" />
+    <result column="benefit_deivce_dealer_indirect" jdbcType="INTEGER" property="benefit_deivce_dealer_indirect" />
+    <result column="benefit_ad_normal_self" jdbcType="INTEGER" property="benefit_ad_normal_self" />
+    <result column="benefit_ad_normal_indirect" jdbcType="INTEGER" property="benefit_ad_normal_indirect" />
+    <result column="benefit_ad_normal_direct" jdbcType="INTEGER" property="benefit_ad_normal_direct" />
+    <result column="benefit_deposit_store" jdbcType="INTEGER" property="benefit_deposit_store" />
+
+
+    <result column="device_activated" jdbcType="INTEGER" property="device_activated" />
+    <result column="benefit_device_activated" jdbcType="INTEGER" property="benefit_device_activated" />
+
+    <result column="benefit_rebate_ad" jdbcType="INTEGER" property="benefit_rebate_ad" />
+
+
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="utoken" jdbcType="VARCHAR" property="utoken" />
+    <result column="record_time" jdbcType="DATE" property="record_time" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+
+    <result column="merchant_market" jdbcType="INTEGER" property="merchant_market" />
+    <result column="benefit_merchant_market" jdbcType="INTEGER" property="benefit_merchant_market" />
+    <result column="franchise_districts" jdbcType="INTEGER" property="franchise_districts" />
+    <result column="benefit_franchise_districts" jdbcType="INTEGER" property="benefit_franchise_districts" />
+
+    <result column="device_buy_amount_dist" jdbcType="INTEGER" property="device_buy_amount_dist" />
+    <result column="benefit_device_buy_dist" jdbcType="INTEGER" property="benefit_device_buy_dist" />
+
+    <result column="dist_device_red" jdbcType="INTEGER" property="dist_device_red" />
+    <result column="benefit_dist_device_red" jdbcType="INTEGER" property="benefit_dist_device_red" />
+    <result column="dist_merchant_market" jdbcType="INTEGER" property="dist_merchant_market" />
+    <result column="benefit_dist_merchant_market" jdbcType="INTEGER" property="benefit_dist_merchant_market" />
+
+
+
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, device_buy_amount_self, device_buy_amount_dealer_direct, device_buy_amount_dealer_indirect,
+    money_ad_normal_self, money_ad_normal_dealer_direct, money_ad_normal_dealer_indirect, 
+    money_deposit_store, benefit_device_self, benefit_device_dealer_direct, benefit_deivce_dealer_indirect, 
+    benefit_ad_normal_self, benefit_ad_normal_indirect,benefit_ad_normal_direct, benefit_deposit_store
+    ,device_activated,benefit_device_activated,benefit_rebate_ad
+    , status, utoken,
+    record_time, time,merchant_market,benefit_merchant_market,franchise_districts,benefit_franchise_districts,
+    device_buy_amount_dist,benefit_device_buy_dist,dist_device_red,benefit_dist_device_red,
+    dist_merchant_market,benefit_dist_merchant_market
+  </sql>
+  <select id="selectByExample" parameterType="model.IncomeDetailsProxyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from income_details_proxy
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from income_details_proxy
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="financeStatistic" resultType="model.dto.FinanceStatistics">
+    select ifnull(sum(benefit_device_self + benefit_device_dealer_direct),0) as combinationDeviceBenefit
+    ,ifnull(sum(benefit_deivce_dealer_indirect),0) as indirectDeviceBenefit
+    ,ifnull(sum(benefit_ad_normal_self + benefit_ad_normal_direct),0) as combinationAdBenefit
+    ,ifnull(sum(benefit_deposit_store),0) as storeAdDepositBenefit
+    ,ifnull(sum(benefit_device_activated),0) as activatedDeviceBenefit
+    ,ifnull(sum(benefit_rebate_ad),0) as rebateAdBenefit
+    ,ifnull(sum(merchant_market),0) as storeMarketingPrice
+    ,ifnull(sum(benefit_merchant_market),0) as storeMarketingBenefit
+    ,ifnull(sum(franchise_districts),0) as totalFranchiseArea
+    ,ifnull(sum(benefit_franchise_districts),0) as totalFranchiseBenefit
+    ,ifnull(sum(device_buy_amount_dist),0) as distDeviceBuyNum
+    ,ifnull(sum(benefit_device_buy_dist),0) as distDeviceBuyBenefit
+    ,ifnull(sum(dist_device_red),0) as dist_device_red
+    ,ifnull(sum(benefit_dist_device_red),0) as benefit_dist_device_red
+    ,ifnull(sum(dist_merchant_market),0) as dist_merchant_market
+    ,ifnull(sum(benefit_dist_merchant_market),0) as benefit_dist_merchant_market
+    from income_details_proxy
+    where status = 'N'
+    <if test="utoken != null">
+      and utoken = #{utoken}
+    </if>
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from income_details_proxy
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="model.IncomeDetailsProxyExample">
+    delete from income_details_proxy
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="model.IncomeDetailsProxy">
+    insert into income_details_proxy (id, device_buy_amount_self, device_buy_amount_dealer_direct, 
+      device_buy_amount_dealer_indirect, money_ad_normal_self, 
+      money_ad_normal_dealer_direct, money_ad_normal_dealer_indirect, 
+      money_deposit_store, benefit_device_self, 
+      benefit_device_dealer_direct, benefit_deivce_dealer_indirect, 
+      benefit_ad_normal_self, benefit_ad_normal_indirect, benefit_ad_normal_direct,
+      benefit_deposit_store, status,utoken, record_time,
+      time,merchant_market,benefit_merchant_market,franchise_districts,benefit_franchise_districts,
+      device_buy_amount_dist,benefit_device_buy_dist,dist_device_red,
+      benefit_dist_device_red,dist_merchant_market,benefit_dist_merchant_market)
+    values (#{id,jdbcType=INTEGER}, #{device_buy_amount_self,jdbcType=INTEGER}, #{device_buy_amount_dealer_direct,jdbcType=INTEGER}, 
+      #{device_buy_amount_dealer_indirect,jdbcType=INTEGER}, #{money_ad_normal_self,jdbcType=INTEGER}, 
+      #{money_ad_normal_dealer_direct,jdbcType=INTEGER}, #{money_ad_normal_dealer_indirect,jdbcType=INTEGER}, 
+      #{money_deposit_store,jdbcType=INTEGER}, #{benefit_device_self,jdbcType=INTEGER}, 
+      #{benefit_device_dealer_direct,jdbcType=INTEGER}, #{benefit_deivce_dealer_indirect,jdbcType=INTEGER}, 
+      #{benefit_ad_normal_self,jdbcType=INTEGER}, #{benefit_ad_normal_indirect,jdbcType=INTEGER},
+       #{benefit_ad_normal_direct,jdbcType=INTEGER},
+      #{benefit_deposit_store,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR},#{utoken,jdbcType=VARCHAR} #{record_time,jdbcType=DATE},
+      #{time,jdbcType=TIMESTAMP}), #{merchant_market,jdbcType=INTEGER},#{benefit_merchant_market,jdbcType=INTEGER},
+      #{franchise_districts,jdbcType=INTEGER},#{benefit_franchise_districts,jdbcType=INTEGER},
+      #{device_buy_amount_dist,jdbcType=INTEGER},#{benefit_device_buy_dist,jdbcType=INTEGER},
+      #{dist_device_red,jdbcType=INTEGER},#{benefit_dist_device_red,jdbcType=INTEGER},
+      #{dist_merchant_market,jdbcType=INTEGER},#{benefit_dist_merchant_market,jdbcType=INTEGER}
+  </insert>
+  <insert id="insertSelective" parameterType="model.IncomeDetailsProxy">
+    insert into income_details_proxy
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="device_buy_amount_self != null">
+        device_buy_amount_self,
+      </if>
+      <if test="device_buy_amount_dealer_direct != null">
+        device_buy_amount_dealer_direct,
+      </if>
+      <if test="device_buy_amount_dealer_indirect != null">
+        device_buy_amount_dealer_indirect,
+      </if>
+      <if test="money_ad_normal_self != null">
+        money_ad_normal_self,
+      </if>
+      <if test="money_ad_normal_dealer_direct != null">
+        money_ad_normal_dealer_direct,
+      </if>
+      <if test="money_ad_normal_dealer_indirect != null">
+        money_ad_normal_dealer_indirect,
+      </if>
+      <if test="money_deposit_store != null">
+        money_deposit_store,
+      </if>
+      <if test="benefit_device_self != null">
+        benefit_device_self,
+      </if>
+      <if test="benefit_device_dealer_direct != null">
+        benefit_device_dealer_direct,
+      </if>
+      <if test="benefit_deivce_dealer_indirect != null">
+        benefit_deivce_dealer_indirect,
+      </if>
+      <if test="benefit_ad_normal_self != null">
+        benefit_ad_normal_self,
+      </if>
+      <if test="benefit_ad_normal_indirect != null">
+        benefit_ad_normal_indirect,
+      </if>
+      <if test="benefit_ad_normal_direct != null">
+        benefit_ad_normal_direct,
+      </if>
+      <if test="benefit_deposit_store != null">
+        benefit_deposit_store,
+      </if>
+
+      <if test="device_activated != null">
+        device_activated,
+      </if>
+      <if test="benefit_device_activated != null">
+        benefit_device_activated,
+      </if>
+      <if test="benefit_rebate_ad != null">
+        benefit_rebate_ad,
+      </if>
+
+      <if test="status != null">
+        status,
+      </if>
+      <if test="utoken != null">
+        utoken,
+      </if>
+      <if test="record_time != null">
+        record_time,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="merchant_market != null">
+        merchant_market,
+      </if>
+      <if test="benefit_merchant_market != null">
+        benefit_merchant_market,
+      </if>
+      <if test="franchise_districts != null">
+        franchise_districts,
+      </if>
+      <if test="benefit_franchise_districts != null">
+        benefit_franchise_districts,
+      </if>
+      <if test="device_buy_amount_dist != null">
+        device_buy_amount_dist,
+      </if>
+      <if test="benefit_device_buy_dist != null">
+        benefit_device_buy_dist,
+      </if>
+      <if test="dist_device_red != null">
+        dist_device_red,
+      </if>
+      <if test="benefit_dist_device_red != null">
+        benefit_dist_device_red,
+      </if>
+      <if test="dist_merchant_market != null">
+        dist_merchant_market,
+      </if>
+      <if test="benefit_dist_merchant_market != null">
+        benefit_dist_merchant_market,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="device_buy_amount_self != null">
+        #{device_buy_amount_self,jdbcType=INTEGER},
+      </if>
+      <if test="device_buy_amount_dealer_direct != null">
+        #{device_buy_amount_dealer_direct,jdbcType=INTEGER},
+      </if>
+      <if test="device_buy_amount_dealer_indirect != null">
+        #{device_buy_amount_dealer_indirect,jdbcType=INTEGER},
+      </if>
+      <if test="money_ad_normal_self != null">
+        #{money_ad_normal_self,jdbcType=INTEGER},
+      </if>
+      <if test="money_ad_normal_dealer_direct != null">
+        #{money_ad_normal_dealer_direct,jdbcType=INTEGER},
+      </if>
+      <if test="money_ad_normal_dealer_indirect != null">
+        #{money_ad_normal_dealer_indirect,jdbcType=INTEGER},
+      </if>
+      <if test="money_deposit_store != null">
+        #{money_deposit_store,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_device_self != null">
+        #{benefit_device_self,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_device_dealer_direct != null">
+        #{benefit_device_dealer_direct,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_deivce_dealer_indirect != null">
+        #{benefit_deivce_dealer_indirect,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_ad_normal_self != null">
+        #{benefit_ad_normal_self,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_ad_normal_indirect != null">
+        #{benefit_ad_normal_indirect,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_ad_normal_direct != null">
+        #{benefit_ad_normal_direct,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_deposit_store != null">
+        #{benefit_deposit_store,jdbcType=INTEGER},
+      </if>
+
+      <if test="device_activated != null">
+        #{device_activated,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_device_activated != null">
+        #{benefit_device_activated,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_rebate_ad != null">
+        #{benefit_rebate_ad,jdbcType=INTEGER},
+      </if>
+
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="utoken != null">
+        #{utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="record_time != null">
+        #{record_time,jdbcType=DATE},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchant_market != null">
+        #{merchant_market,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_merchant_market != null">
+        #{benefit_merchant_market,jdbcType=INTEGER},
+      </if>
+      <if test="franchise_districts != null">
+        #{franchise_districts,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_franchise_districts != null">
+        #{benefit_franchise_districts,jdbcType=INTEGER},
+      </if>
+      <if test="device_buy_amount_dist != null">
+        #{device_buy_amount_dist,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_device_buy_dist != null">
+        #{benefit_device_buy_dist,jdbcType=INTEGER},
+      </if>
+      <if test="dist_device_red != null">
+        #{dist_device_red,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_dist_device_red != null">
+        #{benefit_dist_device_red,jdbcType=INTEGER},
+      </if>
+      <if test="dist_merchant_market != null">
+        #{dist_merchant_market,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_dist_merchant_market != null">
+        #{benefit_dist_merchant_market,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="model.IncomeDetailsProxyExample" resultType="java.lang.Integer">
+    select count(*) from income_details_proxy
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update income_details_proxy
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.device_buy_amount_self != null">
+        device_buy_amount_self = #{record.device_buy_amount_self,jdbcType=INTEGER},
+      </if>
+      <if test="record.device_buy_amount_dealer_direct != null">
+        device_buy_amount_dealer_direct = #{record.device_buy_amount_dealer_direct,jdbcType=INTEGER},
+      </if>
+      <if test="record.device_buy_amount_dealer_indirect != null">
+        device_buy_amount_dealer_indirect = #{record.device_buy_amount_dealer_indirect,jdbcType=INTEGER},
+      </if>
+      <if test="record.money_ad_normal_self != null">
+        money_ad_normal_self = #{record.money_ad_normal_self,jdbcType=INTEGER},
+      </if>
+      <if test="record.money_ad_normal_dealer_direct != null">
+        money_ad_normal_dealer_direct = #{record.money_ad_normal_dealer_direct,jdbcType=INTEGER},
+      </if>
+      <if test="record.money_ad_normal_dealer_indirect != null">
+        money_ad_normal_dealer_indirect = #{record.money_ad_normal_dealer_indirect,jdbcType=INTEGER},
+      </if>
+      <if test="record.money_deposit_store != null">
+        money_deposit_store = #{record.money_deposit_store,jdbcType=INTEGER},
+      </if>
+      <if test="record.benefit_device_self != null">
+        benefit_device_self = #{record.benefit_device_self,jdbcType=INTEGER},
+      </if>
+      <if test="record.benefit_device_dealer_direct != null">
+        benefit_device_dealer_direct = #{record.benefit_device_dealer_direct,jdbcType=INTEGER},
+      </if>
+      <if test="record.benefit_deivce_dealer_indirect != null">
+        benefit_deivce_dealer_indirect = #{record.benefit_deivce_dealer_indirect,jdbcType=INTEGER},
+      </if>
+      <if test="record.benefit_ad_normal_self != null">
+        benefit_ad_normal_self = #{record.benefit_ad_normal_self,jdbcType=INTEGER},
+      </if>
+      <if test="record.benefit_ad_normal_indirect != null">
+        benefit_ad_normal_indirect = #{record.benefit_ad_normal_indirect,jdbcType=INTEGER},
+      </if>
+
+      <if test="record.benefit_ad_normal_direct != null">
+        benefit_ad_normal_direct = #{record.benefit_ad_normal_direct,jdbcType=INTEGER},
+      </if>
+
+      <if test="record.benefit_deposit_store != null">
+        benefit_deposit_store = #{record.benefit_deposit_store,jdbcType=INTEGER},
+      </if>
+
+      <if test="record.device_activated != null">
+        device_activated = #{record.device_activated,jdbcType=INTEGER},
+      </if>
+
+      <if test="record.benefit_device_activated != null">
+        benefit_device_activated = #{record.benefit_device_activated,jdbcType=INTEGER},
+      </if>
+
+
+      <if test="record.benefit_rebate_ad != null">
+        benefit_rebate_ad = #{record.benefit_rebate_ad,jdbcType=INTEGER},
+      </if>
+
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.utoken != null">
+        utoken = #{record.utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.record_time != null">
+        record_time = #{record.record_time,jdbcType=DATE},
+      </if>
+      <if test="record.time != null">
+        time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+    <if test="merchant_market != null">
+      #{merchant_market,jdbcType=INTEGER},
+    </if>
+    <if test="benefit_merchant_market != null">
+      #{benefit_merchant_market,jdbcType=INTEGER},
+    </if>
+    <if test="franchise_districts != null">
+      #{franchise_districts,jdbcType=INTEGER},
+    </if>
+    <if test="benefit_franchise_districts != null">
+      #{benefit_franchise_districts,jdbcType=INTEGER},
+    </if>
+    <if test="device_buy_amount_dist != null">
+      #{device_buy_amount_dist,jdbcType=INTEGER},
+    </if>
+    <if test="benefit_device_buy_dist != null">
+      #{benefit_device_buy_dist,jdbcType=INTEGER},
+    </if>
+    <if test="dist_device_red != null">
+      #{dist_device_red,jdbcType=INTEGER},
+    </if>
+    <if test="benefit_dist_device_red != null">
+      #{benefit_dist_device_red,jdbcType=INTEGER},
+    </if>
+    <if test="dist_merchant_market != null">
+      #{dist_merchant_market,jdbcType=INTEGER},
+    </if>
+    <if test="benefit_dist_merchant_market != null">
+      #{benefit_dist_merchant_market,jdbcType=INTEGER},
+    </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update income_details_proxy
+    set id = #{record.id,jdbcType=INTEGER},
+      device_buy_amount_self = #{record.device_buy_amount_self,jdbcType=INTEGER},
+      device_buy_amount_dealer_direct = #{record.device_buy_amount_dealer_direct,jdbcType=INTEGER},
+      device_buy_amount_dealer_indirect = #{record.device_buy_amount_dealer_indirect,jdbcType=INTEGER},
+      money_ad_normal_self = #{record.money_ad_normal_self,jdbcType=INTEGER},
+      money_ad_normal_dealer_direct = #{record.money_ad_normal_dealer_direct,jdbcType=INTEGER},
+      money_ad_normal_dealer_indirect = #{record.money_ad_normal_dealer_indirect,jdbcType=INTEGER},
+      money_deposit_store = #{record.money_deposit_store,jdbcType=INTEGER},
+      benefit_device_self = #{record.benefit_device_self,jdbcType=INTEGER},
+      benefit_device_dealer_direct = #{record.benefit_device_dealer_direct,jdbcType=INTEGER},
+      benefit_deivce_dealer_indirect = #{record.benefit_deivce_dealer_indirect,jdbcType=INTEGER},
+      benefit_ad_normal_self = #{record.benefit_ad_normal_self,jdbcType=INTEGER},
+      benefit_ad_normal_indirect = #{record.benefit_ad_normal_indirect,jdbcType=INTEGER},
+      benefit_ad_normal_direct = #{record.benefit_ad_normal_direct,jdbcType=INTEGER},
+      benefit_deposit_store = #{record.benefit_deposit_store,jdbcType=INTEGER},
+
+      device_activated = #{record.device_activated,jdbcType=INTEGER},
+      benefit_device_activated = #{record.benefit_device_activated,jdbcType=INTEGER},
+      benefit_rebate_ad = #{record.benefit_rebate_ad,jdbcType=INTEGER},
+
+      status = #{record.status,jdbcType=VARCHAR},
+      utoken = #{record.utoken,jdbcType=VARCHAR},
+      record_time = #{record.record_time,jdbcType=DATE},
+      time = #{record.time,jdbcType=TIMESTAMP}, #{merchant_market,jdbcType=INTEGER},#{benefit_merchant_market,jdbcType=INTEGER},
+    #{franchise_districts,jdbcType=INTEGER},#{benefit_franchise_districts,jdbcType=INTEGER},
+    #{device_buy_amount_dist,jdbcType=INTEGER},#{benefit_device_buy_dist,jdbcType=INTEGER},
+    #{dist_device_red,jdbcType=INTEGER},#{benefit_dist_device_red,jdbcType=INTEGER},
+    #{dist_merchant_market,jdbcType=INTEGER},#{benefit_dist_merchant_market,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="model.IncomeDetailsProxy">
+    update income_details_proxy
+    <set>
+      <if test="device_buy_amount_self != null">
+        device_buy_amount_self = #{device_buy_amount_self,jdbcType=INTEGER},
+      </if>
+      <if test="device_buy_amount_dealer_direct != null">
+        device_buy_amount_dealer_direct = #{device_buy_amount_dealer_direct,jdbcType=INTEGER},
+      </if>
+      <if test="device_buy_amount_dealer_indirect != null">
+        device_buy_amount_dealer_indirect = #{device_buy_amount_dealer_indirect,jdbcType=INTEGER},
+      </if>
+      <if test="money_ad_normal_self != null">
+        money_ad_normal_self = #{money_ad_normal_self,jdbcType=INTEGER},
+      </if>
+      <if test="money_ad_normal_dealer_direct != null">
+        money_ad_normal_dealer_direct = #{money_ad_normal_dealer_direct,jdbcType=INTEGER},
+      </if>
+      <if test="money_ad_normal_dealer_indirect != null">
+        money_ad_normal_dealer_indirect = #{money_ad_normal_dealer_indirect,jdbcType=INTEGER},
+      </if>
+      <if test="money_deposit_store != null">
+        money_deposit_store = #{money_deposit_store,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_device_self != null">
+        benefit_device_self = #{benefit_device_self,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_device_dealer_direct != null">
+        benefit_device_dealer_direct = #{benefit_device_dealer_direct,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_deivce_dealer_indirect != null">
+        benefit_deivce_dealer_indirect = #{benefit_deivce_dealer_indirect,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_ad_normal_self != null">
+        benefit_ad_normal_self = #{benefit_ad_normal_self,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_ad_normal_indirect != null">
+        benefit_ad_normal_indirect = #{benefit_ad_normal_indirect,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_ad_normal_direct != null">
+        benefit_ad_normal_direct = #{benefit_ad_normal_direct,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_deposit_store != null">
+        benefit_deposit_store = #{benefit_deposit_store,jdbcType=INTEGER},
+      </if>
+
+      <if test="device_activated != null">
+        device_activated = #{device_activated,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_device_activated != null">
+        benefit_device_activated = #{benefit_device_activated,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_rebate_ad != null">
+        benefit_rebate_ad = #{benefit_rebate_ad,jdbcType=INTEGER},
+      </if>
+
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="utoken != null">
+        utoken = #{utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="record_time != null">
+        record_time = #{record_time,jdbcType=DATE},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchant_market != null">
+        #{merchant_market,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_merchant_market != null">
+        #{benefit_merchant_market,jdbcType=INTEGER},
+      </if>
+      <if test="franchise_districts != null">
+        #{franchise_districts,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_franchise_districts != null">
+        #{benefit_franchise_districts,jdbcType=INTEGER},
+      </if>
+      <if test="device_buy_amount_dist != null">
+        #{device_buy_amount_dist,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_device_buy_dist != null">
+        #{benefit_device_buy_dist,jdbcType=INTEGER},
+      </if>
+      <if test="dist_device_red != null">
+        #{dist_device_red,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_dist_device_red != null">
+        #{benefit_dist_device_red,jdbcType=INTEGER},
+      </if>
+      <if test="dist_merchant_market != null">
+        #{dist_merchant_market,jdbcType=INTEGER},
+      </if>
+      <if test="benefit_dist_merchant_market != null">
+        #{benefit_dist_merchant_market,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.IncomeDetailsProxy">
+    update income_details_proxy
+    set device_buy_amount_self = #{device_buy_amount_self,jdbcType=INTEGER},
+      device_buy_amount_dealer_direct = #{device_buy_amount_dealer_direct,jdbcType=INTEGER},
+      device_buy_amount_dealer_indirect = #{device_buy_amount_dealer_indirect,jdbcType=INTEGER},
+      money_ad_normal_self = #{money_ad_normal_self,jdbcType=INTEGER},
+      money_ad_normal_dealer_direct = #{money_ad_normal_dealer_direct,jdbcType=INTEGER},
+      money_ad_normal_dealer_indirect = #{money_ad_normal_dealer_indirect,jdbcType=INTEGER},
+      money_deposit_store = #{money_deposit_store,jdbcType=INTEGER},
+      benefit_device_self = #{benefit_device_self,jdbcType=INTEGER},
+      benefit_device_dealer_direct = #{benefit_device_dealer_direct,jdbcType=INTEGER},
+      benefit_deivce_dealer_indirect = #{benefit_deivce_dealer_indirect,jdbcType=INTEGER},
+      benefit_ad_normal_self = #{benefit_ad_normal_self,jdbcType=INTEGER},
+      benefit_ad_normal_indirect = #{benefit_ad_normal_indirect,jdbcType=INTEGER},
+      benefit_ad_normal_direct = #{benefit_ad_normal_direct,jdbcType=INTEGER},
+      benefit_deposit_store = #{benefit_deposit_store,jdbcType=INTEGER},
+
+      device_activated = #{device_activated,jdbcType=INTEGER},
+      benefit_device_activated = #{benefit_device_activated,jdbcType=INTEGER},
+
+      benefit_rebate_ad = #{benefit_rebate_ad,jdbcType=INTEGER},
+
+      status = #{status,jdbcType=VARCHAR},
+      utoken = #{utoken,jdbcType=VARCHAR},
+      record_time = #{record_time,jdbcType=DATE},
+      time = #{time,jdbcType=TIMESTAMP}, #{merchant_market,jdbcType=INTEGER},#{benefit_merchant_market,jdbcType=INTEGER},
+    #{franchise_districts,jdbcType=INTEGER},#{benefit_franchise_districts,jdbcType=INTEGER},
+    #{device_buy_amount_dist,jdbcType=INTEGER},#{benefit_device_buy_dist,jdbcType=INTEGER},
+    #{dist_device_red,jdbcType=INTEGER},#{benefit_dist_device_red,jdbcType=INTEGER},
+    #{dist_merchant_market,jdbcType=INTEGER},#{benefit_dist_merchant_market,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

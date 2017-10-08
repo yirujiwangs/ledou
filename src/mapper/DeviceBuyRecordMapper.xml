@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.DeviceBuyRecordMapper">
+  <resultMap id="BaseResultMap" type="model.DeviceBuyRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="utoken" jdbcType="VARCHAR" property="utoken" />
+    <result column="partner_trade_no" jdbcType="VARCHAR" property="partner_trade_no" />
+    <result column="device_type" jdbcType="VARCHAR" property="device_type" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="rule_id" jdbcType="INTEGER" property="rule_id" />
+    <result column="unit_price" jdbcType="INTEGER" property="unit_price" />
+    <result column="original_price" jdbcType="INTEGER" property="original_price" />
+    <result column="policy_reduct" jdbcType="INTEGER" property="policy_reduct" />
+    <result column="total_fee" jdbcType="INTEGER" property="total_fee" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="type_sec" jdbcType="VARCHAR" property="type_sec" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="logistic_no" jdbcType="VARCHAR" property="logistic_no" />
+    <result column="consignee" jdbcType="VARCHAR" property="consignee" />
+    <result column="contact_way" jdbcType="VARCHAR" property="contact_way" />
+    <result column="delivery_area" jdbcType="VARCHAR" property="delivery_area" />
+    <result column="delivery_address" jdbcType="VARCHAR" property="delivery_address" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="shield" jdbcType="INTEGER" property="shield" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.likeValue">
+                  and ${criterion.condition} #{criterion.value} ${criterion.condition2}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, utoken, partner_trade_no, device_type, amount, rule_id,original_price,policy_reduct,unit_price, total_fee,
+    status, type_sec, comment, logistic_no, consignee, contact_way, delivery_area, delivery_address, 
+    time,reason,shield
+  </sql>
+  <select id="selectByExample" parameterType="model.DeviceBuyRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from device_buy_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause} desc
+    </if>
+    <if test="limitValue">
+      limit #{startSize},#{pageSize}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from device_buy_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--获取代理商组合设备采购记录-->
+  <select id="selectDealerDeviceRecord"  resultType="model.dto.DeviceBuyRecord">
+    select d.id,d.amount,a.account,a.username,d.time,d.utoken
+    from device_buy_record d
+    inner join
+    (select username,account,proxy_token
+      from admin
+      where recommend_token= #{recommend_token,jdbcType=VARCHAR}
+      or proxy_token =  #{recommend_token,jdbcType=VARCHAR}) as a
+    on (a.proxy_token = d.utoken) where d.status IN ('N','B','F')
+    order by d.id DESC
+    limit #{startSize},#{pageSize}
+  </select>
+
+  <select id="countDealerDeviceRecord"  parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(1) from device_buy_record d
+    inner join
+    (select proxy_token
+      from admin
+      where recommend_token= #{recommend_token,jdbcType=VARCHAR}
+      or proxy_token =  #{recommend_token,jdbcType=VARCHAR}) as a
+    on (a.proxy_token = d.utoken) where d.status IN ('N','B','F')
+  </select>
+
+
+  <!--获取间接代理商设备采购记录-->
+  <select id="selectIndirectDealerDeviceRecord" resultType="model.dto.DeviceBuyRecord">
+    select d.id,d.amount,a.account,a.username,d.time,d.utoken
+    from admin a
+    inner join (select * from device_buy_record  where status IN ('N','B','F')) as d
+    on (d.utoken = a.proxy_token)
+    where a.recommend_token
+    in (select proxy_token from admin
+    where recommend_token = #{recommend_token,jdbcType=VARCHAR})
+    order by d.id DESC
+    limit #{startSize},#{pageSize}
+  </select>
+  <!--获取间接代理商设备采购记录-->
+  <select id="countIndirectDealerDeviceRecord"  parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(1)
+    from device_buy_record d
+    inner join
+    (select proxy_token as utoken from admin  where recommend_token in
+    (select proxy_token from admin where recommend_token = #{recommend_token,jdbcType=VARCHAR} )) as s
+    on (d.utoken = s.utoken)
+    and d.status IN ('N','B','F')
+  </select>
+
+
+  <select id="countDeviceRecord" resultType="java.lang.Integer">
+    select count(1) from device_buy_record d
+    inner join
+    admin a
+    on (a.proxy_token = d.utoken) where 1=1
+    <if test="tradeState != null">
+      and d.status = #{tradeState,jdbcType=VARCHAR}
+    </if>
+    <if test="stime != null">
+      and d.time &gt; #{stime}
+    </if>
+    <if test="etime != null">
+      and d.time &lt; #{etime}
+    </if>
+    <if test="searchKey != null">
+      and locate(#{searchKey,jdbcType=VARCHAR},concat_ws(a.username,a.account,d.partner_trade_no)) > 0
+    </if>
+  </select>
+
+
+  <select id="selectDeviceRecord" resultType="model.dto.DeviceBuyRecord">
+    select d.id,d.partner_trade_no,
+    d.device_type,
+    d.amount,a.account,
+    a.username,d.time,d.utoken,d.status,d.logistic_no,d.consignee,d.contact_way,d.delivery_address,d.reason
+    from device_buy_record d
+    inner join admin a on (d.utoken = a.proxy_token)
+    where 1=1
+    <if test="tradeState != null">
+      and d.status = #{tradeState,jdbcType=VARCHAR}
+    </if>
+    <if test="stime != null">
+      and d.time &gt; #{stime}
+    </if>
+    <if test="etime != null">
+      and d.time &lt; #{etime}
+    </if>
+    <if test="searchKey != null">
+      and locate(#{searchKey,jdbcType=VARCHAR},concat_ws(a.username,a.account,d.partner_trade_no)) > 0
+    </if>
+    AND d.status != 'D'
+    order by d.id DESC
+    limit #{startSize},#{pageSize}
+  </select>
+
+
+  <!--自己采购的设备数量-->
+  <select id="myDeviceNum" resultType="java.lang.Integer">
+    select ifnull(sum(amount),0) as amount
+    from device_buy_record
+    where utoken =  #{utoken,jdbcType=VARCHAR}
+    and status IN ('N','B','F')
+    <if test="type != null">
+      and device_type = #{type,jdbcType=VARCHAR}
+    </if>
+    <if test="stime != null">
+      and time &gt;= #{stime}
+    </if>
+    <if test="etime != null">
+      and time &lt;=  #{etime}
+    </if>
+  </select>
+
+  <!--下级（区县）代理在时间段内的采购数量-->
+  <select id="distDeviceBuyNum" resultType="java.lang.Integer">
+    SELECT IFNULL(SUM(amount),0) FROM
+    device_buy_record d
+    WHERE utoken IN
+    (SELECT utoken FROM proxy_area WHERE supertoken = #{utoken,jdbcType=VARCHAR})
+    and d.status IN ('N','B','F') and d.shield = 0
+    <if test="stime != null">
+      and d.time &gt; #{stime}
+    </if>
+    <if test="etime != null">
+      and d.time &lt; #{etime}
+    </if>
+  </select>
+
+  <select id="monthDistBuyRecord" resultType="model.dto.DistBuyRecord">
+    SELECT DATE_FORMAT(TIME,'%Y-%m') as times, IFNULL(SUM(amount),0) as distDeviceBuyNum
+    FROM device_buy_record
+    WHERE utoken IN
+    (SELECT utoken FROM proxy_area WHERE supertoken = #{utoken,jdbcType=VARCHAR})
+    AND status IN ('N','B','F')
+    GROUP BY times DESC
+    LIMIT #{startSize,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+<!--  <select id="monthDistBuyRecord" resultType="model.dto.DistBuyRecord">
+    SELECT device_buy_amount_dist as distDeviceBuyBenefit ,benefit_device_buy_dist as distDeviceBuyNum ,DATE_FORMAT(record_time,'%Y-%m') as times
+    FROM income_details_proxy
+    WHERE utoken = #{utoken,jdbcType=VARCHAR}
+    GROUP BY times DESC
+    LIMIT #{startSize,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>-->
+
+
+  <select id="countMonthDistBuyRecord" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM
+    (SELECT DATE_FORMAT(TIME,'%Y-%m') times
+    FROM device_buy_record
+    WHERE utoken IN
+    (SELECT utoken FROM proxy_area WHERE supertoken = #{utoken,jdbcType=VARCHAR})
+    AND status IN ('N','B','F')
+    GROUP BY times DESC) temp
+  </select>
+
+<!--  <select id="countMonthDistBuyRecord" resultType="java.lang.Integer">
+  SELECT COUNT(1) FROM
+  (SELECT DATE_FORMAT(record_time,'%Y-%m') times
+  FROM income_details_proxy
+  WHERE utoken = #{utoken,jdbcType=VARCHAR}
+  GROUP BY times DESC) temp
+  </select>-->
+
+  <select id="monthDistBuyDetail" resultType="model.dto.DistBuyDetail">
+  SELECT admin.username as username ,proxy_area.area_name as areaName ,temp.amount as amount FROM
+  (SELECT utoken,IFNULL(SUM(amount),0) amount
+  FROM device_buy_record
+  WHERE utoken IN (SELECT utoken FROM proxy_area WHERE supertoken = #{utoken,jdbcType=VARCHAR})
+  AND status IN ('N','B','F')
+  AND TIME LIKE concat(#{time,jdbcType=VARCHAR},'%')
+  GROUP BY utoken) temp INNER JOIN admin ON temp.utoken = admin.proxy_token
+  INNER JOIN proxy_area ON temp.utoken = proxy_area.utoken
+  LIMIT #{startSize,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="countMonthDistBuyDetail" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM
+    (SELECT utoken
+    FROM device_buy_record
+    WHERE utoken IN (SELECT utoken FROM proxy_area WHERE supertoken = #{utoken,jdbcType=VARCHAR})
+    AND status IN ('N','B','F')
+    AND TIME LIKE concat(#{time,jdbcType=VARCHAR},'%')
+    GROUP BY utoken) temp
+  </select>
+
+
+  <!--第一级代理在时间段内的采购数量-->
+  <select id="fDealerDeviceNum" resultType="java.lang.Integer">
+    select ifnull(sum(d.amount),0) as amount
+    from device_buy_record d
+    inner join admin a
+    on (d.utoken = a.proxy_token)
+    where a.recommend_token = #{recommend_token,jdbcType=VARCHAR}
+    and d.status IN ('N','B','F')
+    <if test="stime != null">
+      and d.time &gt; #{stime}
+    </if>
+    <if test="etime != null">
+      and d.time &lt; #{etime}
+    </if>
+  </select>
+
+  <!--第二级代理在时间段内的采购数量-->
+  <select id="sDealerDeviceNum" resultType="java.lang.Integer">
+    select ifnull(sum(d.amount),0) as amount
+    from device_buy_record d
+    inner join
+    (select proxy_token as utoken from admin  where recommend_token in
+    (select proxy_token from admin where recommend_token = #{recommend_token,jdbcType=VARCHAR} )) as s
+    on (d.utoken = s.utoken)
+    and d.status IN ('N','B','F')
+    <if test="stime != null">
+      and d.time &gt; #{stime}
+    </if>
+    <if test="etime != null">
+      and d.time &lt; #{etime}
+    </if>
+  </select>
+
+  <select id="dealerOrders" resultMap="BaseResultMap">
+    select * from device_buy_record d
+    inner join
+    (select proxy_token as utoken from admin
+            where recommend_token in
+    (select proxy_token from admin
+            where recommend_token = #{recommend_token,jdbcType=VARCHAR}
+            or proxy_token = #{recommend_token,jdbcType=VARCHAR})) as s
+    on (d.utoken = s.utoken) order by d.id desc
+    limit #{startSize},#{pageSize}
+  </select>
+
+
+  <!--获取下级代理商累计设备购买情况，分为累计、当月、上个月三个指标-->
+  <select id="dealerDevices" resultType="model.dto.DealerDeviceStatistics">
+    select
+      a.proxy_token,
+      a.createTime,
+      a.account,
+      a.username,
+      a.recommend_token,
+      ifnull(d0.amount1,0) as onceAmount,
+      ifnull(d1.amount1,0) as lastAmount,
+      ifnull(d2.amount1,0) as nowAmount
+    from admin a
+    left join
+    (select sum(amount) as amount1,utoken from device_buy_record
+        where status IN ('N','B','F') and time  &lt; #{stime}  group by utoken) as d0
+        on (d0.utoken = a.proxy_token)
+    left join  (select sum(amount) as amount1,utoken from device_buy_record
+          where status IN ('N','B','F') and time &gt; #{stime} and time &lt; #{etime}  group by utoken) as d1
+          on (d1.utoken = a.proxy_token)
+    left join (select sum(amount) as amount1,utoken from device_buy_record
+          where status IN ('N','B','F') and time &gt; #{etime}  group by utoken) as d2
+          on (d2.utoken = a.proxy_token)
+    where a.recommend_token
+          in (select proxy_token from admin
+                where recommend_token =  #{recommend_token,jdbcType=VARCHAR}
+                      or proxy_token =  #{recommend_token,jdbcType=VARCHAR})
+    limit #{startSize},#{pageSize}
+  </select>
+
+  <!--下属多级代理商总数-->
+  <select id="dealerCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(1) as size
+    from admin
+    where recommend_token
+    in (select proxy_token from admin
+        where recommend_token =  #{recommend_token,jdbcType=VARCHAR}
+        or proxy_token =  #{recommend_token,jdbcType=VARCHAR}) ;
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from device_buy_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="model.DeviceBuyRecordExample">
+    delete from device_buy_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="model.DeviceBuyRecord">
+    insert into device_buy_record (id, utoken, partner_trade_no, 
+      device_type, amount, rule_id,
+      original_price,policy_reduct,
+      unit_price, total_fee, status, 
+      type_sec, comment, logistic_no, 
+      consignee, contact_way, delivery_area, 
+      delivery_address, time,reason,shield)
+    values (#{id,jdbcType=INTEGER}, #{utoken,jdbcType=VARCHAR}, #{partner_trade_no,jdbcType=VARCHAR}, 
+      #{device_type,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, #{rule_id,jdbcType=INTEGER},
+      #{original_price,jdbcType=INTEGER},#{policy_reduct,jdbcType=INTEGER},
+      #{unit_price,jdbcType=INTEGER}, #{total_fee,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
+      #{type_sec,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{logistic_no,jdbcType=VARCHAR}, 
+      #{consignee,jdbcType=VARCHAR}, #{contact_way,jdbcType=VARCHAR}, #{delivery_area,jdbcType=VARCHAR}, 
+      #{delivery_address,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{reason,jdbcType=VARCHAR},
+      #{shield,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="model.DeviceBuyRecord">
+    insert into device_buy_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="utoken != null">
+        utoken,
+      </if>
+      <if test="partner_trade_no != null">
+        partner_trade_no,
+      </if>
+      <if test="device_type != null">
+        device_type,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="rule_id != null">
+        rule_id,
+      </if>
+      <if test="original_price != null">
+        original_price,
+      </if>
+      <if test="policy_reduct != null">
+        policy_reduct,
+      </if>
+      <if test="unit_price != null">
+        unit_price,
+      </if>
+      <if test="total_fee != null">
+        total_fee,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="type_sec != null">
+        type_sec,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="logistic_no != null">
+        logistic_no,
+      </if>
+      <if test="consignee != null">
+        consignee,
+      </if>
+      <if test="contact_way != null">
+        contact_way,
+      </if>
+      <if test="delivery_area != null">
+        delivery_area,
+      </if>
+      <if test="delivery_address != null">
+        delivery_address,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="shield != null">
+        shield,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="utoken != null">
+        #{utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="partner_trade_no != null">
+        #{partner_trade_no,jdbcType=VARCHAR},
+      </if>
+      <if test="device_type != null">
+        #{device_type,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="rule_id != null">
+        #{rule_id,jdbcType=INTEGER},
+      </if>
+      <if test="original_price != null">
+        #{original_price,jdbcType=INTEGER},
+      </if>
+      <if test="policy_reduct != null">
+        #{policy_reduct,jdbcType=INTEGER},
+      </if>
+      <if test="unit_price != null">
+        #{unit_price,jdbcType=INTEGER},
+      </if>
+      <if test="total_fee != null">
+        #{total_fee,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="type_sec != null">
+        #{type_sec,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="logistic_no != null">
+        #{logistic_no,jdbcType=VARCHAR},
+      </if>
+      <if test="consignee != null">
+        #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="contact_way != null">
+        #{contact_way,jdbcType=VARCHAR},
+      </if>
+      <if test="delivery_area != null">
+        #{delivery_area,jdbcType=VARCHAR},
+      </if>
+      <if test="delivery_address != null">
+        #{delivery_address,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="shield != null">
+        #{shield,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="model.DeviceBuyRecordExample" resultType="java.lang.Integer">
+    select count(1) from device_buy_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update device_buy_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.utoken != null">
+        utoken = #{record.utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partner_trade_no != null">
+        partner_trade_no = #{record.partner_trade_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.device_type != null">
+        device_type = #{record.device_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.rule_id != null">
+        rule_id = #{record.rule_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.original_price != null">
+        original_price = #{record.original_price,jdbcType=INTEGER},
+      </if>
+      <if test="record.policy_reduct != null">
+        policy_reduct = #{record.policy_reduct,jdbcType=INTEGER},
+      </if>
+      <if test="record.unit_price != null">
+        unit_price = #{record.unit_price,jdbcType=INTEGER},
+      </if>
+      <if test="record.total_fee != null">
+        total_fee = #{record.total_fee,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type_sec != null">
+        type_sec = #{record.type_sec,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logistic_no != null">
+        logistic_no = #{record.logistic_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consignee != null">
+        consignee = #{record.consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contact_way != null">
+        contact_way = #{record.contact_way,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delivery_area != null">
+        delivery_area = #{record.delivery_area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delivery_address != null">
+        delivery_address = #{record.delivery_address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null">
+        time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reason != null">
+        reason = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shield != null">
+        shield = #{record.shield,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update device_buy_record
+    set id = #{record.id,jdbcType=INTEGER},
+      utoken = #{record.utoken,jdbcType=VARCHAR},
+      partner_trade_no = #{record.partner_trade_no,jdbcType=VARCHAR},
+      device_type = #{record.device_type,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=INTEGER},
+      rule_id = #{record.rule_id,jdbcType=INTEGER},
+      original_price = #{record.original_price,jdbcType=INTEGER},
+      policy_reduct = #{record.policy_reduct,jdbcType=INTEGER},
+      unit_price = #{record.unit_price,jdbcType=INTEGER},
+      total_fee = #{record.total_fee,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=VARCHAR},
+      type_sec = #{record.type_sec,jdbcType=VARCHAR},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      logistic_no = #{record.logistic_no,jdbcType=VARCHAR},
+      consignee = #{record.consignee,jdbcType=VARCHAR},
+      contact_way = #{record.contact_way,jdbcType=VARCHAR},
+      delivery_area = #{record.delivery_area,jdbcType=VARCHAR},
+      delivery_address = #{record.delivery_address,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=TIMESTAMP},
+      reason = #{record.reason,jdbcType=VARCHAR},
+      shield = #{record.shield,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="model.DeviceBuyRecord">
+    update device_buy_record
+    <set>
+      <if test="utoken != null">
+        utoken = #{utoken,jdbcType=VARCHAR},
+      </if>
+      <if test="partner_trade_no != null">
+        partner_trade_no = #{partner_trade_no,jdbcType=VARCHAR},
+      </if>
+      <if test="device_type != null">
+        device_type = #{device_type,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="rule_id != null">
+        rule_id = #{rule_id,jdbcType=INTEGER},
+      </if>
+      <if test="original_price != null">
+        original_price = #{original_price,jdbcType=INTEGER},
+      </if>
+      <if test="policy_reduct != null">
+        policy_reduct = #{policy_reduct,jdbcType=INTEGER},
+      </if>
+      <if test="unit_price != null">
+        unit_price = #{unit_price,jdbcType=INTEGER},
+      </if>
+      <if test="total_fee != null">
+        total_fee = #{total_fee,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="type_sec != null">
+        type_sec = #{type_sec,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="logistic_no != null">
+        logistic_no = #{logistic_no,jdbcType=VARCHAR},
+      </if>
+      <if test="consignee != null">
+        consignee = #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="contact_way != null">
+        contact_way = #{contact_way,jdbcType=VARCHAR},
+      </if>
+      <if test="delivery_area != null">
+        delivery_area = #{delivery_area,jdbcType=VARCHAR},
+      </if>
+      <if test="delivery_address != null">
+        delivery_address = #{delivery_address,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="shield != null">
+        shield = #{shield,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.DeviceBuyRecord">
+    update device_buy_record
+    set utoken = #{utoken,jdbcType=VARCHAR},
+      partner_trade_no = #{partner_trade_no,jdbcType=VARCHAR},
+      device_type = #{device_type,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
+      rule_id = #{rule_id,jdbcType=INTEGER},
+      original_price = #{original_price,jdbcType=INTEGER},
+      policy_reduct = #{policy_reduct,jdbcType=INTEGER},
+      unit_price = #{unit_price,jdbcType=INTEGER},
+      total_fee = #{total_fee,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      type_sec = #{type_sec,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      logistic_no = #{logistic_no,jdbcType=VARCHAR},
+      consignee = #{consignee,jdbcType=VARCHAR},
+      contact_way = #{contact_way,jdbcType=VARCHAR},
+      delivery_area = #{delivery_area,jdbcType=VARCHAR},
+      delivery_address = #{delivery_address,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      reason = #{reason,jdbcType=VARCHAR},
+      shield = #{shield,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

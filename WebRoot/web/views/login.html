@@ -1,0 +1,112 @@
+<header>
+    <div class="logo-area clearfix">
+        <div class="logo">
+        </div>
+        <div class="text">
+            运营商服务系统
+        </div>
+    </div>
+</header>
+<section>
+    <style>
+        #login_container{
+            /* display: none; */
+            position:absolute;
+            z-index: 99;
+            top: 0;
+            left: 10%;
+            width: 80%;
+        }
+    </style>
+    <dl class="container clearfix">
+        <div class="col-xs-6 description"></div>
+        <div class="pull-right" style="width: 450px;margin-right: 100px;">
+            <form role="form" action="login.do" class="login form-inline" method="post" id="login-form">
+                <header class="login-header clearfix">
+                    <span 
+                        ng-class="{'active':loginType}"
+                        ng-click="loginCtrl.loginToggle('user')">
+                        帐密登录
+                    </span>
+                    <span
+                        ng-class="{'active':!loginType}"
+                        ng-click="loginCtrl.loginToggle('qrcode')">
+                        扫码登录
+                    </span>
+                </header>
+                <div class="main-body" ng-show="loginType" style="margin-top: 50px;">
+                    <div class="form-group col-xs-12 clearfix text-center">
+                        <div class="input-group">
+                            <div class="input-group-addon" style="font-size:17px;">
+                                <i class="fa fa-mobile fa-2x"></i>
+                            </div>
+                            <input 
+                                type="tel" 
+                                name="phone" 
+                                class="form-control"
+                                ng-model="form.username" 
+                                required="required"
+                                style="height: 50px;width: 270px;" 
+                            >
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 clearfix text-center">
+                        <div class="input-group ">
+                            <div class="input-group-addon" style="font-size:17px;">
+                                <i class="fa fa-key"></i>
+                            </div>
+                            <input 
+                                type="password" 
+                                name="pwd" 
+                                class="form-control" 
+                                required="required" 
+                                ng-model="form.password" 
+                                ng-keypress="loginCtrl.enter($event)"
+                                style="height: 50px;width: 270px;" 
+                            >
+                        </div>
+                    </div>
+                    <div class="text-left" style="padding-left:25px;">
+                        <span class="action-left">
+                            <input type="checkbox" 
+                            ng-model="rem" >
+                            <label     style="margin-top: 20px;" for="checkboxDouya">记住我,公用电脑请勿选择此项</label>
+                        </span>
+                    </div>
+                    <div class=" col-xs-12 clearfix text-center" style="padding:15px 25px 0px 25px">
+                        <button style="width:100%;" type="button" class="btn btn-info btn-lg" ng-click="loginCtrl.loginCheck()">立即登录</button>
+                    </div>
+                </div>
+                <div class="main-body clearfix" ng-show="!loginType">
+                   <div id="login_container" style="display:none;"></div>
+                    <div style="width: 300px;margin: 0 auto;">
+                        <img style="width: 300px;" ng-src="{{loginQrcode}}" alt=""/>
+                        <p style="text-align: center">请使用微信扫一扫进行扫码登录</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </dl>
+</section>
+<footer>
+    Copyright ©2014 - 2016 西安绿豆芽信息科技有限公司, All rights reserved.
+</footer>
+ <script>
+    var generateRandomAlphaNum = generateRandomAlphaNum(12);
+    var obj = new WxLogin({
+      id:"login_container", 
+      appid: "wxebf0860568383f8a",
+      scope: "snsapi_login", 
+      redirect_uri: encodeURI("http://www.ledouya.com/admin/wx/wxLogin.do"),
+      state: generateRandomAlphaNum,
+      style: "",
+      href: ""
+    });
+    function generateRandomAlphaNum(len,radix) {
+        radix = radix ? 10 : 36;
+        var rdmString = "";
+        for (; rdmString.length < len; rdmString += Math.random().toString(radix).substr(2));
+        return rdmString.substr(0, len);
+    }
+
+</script>

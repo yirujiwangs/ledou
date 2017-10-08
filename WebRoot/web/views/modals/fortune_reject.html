@@ -1,0 +1,9 @@
+<div class='fortune-confirm-header'>
+	<h2>确认拒绝提现</h2>
+	<form>
+		<label>您当前正在拒绝乐豆互动{{fortuneRejectCtrl.datas.n}}的{{fortuneRejectCtrl.datas.fee}}元提现操作,请输入拒绝理由:</label>
+		<textarea ng-model='reason' class='fortune-reject-reason'></textarea>
+		<button ng-click="fortuneRejectCtrl.ok()">确定</button>
+		<button ng-click="fortuneRejectCtrl.close()">取消</button>
+	</form>
+</div>

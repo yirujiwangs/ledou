@@ -1,0 +1,220 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="intro">
+		<span class="intro-header">收益明细</span>
+		<div class="intro-body">
+			<dl class="imgsizequestion">
+				<dt>收益规则:</dt>
+				<dd>1.每月的1日-7日，系统将根据奖励政策，对服务商上月份的收益明细数据指标进行人工清算，并更新显示。</dd>
+				<dd>2.服务商的组合采购奖励，取决于组合采购量（自已采购+直接推荐服务商），享受阶梯奖励政策。<a href="#" data-toggle="tooltip" data-placement="right" title="组合采购量额外设备奖励：
+L6级：每月组合采购 10000台及以上设备，每台奖励15元。
+L5级：每月组合采购 5000-9999台设备，每台奖励12元。
+L4级：每月组合采购 1000-4999台设备，每台奖励9元。
+L3级：每月组合采购 500-999台设备，每台奖励6元。
+L2级：每月组合采购 300-499台设备，每台奖励4元。
+L1级：每月组合采购 200-299台设备，每台奖励3元。
+L0级：每月组合采购 0-199台设备，每台奖励0元。">查看详情<img src="images/question_mark.png"></button></a></dd>
+				<dd>3.服务商的间接推荐采购奖励，取决于间接推荐采购量（间接推荐的服务商），享受阶梯奖励政策。<a href="#" data-toggle="tooltip" data-placement="right" title="间接推荐服务商采购量额外设备奖励：
+L5级：每月累计采购 10000台及以上设备，每台奖励6元。
+L4级：每月累计采购 5000-9999台设备，每台奖励5元。
+L3级：每月累计采购 2000-4999台设备，每台奖励4元。
+L2级：每月累计采购 1000-1999台设备，每台奖励3元。
+L1级：每月累计采购 500-999台设备，每台奖励2元。
+L0级：每月累计采购 0-499台设备，每台奖励1元。">查看详情<img src="images/question_mark.png"></button></a></dd>
+				<dd>4.服务商的组合设备红包奖励收益（自己采购＋直接推荐），为额外奖励的广告红包发放金额的0.5%-2%。<a href="#" data-toggle="tooltip" data-placement="bottom" title="组合采购设备广告享有额外奖励：
+L3级：组合采购累计达100000台以上设备，奖励所有设备发放红包总额的2%。
+L2级：组合采购累计达30000-99999台设备，奖励所有设备发放红包总额的1.5%。
+L1级：组合采购累计达10000-29999台设备，奖励所有设备发放红包总额的1%。
+L0级：组合采购累计达0-9999台设备，按每台设备发放红包总额的0.5%奖励">查看详情<img src="images/question_mark.png"></button></a></dd>
+				<dd>5.服务商的商户广告金充值收益，为商户充值的4%。<a href="#" data-toggle="tooltip" data-placement="bottom" title="商户在使用商户红包等功能时，需先在公众号【乐豆呀-个人主页-商户财务中心】处进行广告金充值，充值时系统收取6%的服务费（其中1%用于支付微信支付通道费，1%用于乐豆呀平台技术运维，4%奖励给服务商）">查看详情<img src="images/question_mark.png"></button></a></dd>
+
+				<dd>6.服务商平台自定义激活补贴收益，是指针对已经自定义设置激活补贴的设备，在激活时返给服务商平台的收益。</dd>
+
+				<dd>7.服务商平台自定义红包分成收益，是指针对已经自定义设置红包分成的设备，在摇红包时返给服务商平台的收益。</dd>
+
+			</dl>
+		</div>
+	</div>
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h3 class="panel-title">数据指标(上月)</h3>
+	    </div>
+	    <div class="panel-body">
+	    	<div class='panel-items col-xs-2' style="border-bottom: 1px dashed #ececec;">
+	    		<p>组合采购数量</p>
+	    		<p class="panel-items-num">{{oldIncomeCtrl.items.combinationDeviceNum}}</p>
+				<p>组合采购奖励收益</p>
+				<p class="panel-items-num">{{(oldIncomeCtrl.items.combinationDeviceBenefit/100)=="NaN"?"0":oldIncomeCtrl.items.combinationDeviceBenefit/100}}</p>
+	    	</div>
+	    	<div class='panel-items col-xs-2' style="border-bottom: 1px dashed #ececec;">
+	    		<p>间接推荐采购数量</p>
+	    		<p class="panel-items-num">{{oldIncomeCtrl.items.indirectDeviceNum}}</p>
+				<p>间接推荐采购奖励收益</p>
+				<p class="panel-items-num">{{(oldIncomeCtrl.items.indirectDeviceBenefit/100)=="NaN"?"0":oldIncomeCtrl.items.indirectDeviceBenefit/100}}</p>
+	    	</div>
+			<div class='panel-items col-xs-2' style="border-bottom: 1px dashed #ececec;">
+				<p>激活设备数量</p>
+				<p class="panel-items-num">{{(oldIncomeCtrl.items.activatedDeviceNum)=="NaN"?"0":oldIncomeCtrl.items.activatedDeviceNum}}</p>
+				<p>自定义激活补贴收益</p>
+				<p class="panel-items-num">{{(oldIncomeCtrl.items.activatedDeviceBenefit/100)=="NaN"?"0":oldIncomeCtrl.items.activatedDeviceBenefit/100}}</p>
+			</div>
+			<div class='panel-items col-xs-2' style="border-bottom: 1px dashed #ececec;">
+				<p>商户广告金充值</p>
+				<p class="panel-items-num">{{(oldIncomeCtrl.items.storeAdDepositPrice/100)=="NaN"?"0":oldIncomeCtrl.items.storeAdDepositPrice/100}}</p>
+				<p>商户广告金充值收益</p>
+				<p class="panel-items-num">{{(oldIncomeCtrl.items.storeAdDepositBenefit/100)=="NaN"?"0":oldIncomeCtrl.items.storeAdDepositBenefit/100}}</p>
+			</div>
+	    	<div class='panel-items col-xs-2 ' style="border-bottom: 1px dashed #ececec;">
+	    		<p>组合设备品牌红包</p>
+	    		<p class="panel-items-num">{{(oldIncomeCtrl.items.combinationAdPrice/100)=="NaN"?"0":oldIncomeCtrl.items.combinationAdPrice/100}}</p>
+				<p>组合设备红包奖励收益</p>
+				<p class="panel-items-num">{{(oldIncomeCtrl.items.combinationAdBenefit/100)=="NaN"?"0":oldIncomeCtrl.items.combinationAdBenefit/100}}</p>
+	    	</div>
+			<div class='panel-items col-xs-2' style="border-bottom: 1px dashed #ececec;">
+				<p>自有设备品牌红包</p>
+				<p class="panel-items-num">{{(oldIncomeCtrl.items.selfAdPrice/100)=="NaN"?"0":oldIncomeCtrl.items.selfAdPrice/100}}</p>
+				<p>自定义红包分成收益</p>
+				<p class="panel-items-num">{{(oldIncomeCtrl.items.rebateAdBenefit/100)=="NaN"?"0":oldIncomeCtrl.items.rebateAdBenefit/100}}</p>
+			</div>
+
+	    </div>
+	</div>
+	<table class="table table-hover table-reponsive">
+
+		<div class="incomeTabs pull-right incomelistname" style="height: 45px;width:100%;">
+			<div
+					style="line-height: 45px;font-size: 10px;width:130px;float:right;"
+					ng-class="{'active': tabType=='activerecord'}"
+					class="incomeTab incomeAd"
+					ng-click="oldIncomeCtrl.tabToggle('activerecord')">
+				设备激活记录</div>
+			<div
+					style="line-height: 45px;font-size: 10px;width:130px;float:right;"
+					ng-class="{'active': tabType=='deviceadred'}"
+					class="incomeTab incomeAd"
+					ng-click="oldIncomeCtrl.tabToggle('deviceadred')">
+				自有设备品牌红包</div>
+			<div
+					style="line-height: 45px;font-size: 10px;width:130px;float:right;"
+					ng-class="{'active': tabType=='directadred'}"
+					class="incomeTab incomeAd"
+					ng-click="oldIncomeCtrl.tabToggle('directadred')">
+				直接推荐设备品牌红包</div>
+			<div
+					style="line-height: 45px;font-size: 10px;width:130px;float:right;"
+					ng-class="{'active': tabType=='combinationDevice'}"
+					class="incomeTab incomeAd"
+					ng-click="oldIncomeCtrl.tabToggle('combinationDevice')">
+				组合采购设备记录</div>
+			<div
+					style="line-height: 45px;font-size: 10px;width:130px;float:right;"
+					ng-class="{'active': tabType=='indirectDevice'}"
+					class="incomeTab incomeAd"
+					ng-click="oldIncomeCtrl.tabToggle('indirectDevice')">
+				间接推荐设备采购记录</div>
+
+			<div
+					style="line-height: 45px;font-size: 10px;width:130px;float:right;"
+				ng-class="{'active': tabType=='storeAdDeposit'}"
+				class="incomeTab incomeAd"
+				ng-click="oldIncomeCtrl.tabToggle('storeAdDeposit')">
+				商户广告金充值</div>
+		</div>
+
+		<thead ng-show="tabType=='activerecord'">
+		<th ng-repeat="title in oldIncomeCtrl.activerecordTitles">
+			{{title.name}}
+		</th>
+		</thead>
+		<tbody ng-show="tabType=='activerecord'">
+		<tr ng-repeat="record in oldIncomeCtrl.activerecordDevicelist">
+			<td>{{ record.day |date : 'yyyy-MM-dd' }}</td>
+			<td >{{record.num}}</td>
+			<td>{{ record.benefit/100 }}</td>
+			<td ng-click="oldIncomeCtrl.recordDetail($index)" style="color: #0083FF;cursor:pointer;">详情</td>
+		</tr>
+		</tbody>
+		<!--//第1个选项卡-->
+		<thead ng-show="tabType=='combinationDevice'">
+		<th ng-repeat="title in oldIncomeCtrl.adthirdTitles">
+			{{title.name}}
+		</th>
+		</thead>
+		<tbody ng-show="tabType=='combinationDevice'">
+		<tr ng-repeat="record in oldIncomeCtrl.combinationDevicelist">
+			<td>{{ record.time |date : 'yyyy-MM-dd hh:mm:ss' }}</td>
+			<td >{{record.account.replace((record.account).substr(3,4),"****")}}</td>
+			<td>{{ record.username }}</td>
+			<td>{{ record.amount }}</td>
+		</tr>
+		</tbody>
+		<!--//第2个选项卡-->
+		<thead ng-show="tabType=='indirectDevice'">
+		<th ng-repeat="title in oldIncomeCtrl.adTitles">
+			{{title.name}}
+		</th>
+		</thead>
+		<tbody ng-show="tabType=='indirectDevice'">
+		<tr ng-repeat="record in oldIncomeCtrl.indirectDevicelist">
+			<td>{{ record.time |date : 'yyyy-MM-dd hh:mm:ss' }}</td>
+			<td >{{record.account.replace((record.account).substr(3,4),"****")}}</td>
+			<td>{{ record.username }}</td>
+			<td>{{ record.amount }}</td>
+		</tr>
+		</tbody>
+		<!--//第3个选项卡-->
+		<thead ng-show="tabType=='deviceadred'">
+		<th ng-repeat="title in oldIncomeCtrl.adfirstTitles">
+			{{title.name}}
+		</th>
+		</thead>
+		<tbody ng-show="tabType=='deviceadred'">
+		<tr ng-repeat="record in oldIncomeCtrl.deviceadredlist">
+			<td>{{ record.date }}</td>
+			<td>{{ record.activityDevice }}</td>
+			<td>{{ record.totalSelledDevice }}</td>
+			<td>{{ (record.advPayment/100).toFixed(2) }}</td>
+			<td>{{ (record.advProxyPayment/100).toFixed(2)}}</td>
+			<td ng-click="oldIncomeCtrl.getAdDetail($index)" style="color: #0083FF;cursor:pointer;"
+					>详情
+			</td>
+		</tr>
+		</tbody>
+		<!--//第4个选项卡-->
+		<thead ng-show="tabType=='directadred'">
+		<th ng-repeat="title in oldIncomeCtrl.adscendTitles">
+			{{title.name}}
+		</th>
+		</thead>
+		<tbody ng-show="tabType=='directadred'">
+		<tr ng-repeat="record in oldIncomeCtrl.directadredlist">
+			<td>{{ record.date }}</td>
+			<td>{{ record.activityDevice }}</td>
+			<td>{{ record.totalSelledDevice }}</td>
+			<td>{{ (record.advPayment/100).toFixed(2)}}</td>
+		<!--	<td>{{ (record.advPayment*0.4/100).toFixed(2) }}</td>-->
+		</tr>
+		</tbody>
+		<!--//第5个选项卡-->
+		<thead ng-show="tabType=='storeAdDeposit'">
+			<th ng-repeat="title in oldIncomeCtrl.titles">
+				{{title.name}}
+			</th>
+		</thead>
+		<tbody ng-show="tabType=='storeAdDeposit'">
+			<tr ng-repeat="record in oldIncomeCtrl.storeAdDepositlist">
+				<td>{{record.month}}</td>
+				<td>{{(record.money/100).toFixed(2)}}</td>
+				<td>{{record.personnum}}</td>
+				<td><button class="t-btn t-btn-green" ng-click="oldIncomeCtrl.getStoreAdDeposit($index)">详情</button></td>
+			</tr>
+		</tbody>
+	</table>
+
+	</table>
+	<div class="page-btn">
+		<button ng-click="oldIncomeCtrl.pre()">上一页</button>
+		<span>第{{oldIncomeCtrl.currentPage}}页,共{{oldIncomeCtrl.totalPage}}页</span>
+		<button ng-click="oldIncomeCtrl.next()">下一页</button>
+	</div>
+</div>

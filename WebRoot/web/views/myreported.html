@@ -1,0 +1,54 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <div class='table-marg clearfix'>
+        <form class="form-inline clearfix">
+            <div
+                province="province"
+                area-code="areaCode"
+                align="align"
+                city-selector>
+            </div>
+            <div class="pull-left">
+                <!--<input type="text" placeholder="运营商账号/运营商名称/备注" ng-model="form.keyword" class="m-r-lg">-->
+                <button class="t-btn t-btn-green pull-right" ng-click="myreportedCtrl.search()">查询</button>
+            </div>
+        </form>
+    </div>
+    <table  class="table table-hover ">
+        <thead>
+        <th ng-repeat="title in myreportedCtrl.titles">
+            {{title.name}}
+        </th>
+        </thead>
+        <tbody>
+        <tr id="noneMessage" style="height: 340px;" ng-show="!isShow()">
+            <td colspan="6"><h1>请选择报备区域</h1></td>
+        </tr>
+        <tr ng-repeat="user in myreportedCtrl.allUser" ng-show="isShow()">
+            <td>{{user.province}}</td>
+            <td>{{user.city}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.report_num}}人</td>
+            <td ng-show="user.state=='B'">可报备</td>
+            <td ng-show="user.state=='N'">已签约</td>
+            <td ng-show="user.noReport"
+                ng-disabled="user.noReport"
+                ng-click=" user.noReport || myreportedCtrl.report($index)">
+                不可报备
+            </td>
+            <td ng-show="!user.noReport"
+                class="colorblue reportclk" ng-disabled="user.noReport"
+                ng-click=" user.noReport || myreportedCtrl.report($index)">
+                报备
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn " id="pageHide">
+        <button ng-click="myreportedCtrl.pre()" style="background: #fff;"><img src="images/pre.png" alt=""/></button>
+        <span>{{myreportedCtrl.currentPage}}/{{myreportedCtrl.totalPage}}</span>
+        <button ng-click="myreportedCtrl.next()" style="background: #fff;"><img src="images/next.png" alt=""/></button>
+        <input type='text' class="preinputwid jumppage" style="text-align: center;" placeholder=""  ng-model="jumppage">
+        <button class="t-btn t-btn-green m-r-md " ng-click="myreportedCtrl.jump()">跳转</button>
+    </div>
+</div>

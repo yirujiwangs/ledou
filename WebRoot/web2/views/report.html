@@ -1,0 +1,66 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <table class="table table-hover table-reponsive">
+        <div class='table-func clearfix'>
+            <!--<button class="t-btn t-btn-green pull-left" ng-click="reportCtrl.add()">创建运营商账号</button>-->
+            <div class="pull-left col-xs-9">
+                <form class="form-inline clearfix">
+                    <div
+                            class="pull-left"
+                            province="province"
+                            area-code="areaCode"
+                            align="align"
+                            style="margin-right: 10px;"
+                            city-selector>
+                    </div>
+                    <div class="pull-left">
+                        <button class="t-btn t-btn-green pull-left" ng-click="reportCtrl.search()">查询</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <thead>
+        <th>报备区域</th>
+        <th>企业名称</th>
+        <th>联系人</th>
+        <th>联系电话</th>
+        <!--<th>备注</th>-->
+        <th>签约状态</th>
+        <th >操作</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="record in reportCtrl.allRecord">
+
+            <td>{{record.area_name}}</td>
+            <td>{{record.company}}</td>
+            <td>{{record.contact_name}}</td>
+            <td>{{record.contact_way}}</td>
+            <td ng-if="record.status === 'B'">报备中</td>
+            <td ng-if="record.status === 'C'">洽谈中</td>
+            <td ng-if="record.status === 'N'">已签约</td>
+            <td>
+                <div class="btn-group dropdown-select" style="display: inline-block;margin: 0;width: auto;">
+                    <button type="button" class="t-btn t-btn-green dropdown-toggle" data-toggle="dropdown">
+                        操作
+                    </button>
+                    <ul id="changcolor" class="dropdown-menu" role="menu" style="  padding: 0;  left: -112px;">
+                        <li
+                                ng-repeat="menu in reportCtrl.menus"
+                                style="height: 45px; line-height: 45px;text-align: center;cursor:pointer;"
+                                ng-click="reportCtrl.updateReportStatus($index,record.id)">
+                            {{ menu.name }}
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn">
+        <button ng-click="reportCtrl.pre()" style="background: #fff;"><img src="images/pre.png" alt=""/></button>
+        <span>{{reportCtrl.currentPage}}/{{reportCtrl.totalPage}}</span>
+        <button ng-click="reportCtrl.next()"style="background: #fff;" ><img src="images/next.png" alt=""/></button>
+        <input type='text' class="preinputwid jumppage"   ng-model="jumppage">
+        <button class="t-btn t-btn-green m-r-md " ng-click="reportCtrl.jump()">跳转</button>
+    </div>
+</div>

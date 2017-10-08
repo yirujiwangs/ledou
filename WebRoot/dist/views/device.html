@@ -1,0 +1,57 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h3 class="panel-title">数据指标</h3>
+	    </div>
+	    <div class="panel-body">
+	    	<div ng-repeat="item in deviceCtrl.generalNum" class='panel-items col-xs-3'>
+	    		<p>{{item.name}}</p>
+	    		<p class="panel-items-num">{{item.number}}</p>
+	    	</div>
+	    </div>
+	</div>
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<button class="t-btn t-btn-green pull-left" ng-click="deviceCtrl.undistributed()">
+			 未绑定的设备
+			</button>
+			<div class="pull-right">
+				<input type='text' class="m-r-md pull-left col-xs-3" placeholder="输入商家账号/商家名称进行查询" ng-model='searchCon'>
+				<button class="t-btn t-btn-green m-r-md pull-left" ng-click="deviceCtrl.search()">查询</button>
+				<!-- <button ng-click="deviceCtrl.addDevice()">添加设备</button>
+				<button ng-click="deviceCtrl.import()">
+				 导出excel表
+				</button> -->
+			</div>
+		</div>
+		<thead>
+			<th ng-repeat="title in deviceCtrl.titles">
+				{{title.name}}
+			</th>
+			<th>操作</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="user in deviceCtrl.allUser">
+				<td>{{user.account}}</td>
+				<td>{{user.storeName}}</td>
+				<td>{{user.deviceNum}}</td>
+				<td>{{user.groupNum}}</td>
+				<!-- <td>{{user.remark}}</td> -->
+				<td>
+					<!-- <button class="t-btn t-btn-green" ng-click="deviceCtrl.revcomment($index)">
+						修改备注
+					</button> -->
+					<button class="t-btn t-btn-blue" ng-click="deviceCtrl.getDetail($index)">
+						详情
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="deviceCtrl.pre()">上一页</button>
+		<span>第{{deviceCtrl.currentPage}}页,共{{deviceCtrl.totalPage}}页</span>
+		<button ng-click="deviceCtrl.next()">下一页</button>
+	</div>
+</div>

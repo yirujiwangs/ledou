@@ -1,0 +1,81 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">关键指标
+				<span>
+					{{financeDetailCtrl.financeDetailAccount.account}}
+					({{financeDetailCtrl.financeDetailAccount.phoneNum}})
+				</span>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div class='panel-items col-xs-4'>
+				<p>商户总资产</p>
+				<p class="panel-items-num-xs">
+					{{financeDetailCtrl.items.totalmoney}}
+				</p>
+			</div>
+			<div class='panel-items col-xs-4'>
+				<p>累计总支出</p>
+				<p class="panel-items-num-xs">
+					{{financeDetailCtrl.items.totalexpense}}
+				</p>
+			</div>
+			<div class='panel-items col-xs-4'>
+				<p>累计总充值</p>
+				<p class="panel-items-num-xs">
+					{{financeDetailCtrl.items.totaldeposit}}
+				</p>
+			</div>
+			<!-- <div class='panel-items col-xs-3'>
+				<p>累计总收益</p>
+				<p class="panel-items-num-xs">
+					{{financeDetailCtrl.items.unUsingNum}}
+				</p>
+			</div> -->
+		</div>
+	</div>
+
+	<table class="table table-hover table-reponsive">
+		<div class='table-func clearfix'>
+			<form class="form-inline clearfix">
+				<button class="t-btn t-btn-green pull-left" ng-click="financeDetailCtrl.fortune()">收益明细</button>
+				<div class="form-group col-xs-3 pull-right" style="margin-bottom: 0;">
+					<button class="t-btn t-btn-green pull-right" ng-click="financeDetailCtrl.search()">搜索</button>
+					<input type="text" class="m-r-md pull-right" ng-model="form.searchkey" placeholder="交易单号/备注" style="min-width: 170px;">
+				</div>
+				<div class="col-xs-4 pull-right" style="padding: 0;">
+					<!-- <label class="control-label pull-left">时间:</label> -->
+					<div class="pull-right" ng-include="'views/dateTime.html'"></div>
+				</div>
+			</form>
+		</div>
+		<thead>
+			<th ng-repeat="title in financeDetailCtrl.titles">
+				{{title.name}}
+			</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="store in financeDetailCtrl.stores">
+				<td>{{store.phonenum}}</td>
+				<td>{{store.storeName}}</td>
+				<td>{{store.sum}}</td>
+				<td>{{store.freeze}}</td>
+				<td>{{store.available}}</td>
+				<td>{{store.sumdeposit}}</td>
+				<td>{{store.sumrefund}}</td>
+				<td>{{store.sumexpense}}</td>
+				<td>{{store.profit}}</td>
+				<td>
+					<button class="t-btn t-btn-green" ng-click="financeDetailCtrl.getFinanceStoreDetail($index)">详情</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-btn">
+		<button ng-click="financeDetailCtrl.pre()">上一页</button>
+		<span>第{{financeDetailCtrl.currentPage}}页,共{{financeDetailCtrl.totalPage}}页</span>
+		<button ng-click="financeDetailCtrl.next()">下一页</button>
+	</div>
+</div>

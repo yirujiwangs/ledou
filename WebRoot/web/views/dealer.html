@@ -1,0 +1,43 @@
+<div ng-include="'views/nav.html'"></div>
+<div class='main'>
+    <table class="table table-hover table-reponsive">
+        <div class='table-func clearfix'>
+            <button class="t-btn t-btn-green pull-left" ng-click="dealerCtrl.add()">添加经销商</button>
+        </div>
+        <thead>
+        <th ng-repeat="title in dealerCtrl.titles">
+            {{title.name}}
+        </th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in dealerCtrl.allDealer">
+            <td>{{item.account}}</td>
+            <td>{{item.name}}</td>
+            <td>{{(item.status=="N")?"正常":"禁用"}}</td>
+            <td>{{item.usedStock}}/{{item.stock}}</td>
+            <td>0/100</td>
+            <td>{{item.deviceNum}}</td>
+            <td>{{item.comment}}</td>
+            <td>{{item.createtime}}</td>
+            <td>
+                <div class="btn-group dropdown-select" style="display: inline-block;margin: 0;width: auto;">
+                    <button type="button" class="t-btn t-btn-green dropdown-toggle" style="width:64px;"  data-toggle="dropdown">
+                        操作&nbsp;<b class="caret"></b>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" style="left:initial;right:0;text-align: center;">
+                        <li ng-click="dealerCtrl.update(item.id)">编辑</li>
+                        <li ng-click="dealerCtrl.forbidden(item.id)">禁用</li>
+                        <li ng-click="dealerCtrl.device(item.id)">分配设备</li>
+                        <li ng-click="dealerCtrl.merchant(item.id,(item.stock-item.usedStock))">分配商户</li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="page-btn">
+        <button ng-click="dealerCtrl.pre()">上一页</button>
+        <span>第{{dealerCtrl.currentPage}}页,共{{dealerCtrl.totalPage}}页</span>
+        <button ng-click="dealerCtrl.next()">下一页</button>
+    </div>
+</div>
